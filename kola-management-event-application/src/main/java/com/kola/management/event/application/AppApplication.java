@@ -6,8 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import java.io.File;
-
 @SpringBootApplication
 @ComponentScan("com.kola.management")
 public class AppApplication {

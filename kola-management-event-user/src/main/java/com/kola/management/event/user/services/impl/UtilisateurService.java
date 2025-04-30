@@ -1,6 +1,5 @@
 package com.kola.management.event.user.services.impl;
 
-
 import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.services.BaseKernelService;
 import com.kola.management.event.user.dto.utilisateur.*;

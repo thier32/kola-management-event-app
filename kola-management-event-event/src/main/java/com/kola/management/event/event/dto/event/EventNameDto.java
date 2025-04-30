@@ -1,0 +1,10 @@
+package com.kola.management.event.event.dto.event;
+
+/**
+ *
+ * @param eventName
+ */
+public record EventNameDto(
+        String eventName
+) implements IEventDto {
+}
