@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/kola-management-event-app.iml" filepath="$PROJECT_DIR$/.idea/kola-management-event-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kola-management-event-application/application.kola-management-event-application.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kola-management-event-application/application.kola-management-event-application.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kola-management-event-event/application.kola-management-event-event.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kola-management-event-event/application.kola-management-event-event.main.iml" />
     </modules>
   </component>
 </project>

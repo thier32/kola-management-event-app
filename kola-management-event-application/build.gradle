@@ -31,8 +31,8 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	runtimeOnly 'com.h2database:h2'
 	compileOnly 'org.projectlombok:lombok'
-	implementation project(':kola-management-event-user')
-	implementation project(':kola-management-event-client')
+//	implementation project(':kola-management-event-user')
+	implementation project(':kola-management-event-event')
 	implementation project(':kola-management-event-kernel')
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	runtimeOnly 'com.mysql:mysql-connector-j'
