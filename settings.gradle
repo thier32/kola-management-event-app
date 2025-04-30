@@ -1,5 +1,5 @@
 rootProject.name = 'application'
 include 'kola-management-event-application'
 include 'kola-management-event-event'
-include 'notary-management-event-user'
-include 'notary-management-event-kernel'
+include 'kola-management-event-user'
+include 'kola-management-event-kernel'

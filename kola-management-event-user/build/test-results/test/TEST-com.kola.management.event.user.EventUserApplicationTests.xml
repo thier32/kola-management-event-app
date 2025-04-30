@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kola.management.event.user.EventUserApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-04-30T14:05:21.319Z" hostname="DESKTOP-154MT6H" time="1.854">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.kola.management.event.user.EventUserApplicationTests" time="1.854"/>
+  <system-out><![CDATA[16:05:09.412 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.kola.management.event.user.EventUserApplicationTests]: EventUserApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:05:09.713 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.kola.management.event.user.EventUserApplication for test class com.kola.management.event.user.EventUserApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.4)
+
+2025-04-30T16:05:11.033+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] c.k.m.e.user.EventUserApplicationTests   : Starting EventUserApplicationTests using Java 21.0.7 with PID 17824 (started by user in E:\jjava\kola-management-event-app\kola-management-event-user)
+2025-04-30T16:05:11.033+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] c.k.m.e.user.EventUserApplicationTests   : No active profile set, falling back to 1 default profile: "default"
+2025-04-30T16:05:14.673+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-30T16:05:14.726+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 29 ms. Found 0 JPA repository interfaces.
+2025-04-30T16:05:15.928+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-04-30T16:05:16.445+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:e57c164b-5016-4e27-8729-7267d07a374a user=SA
+2025-04-30T16:05:16.445+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-04-30T16:05:16.618+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-30T16:05:16.779+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-04-30T16:05:16.887+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-04-30T16:05:17.780+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-30T16:05:18.034+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-30T16:05:18.782+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-30T16:05:18.798+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-30T16:05:19.252+02:00  WARN 17824 --- [Event Management System - Kernel] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-30T16:05:20.162+02:00  WARN 17824 --- [Event Management System - Kernel] [    Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-04-30T16:05:20.664+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-04-30T16:05:21.276+02:00  INFO 17824 --- [Event Management System - Kernel] [    Test worker] c.k.m.e.user.EventUserApplicationTests   : Started EventUserApplicationTests in 11.019 seconds (process running for 14.162)
+]]></system-out>
+  <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\user\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.15.11\a38b16385e867f59a641330f0362ebe742788ed8\byte-buddy-agent-1.15.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>
