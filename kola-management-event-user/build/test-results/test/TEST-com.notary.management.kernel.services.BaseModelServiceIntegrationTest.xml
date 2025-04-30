@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.notary.management.kernel.services.BaseModelServiceIntegrationTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-04-28T17:37:19.918Z" hostname="DESKTOP-154MT6H" time="0.271">
+  <properties/>
+  <testcase name="givenNewBaseModel_whenSave_thenSuccess()" classname="com.notary.management.kernel.services.BaseModelServiceIntegrationTest" time="0.075"/>
+  <testcase name="givenNewBaseModel_whenUpdate_thenSuccess()" classname="com.notary.management.kernel.services.BaseModelServiceIntegrationTest" time="0.175"/>
+  <system-out><![CDATA[2025-04-28T19:37:14.337+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.notary.management.kernel.services.BaseModelServiceIntegrationTest]: BaseModelServiceIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-04-28T19:37:14.434+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.notary.management.kernel.KernelApplication for test class com.notary.management.kernel.services.BaseModelServiceIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.4)
+
+2025-04-28T19:37:14.747+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] .n.m.k.s.BaseModelServiceIntegrationTest : Starting BaseModelServiceIntegrationTest using Java 21.0.7 with PID 2868 (started by user in E:\jjava\notary-management-app\notary-management-kernel)
+2025-04-28T19:37:14.762+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] .n.m.k.s.BaseModelServiceIntegrationTest : No active profile set, falling back to 1 default profile: "default"
+2025-04-28T19:37:16.249+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-28T19:37:16.319+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 65 ms. Found 2 JPA repository interfaces.
+2025-04-28T19:37:16.929+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2025-04-28T19:37:16.993+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn18: url=jdbc:h2:mem:test user=SA
+2025-04-28T19:37:16.995+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2025-04-28T19:37:17.056+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-28T19:37:17.104+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-04-28T19:37:17.442+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-28T19:37:17.547+02:00  WARN 2868 --- [Notary Management System - Kernel] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-28T19:37:17.552+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-28T19:37:18.245+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-28T19:37:18.278+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-28T19:37:19.063+02:00  WARN 2868 --- [Notary Management System - Kernel] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-28T19:37:19.550+02:00  WARN 2868 --- [Notary Management System - Kernel] [    Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-04-28T19:37:19.770+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-04-28T19:37:19.909+02:00  INFO 2868 --- [Notary Management System - Kernel] [    Test worker] .n.m.k.s.BaseModelServiceIntegrationTest : Started BaseModelServiceIntegrationTest in 5.41 seconds (process running for 50.165)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
