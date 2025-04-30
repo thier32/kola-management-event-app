@@ -23,7 +23,4 @@ public class EventUserException extends Throwable {
         super(message,throwable);
     }
 
-//    public KernelExceptionException(String message, Class parentClass){
-//        super(message,parentClass);
-//    }
 }
