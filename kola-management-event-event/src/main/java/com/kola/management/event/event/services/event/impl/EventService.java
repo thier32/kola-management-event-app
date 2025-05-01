@@ -7,6 +7,7 @@ import com.kola.management.event.event.services.event.IEventService;
 import com.kola.management.event.event.services.exceptions.EventServiceException;
 import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.services.BaseKernelService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -96,4 +97,9 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
         return getDefaultRepository().findAll();
     }
 
+    @Override
+    public List<Event> findAllByOrderByIdDesc(int page, int element){
+        Pageable pageable = Pageable.ofSize( element).withPage( page-1);
+        return ((EventRepository)getDefaultRepository()).findByOrderByIdDesc(pageable);
+    }
 }

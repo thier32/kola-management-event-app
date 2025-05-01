@@ -108,4 +108,12 @@ public interface IEventService {
     */
    List<Event> findAllEvents();
 
+
+   /**
+    *
+    * @param page page number
+    * @param element number elements per page
+    * @return list of event -> list can be empty
+    */
+   public List<Event> findAllByOrderByIdDesc(int page, int element);
 }

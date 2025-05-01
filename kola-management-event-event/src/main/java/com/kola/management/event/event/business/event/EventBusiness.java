@@ -92,16 +92,13 @@ public class EventBusiness implements IEventBusiness {
         return null;
     }
 
-
-    @Override
-    public ListDataDto<Event> getListData() {
+    public ListDataDto<Event> getListData(int page) {
         ListDataDto<Event> data = new ListDataDto<>();
         data.numberPage = 10;
-        data.currentPage = 1;
-        data.elementPerPage = 10;
-        data.listElements = this.eventService.findAllEvents();
-//        data.listeElements = findAllBySlug(key, requestData.currentPage,requestData.numberPage);
-        data.total = data.listElements.size();
+        data.currentPage = page;
+        data.elementPerPage = 5;
+        data.listElements = this.eventService.findAllByOrderByIdDesc(data.currentPage,data.elementPerPage);
+        data.total = this.eventService.findAllEvents().size();
 
         long divisor = data.total;
         if (divisor <= 0){
@@ -121,6 +118,12 @@ public class EventBusiness implements IEventBusiness {
         return data;
     }
 
+
+    @Override
+    public ListDataDto<Event> getListData() {
+        return getListData(1);
+    }
+
     @Override
     public EventReturnDto getEvent(Long eventId) throws EventBusinessException {
         Optional<Event> optionalEvent = eventService.findEventByEventId(new EventEventIdDto(eventId));
@@ -135,9 +138,4 @@ public class EventBusiness implements IEventBusiness {
 
         return eventReturnDto;
     }
-
-//    @Override
-//    public List<Event> findAllEvents() {
-//        return eventService.findAllEvents();
-//    }
 }

@@ -77,8 +77,19 @@ public interface IEventBusiness {
      */
     ListDataDto<Event> getListData();
 
+    /**
+     *
+     * @param eventId
+     * @return
+     * @throws EventBusinessException
+     */
     EventReturnDto getEvent(Long eventId) throws EventBusinessException;
 
-//    List<Event> findAllEvents();
+    /**
+     *
+     * @param page
+     * @return
+     */
+    ListDataDto<Event> getListData(int page);
 
 }

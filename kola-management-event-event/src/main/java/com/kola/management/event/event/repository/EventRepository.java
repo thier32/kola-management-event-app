@@ -2,6 +2,7 @@ package com.kola.management.event.event.repository;
 
 import com.kola.management.event.kernel.repository.BaseKernelRepository;
 import com.kola.management.event.event.model.Event;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -38,6 +39,11 @@ public interface EventRepository extends BaseKernelRepository<Event> {
      */
     List<Event> findByEventName(String eventName);
 
-
+    /**
+     *
+     * @param pageable number of page and index
+     * @return List of Event -> list can be empty
+     */
+    List<Event> findByOrderByIdDesc(Pageable pageable);
 
 }
