@@ -96,6 +96,7 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
     public List<Event> findAllEvents() {
         return getDefaultRepository().findAll();
     }
+    
 
     @Override
     public List<Event> findAllByOrderByIdDesc(int page, int element){
