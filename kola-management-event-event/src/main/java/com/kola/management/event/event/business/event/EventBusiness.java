@@ -3,19 +3,18 @@ package com.kola.management.event.event.business.event;
 import com.kola.management.event.event.business.IEventBusiness;
 import com.kola.management.event.event.business.exceptions.EventBusinessException;
 import com.kola.management.event.event.dto.event.*;
-import com.kola.management.event.event.dto.eventhistory.EventHistoryBookerEventDto;
-import com.kola.management.event.event.dto.eventhistory.EventHistoryEndDateDto;
-import com.kola.management.event.event.dto.eventhistory.EventHistoryPublisherEventDto;
-import com.kola.management.event.event.dto.eventhistory.EventHistoryStartDateDto;
+import com.kola.management.event.event.dto.eventhistory.*;
 import com.kola.management.event.event.model.Event;
+import com.kola.management.event.event.model.EventHistory;
+import com.kola.management.event.event.services.eventhistory.impl.EventHistoryService;
+import com.kola.management.event.event.services.exceptions.EventHistoryServiceException;
 import com.kola.management.event.event.services.exceptions.EventServiceException;
 import com.kola.management.event.event.services.event.impl.EventService;
 import com.kola.management.event.kernel.exception.KernelException;
+import com.kola.management.event.kernel.model.BaseKernelModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +22,9 @@ public class EventBusiness implements IEventBusiness {
 
     @Autowired
     EventService eventService;
+
+    @Autowired
+    EventHistoryService eventHistoryService;
 
     @Override
     public EventReturnDto createEvent(EventDto eventDto) throws EventBusinessException {
@@ -45,11 +47,11 @@ public class EventBusiness implements IEventBusiness {
         return eventReturnDto;
     }
 
-    EventReturnDto map(Event event) throws EventBusinessException {
+    EventReturnDto map(BaseKernelModel model) throws EventBusinessException {
         EventReturnDto eventReturnDto;
         try {
             eventReturnDto =
-                    eventService.mapping(event,EventReturnDto.class);
+                    eventService.mapping(model,EventReturnDto.class);
         }catch (KernelException kernelException){
             throw new EventBusinessException(kernelException.getMessage());
         }
@@ -77,19 +79,67 @@ public class EventBusiness implements IEventBusiness {
         return null;
     }
 
-    @Override
-    public EventReturnDto unPublishEvent(EventHistoryPublisherEventDto eventHistoryPublisherEventDto) {
-        return null;
+    public EventReturnDto changeEventStatus(long eventId, EventStatus eventStatus) throws EventBusinessException {
+        Event event;
+        try {
+            event = this.eventService.verifyEventExistByEventId(new EventEventIdDto(eventId));
+        } catch (EventServiceException e) {
+            throw new EventBusinessException(e.getMessage());
+        }
+        return this.changeEventStatus(event,eventStatus);
     }
 
     @Override
-    public EventReturnDto bookEvent(EventHistoryBookerEventDto eventHistoryBookerEventDto) {
-        return null;
+    public EventReturnDto changeEventStatus(Event event, EventStatus eventStatus) throws EventBusinessException {
+        EventReturnDto eventReturnDto = null;
+
+        try {
+            EventHistoryChangeStatusEventDto eventHistoryChangeStatusEventDto =
+                    new EventHistoryChangeStatusEventDto(
+                    event.getEventId(),
+                    event.getEventName(),
+                    eventStatus
+            );
+            Optional<EventHistory> optionalEventHistory = this.eventHistoryService.
+                    findEventHistoryBychangeStatusEvent(
+                      eventHistoryChangeStatusEventDto
+                    );
+
+            if (optionalEventHistory.isEmpty()){
+                optionalEventHistory = this.eventHistoryService.changeStatusEvent(
+                        eventHistoryChangeStatusEventDto
+                );
+            }
+
+            if (optionalEventHistory.isPresent()){
+                eventReturnDto = this.map(optionalEventHistory.get());
+            }
+
+        } catch (EventHistoryServiceException e) {
+            throw new EventBusinessException(e.getMessage());
+        }
+
+        return  eventReturnDto;
     }
 
     @Override
-    public EventReturnDto unBookEvent(EventHistoryBookerEventDto eventHistoryBookerEventDto) {
-        return null;
+    public EventReturnDto publishEvent(long eventId) throws EventBusinessException {
+        return this.changeEventStatus(eventId,EventStatus.PUBLISHED);
+    }
+
+    @Override
+    public EventReturnDto unPublishEvent(long eventId) throws EventBusinessException {
+        return this.changeEventStatus(eventId,EventStatus.UNPUBLISHED);
+    }
+
+    @Override
+    public EventReturnDto bookEvent(long eventId) throws EventBusinessException {
+        return this.changeEventStatus(eventId,EventStatus.BOOKED);
+    }
+
+    @Override
+    public EventReturnDto unBookEvent(long eventId) throws EventBusinessException {
+        return this.changeEventStatus(eventId,EventStatus.UNBOOKED);
     }
 
     public ListDataDto<Event> getListData(int page) {

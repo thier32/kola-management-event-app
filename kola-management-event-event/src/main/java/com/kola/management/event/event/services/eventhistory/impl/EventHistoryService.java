@@ -63,6 +63,20 @@ public class EventHistoryService extends BaseKernelService<EventHistory> impleme
         return this.saveEventHistory(eventHistoryPublisherEventDto);
     }
 
+
+    @Override
+    public Optional<EventHistory> changeStatusEvent(EventHistoryChangeStatusEventDto eventHistoryChangeStatusEventDto) throws EventHistoryServiceException {
+        return this.saveEventHistory(eventHistoryChangeStatusEventDto);
+    }
+
+    @Override
+    public Optional<EventHistory> findEventHistoryBychangeStatusEvent(EventHistoryChangeStatusEventDto eventHistoryChangeStatusEventDto) throws EventHistoryServiceException {
+        return ((EventHistoryRepository)getDefaultRepository()).findFirstByEventIdAndEventStatusOrderByIdDesc(
+                eventHistoryChangeStatusEventDto.eventId(),
+                eventHistoryChangeStatusEventDto.eventStatus()
+        );
+    }
+
     @Override
     public Optional<EventHistory> bookEvent(EventHistoryBookerEventDto eventHistoryBookerEventDto) throws EventHistoryServiceException {
         return this.saveEventHistory(eventHistoryBookerEventDto);

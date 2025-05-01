@@ -65,6 +65,17 @@ public interface IEventHistoryService {
 
     /**
      *
+     * @param eventHistoryPublisherEventDto
+     * @return
+     * @throws EventHistoryServiceException
+     */
+    Optional<EventHistory> changeStatusEvent(EventHistoryChangeStatusEventDto eventHistoryPublisherEventDto) throws EventHistoryServiceException;
+
+
+    Optional<EventHistory> findEventHistoryBychangeStatusEvent(EventHistoryChangeStatusEventDto eventHistoryPublisherEventDto) throws EventHistoryServiceException;
+
+    /**
+     *
      * @param eventHistoryBookerEventDto
      * @return Optional<EventHistory>
      */

@@ -1,5 +1,6 @@
 package com.kola.management.event.event.repository;
 
+import com.kola.management.event.event.dto.event.EventStatus;
 import com.kola.management.event.kernel.repository.BaseKernelRepository;
 import com.kola.management.event.event.model.EventHistory;
 import org.springframework.stereotype.Repository;
@@ -88,4 +89,7 @@ public interface EventHistoryRepository extends BaseKernelRepository<EventHistor
      * @return List of EventHistory -> list can be empty
      */
     List<EventHistory> findEventHistoryByEventStatus(int status);
+
+    Optional<EventHistory> findFirstByEventIdAndEventStatusOrderByIdDesc(long eventId, EventStatus eventStatus);
+
 }

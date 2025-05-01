@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IEventService {
+   String NOT_FOUND_MESSAGE_TEMPLATE = "%s with %s %s not found.";
 
    /**
     *
@@ -94,6 +95,12 @@ public interface IEventService {
     * @return  Optional of <Event>
     */
    Optional<Event> findEventByEventId(EventEventIdDto eventEventIdDto);
+
+   /**
+    *
+    * @param eventEventIdDto EventIdDto
+    */
+   Event verifyEventExistByEventId(EventEventIdDto eventEventIdDto) throws EventServiceException;
 
    /**
     *

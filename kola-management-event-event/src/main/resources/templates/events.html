@@ -28,11 +28,10 @@
                 <table class="table table-striped table-responsive-md">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Service</th>
-                        <th>Slug</th>
-                        <th>Value</th>
-                        <th colspan="2">Actions</th>
+                        <th>Event Name</th>
+                        <th>Event Venue</th>
+                        <th>Event Description</th>
+                        <th colspan="3">Actions</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -50,15 +49,23 @@
                         <td th:text="${event.eventName}"></td>
                         <td th:text="${event.eventVenue}"></td>
                         <td th:text="${event.eventDescription}"></td>
-                        <td th:text="${event.eventId}"></td>
                         <td>
                             <a class="fa fa-regular fa fa-square icon-dark"
-                               th:href="@{'/events/edit/' + ${event.eventId}}"  title="Editer"
+                               th:href="@{'/events/edit/' + ${event.eventId}}"  title="Edit"
 
                             ></a>
-                            <!--                             <a class="btn btn-primary"><i class="fa fa-user-edit ml-2"></i></a>-->
                         </td>
-                        <td><a class="btn btn-primary"><i class="fa fa-user-times ml-2"></i></a></td>
+                        <td>
+                            <a class="fa fa-regular fa fa-circle icon-dark"
+                               th:href="@{'/events/publish/' + ${event.eventId}}"  title="Publish"
+                            ></a>
+                        </td>
+                        <td>
+                            <a class="fa fa-regular fa fa-triangle icon-dark"
+                               th:href="@{'/events/cancel/' + ${event.eventId}}"  title="Cancel"
+                            ></a>
+                        </td>
+<!--                        <td><a class="btn btn-primary"><i class="fa fa-user-times ml-2"></i></a></td>-->
                     </tr>
                     </tbody>
                 </table>

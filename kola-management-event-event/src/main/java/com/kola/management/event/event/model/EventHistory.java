@@ -1,5 +1,6 @@
 package com.kola.management.event.event.model;
 
+import com.kola.management.event.event.dto.event.EventStatus;
 import com.kola.management.event.kernel.model.BaseKernelModel;
 import jakarta.persistence.Entity;
 import lombok.*;
@@ -38,7 +39,7 @@ public class EventHistory extends BaseKernelModel {
     private String eventBookerName;
     private long eventPublisherId;
     private String eventPublisherName;
-    private int eventStatus;
+    private EventStatus eventStatus;
     private LocalDateTime eventStartDate;
     private LocalDateTime eventEndDate;
 }

@@ -22,11 +22,6 @@ public class EventController {
 
     @GetMapping("list")
     public String eventlist(Model model){
-//        List<String> snames = this.moduleService.getModuleNames();
-//        snames.forEach(System.out::println);
-//        List<Parameter> sParameters = this.parameterService.findDistinctParameterByName(snames);
-//        model.addAttribute("servicesName",snames);
-//        model.addAttribute("services",sParameters);
         model.addAttribute("eventData", eventBusiness.getListData());
         return  "events";
     }
@@ -56,6 +51,16 @@ public class EventController {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/events/list";
         }
+    }
+
+    @GetMapping("publish/{eventId}")
+    public String eventPublish(@PathVariable("eventId") Long eventId, Model model, RedirectAttributes redirectAttributes){
+        try {
+            model.addAttribute("eventDto", eventBusiness.publishEvent(eventId));
+        } catch (Exception|EventBusinessException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
+        return "redirect:/events/list";
     }
 
 }

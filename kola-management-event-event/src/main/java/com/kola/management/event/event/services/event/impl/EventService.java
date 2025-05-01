@@ -88,6 +88,21 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
     }
 
     @Override
+    public Event verifyEventExistByEventId(EventEventIdDto eventEventIdDto) throws EventServiceException {
+        Optional<Event> optionalEvent = this.findEventByEventId(eventEventIdDto);
+
+        if(optionalEvent.isEmpty()){
+            throw  new EventServiceException(String.format(NOT_FOUND_MESSAGE_TEMPLATE,
+                    Event.class.getSimpleName(),
+                    Event.eventIdProp,
+                    eventEventIdDto.eventId()
+                    ));
+        }
+
+        return optionalEvent.get();
+    }
+
+    @Override
     public List<Event> findEventByEventName(EventNameDto eventNameDto) {
         return ((EventRepository)getDefaultRepository()).findByEventName(eventNameDto.eventName());
     }
@@ -96,7 +111,7 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
     public List<Event> findAllEvents() {
         return getDefaultRepository().findAll();
     }
-    
+
 
     @Override
     public List<Event> findAllByOrderByIdDesc(int page, int element){

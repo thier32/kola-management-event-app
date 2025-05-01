@@ -1,10 +1,7 @@
 package com.kola.management.event.event.business;
 
 import com.kola.management.event.event.business.exceptions.EventBusinessException;
-import com.kola.management.event.event.dto.event.EventDto;
-import com.kola.management.event.event.dto.event.EventReturnDto;
-import com.kola.management.event.event.dto.event.EventUpdateDto;
-import com.kola.management.event.event.dto.event.ListDataDto;
+import com.kola.management.event.event.dto.event.*;
 import com.kola.management.event.event.dto.eventhistory.EventHistoryBookerEventDto;
 import com.kola.management.event.event.dto.eventhistory.EventHistoryEndDateDto;
 import com.kola.management.event.event.dto.eventhistory.EventHistoryPublisherEventDto;
@@ -50,26 +47,41 @@ public interface IEventBusiness {
      */
     EventReturnDto publishEvent(EventHistoryPublisherEventDto eventHistoryPublisherEventDto);
 
-    /**
-     *
-     * @param eventHistoryPublisherEventDto
-     * @return
-     */
-    EventReturnDto unPublishEvent(EventHistoryPublisherEventDto eventHistoryPublisherEventDto);
 
     /**
      *
-     * @param eventHistoryBookerEventDto
+     * @param event
+     * @param eventStatus
      * @return
+     * @throws EventBusinessException
      */
-    EventReturnDto bookEvent(EventHistoryBookerEventDto eventHistoryBookerEventDto);
+    EventReturnDto changeEventStatus(Event event, EventStatus eventStatus) throws EventBusinessException;
+
 
     /**
      *
-     * @param eventHistoryBookerEventDto
+     * @param eventId
+     * @param eventStatus
+     * @return
+     * @throws EventBusinessException
+     */
+    public EventReturnDto changeEventStatus(long eventId, EventStatus eventStatus) throws EventBusinessException;
+    /**
+     *
+     * @param eventId
      * @return
      */
-    EventReturnDto unBookEvent(EventHistoryBookerEventDto eventHistoryBookerEventDto);
+    EventReturnDto publishEvent(long eventId) throws EventBusinessException;
+
+
+    /**
+     *
+     * @param eventId
+     * @return
+     * @throws EventBusinessException
+     */
+    EventReturnDto unPublishEvent(long eventId) throws EventBusinessException;
+
 
     /**
      *
@@ -87,9 +99,24 @@ public interface IEventBusiness {
 
     /**
      *
+     * @param eventId
+     * @return
+     */
+    EventReturnDto bookEvent(long eventId) throws EventBusinessException;
+
+    /**
+     *
+     * @param eventId
+     * @return
+     */
+    EventReturnDto unBookEvent(long eventId) throws EventBusinessException;
+
+    /**
+     *
      * @param page
      * @return
      */
     ListDataDto<Event> getListData(int page);
+
 
 }

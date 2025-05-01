@@ -15,5 +15,6 @@ public class EventReturnDto {
     String eventName;
     String eventVenue;
     String message;
+    EventStatus eventStatus;
 }
 
