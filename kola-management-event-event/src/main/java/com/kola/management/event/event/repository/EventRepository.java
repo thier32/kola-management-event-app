@@ -16,6 +16,14 @@ public interface EventRepository extends BaseKernelRepository<Event> {
      */
     Optional<Event> findByEventId(long eventId);
 
+
+    /**
+     *
+     * @param eventId
+     * @return
+     */
+    Event findEventByEventId(long eventId);
+
     /**
      *
      * @param venue  the event's venue
@@ -29,5 +37,7 @@ public interface EventRepository extends BaseKernelRepository<Event> {
      * @return List of Event -> list can be empty
      */
     List<Event> findByEventName(String eventName);
+
+
 
 }

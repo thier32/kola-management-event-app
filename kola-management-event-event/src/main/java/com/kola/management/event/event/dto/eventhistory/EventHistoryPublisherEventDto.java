@@ -16,6 +16,7 @@ public record EventHistoryPublisherEventDto(
         String eventName,
         long publisherId,
         String publisherName,
+        boolean status,
         LocalDateTime eventStartDate,
         LocalDateTime eventEndDate
 ) implements IEventHistoryDto {

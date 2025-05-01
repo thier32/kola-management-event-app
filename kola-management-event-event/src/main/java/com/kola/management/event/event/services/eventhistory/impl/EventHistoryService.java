@@ -3,7 +3,7 @@ package com.kola.management.event.event.services.eventhistory.impl;
 import com.kola.management.event.event.dto.eventhistory.*;
 import com.kola.management.event.event.model.EventHistory;
 import com.kola.management.event.event.repository.EventHistoryRepository;
-import com.kola.management.event.event.services.event.exceptions.EventHistoryServiceException;
+import com.kola.management.event.event.services.exceptions.EventHistoryServiceException;
 import com.kola.management.event.event.services.eventhistory.IEventHistoryService;
 import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.services.BaseKernelService;
@@ -15,18 +15,25 @@ import java.util.Optional;
 @Service
 public class EventHistoryService extends BaseKernelService<EventHistory> implements IEventHistoryService {
 
-
-
     @Override
-    public EventHistory saveEventHistoryDto(IEventHistoryDto eventHistoryDto) throws EventHistoryServiceException {
-        EventHistory eventHistory = null;
+    public EventHistory saveEventHistoryDto(IEventHistoryDto eventHistoryDto,Long eventHistoryId) throws EventHistoryServiceException{
+        EventHistory eventHistory;
         try {
             eventHistory = this.mapping(eventHistoryDto, EventHistory.class);
-            eventHistory = this.save(eventHistory);
+            if(eventHistoryId == null){
+                eventHistory = this.save(eventHistory);
+            }else{
+                eventHistory = this.update(eventHistory,eventHistoryId);
+            }
         } catch (KernelException e) {
             throw new EventHistoryServiceException(e.getMessage());
         }
         return eventHistory;
+    }
+
+    @Override
+    public EventHistory saveEventHistoryDto(IEventHistoryDto eventHistoryDto) throws EventHistoryServiceException {
+        return saveEventHistoryDto(eventHistoryDto,null);
     }
 
 

@@ -1,19 +1,38 @@
 package com.kola.management.event.event.services.eventhistory;
 
-import com.kola.management.event.event.dto.event.EventDto;
 import com.kola.management.event.event.dto.eventhistory.*;
-import com.kola.management.event.event.model.Event;
 import com.kola.management.event.event.model.EventHistory;
-import com.kola.management.event.event.services.event.exceptions.EventHistoryServiceException;
-import com.kola.management.event.event.services.event.exceptions.EventServiceException;
+import com.kola.management.event.event.services.exceptions.EventHistoryServiceException;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IEventHistoryService {
 
+
+    /**
+     *
+     * @param eventHistoryDto
+     * @param eventHistoryId
+     * @return
+     * @throws EventHistoryServiceException
+     */
+    EventHistory saveEventHistoryDto(IEventHistoryDto eventHistoryDto,Long eventHistoryId) throws EventHistoryServiceException;
+
+    /**
+     *
+     * @param eventHistoryDto
+     * @return
+     * @throws EventHistoryServiceException
+     */
     EventHistory saveEventHistoryDto(IEventHistoryDto eventHistoryDto) throws EventHistoryServiceException;
 
+    /**
+     *
+     * @param eventHistoryDto
+     * @return
+     * @throws EventHistoryServiceException
+     */
     Optional<EventHistory> saveEventHistory(IEventHistoryDto eventHistoryDto) throws EventHistoryServiceException;
 
     /**

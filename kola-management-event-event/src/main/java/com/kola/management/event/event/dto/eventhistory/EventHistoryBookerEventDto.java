@@ -11,6 +11,7 @@ public record EventHistoryBookerEventDto(
         long eventId,
         String eventName,
         long bookerId,
-        String bookerName
+        String bookerName,
+        int status
 ) implements IEventHistoryDto {
 }

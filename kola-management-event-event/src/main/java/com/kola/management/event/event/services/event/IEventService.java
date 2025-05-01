@@ -2,13 +2,31 @@ package com.kola.management.event.event.services.event;
 
 import com.kola.management.event.event.dto.event.*;
 import com.kola.management.event.event.model.Event;
-import com.kola.management.event.event.services.event.exceptions.EventServiceException;
+import com.kola.management.event.event.services.exceptions.EventServiceException;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IEventService {
 
+   /**
+    *
+    * @param eventDto
+    * @param eventId
+    * @return
+    * @throws EventServiceException
+    */
+   Optional<Event> updateEvent(IEventDto eventDto, long eventId) throws EventServiceException;
+
+
+   /**
+    *
+    * @param eventDto
+    * @param eventId
+    * @return
+    * @throws EventServiceException
+    */
+   Event saveEventDto(IEventDto eventDto,Long eventId) throws EventServiceException;
 
    /**
     *
@@ -83,4 +101,11 @@ public interface IEventService {
     * @return  Optional of <Event>
     */
    List<Event> findEventByEventName(EventNameDto eventNameDto);
+
+   /**
+    *
+    * @return list of event -> list can be empty
+    */
+   List<Event> findAllEvents();
+
 }
