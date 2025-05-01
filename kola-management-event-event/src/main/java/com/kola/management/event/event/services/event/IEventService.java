@@ -9,13 +9,16 @@ import java.util.Optional;
 
 public interface IEventService {
 
+
    /**
     *
-    * @param event
+    * @param eventDto
     * @return
     * @throws EventServiceException
     */
-   Event saveEvent(Event event) throws EventServiceException;
+   Optional<Event> saveEvent(IEventDto eventDto) throws EventServiceException;
+
+
 
    /**
     *

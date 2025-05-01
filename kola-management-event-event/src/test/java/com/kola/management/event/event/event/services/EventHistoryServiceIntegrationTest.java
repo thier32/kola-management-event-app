@@ -3,6 +3,7 @@ package com.kola.management.event.event.event.services;
 import com.kola.management.event.event.dto.eventhistory.EventHistoryDto;
 import com.kola.management.event.event.dto.eventhistory.EventHistoryStartDateDto;
 import com.kola.management.event.event.model.EventHistory;
+import com.kola.management.event.event.services.event.exceptions.EventHistoryServiceException;
 import com.kola.management.event.event.services.eventhistory.IEventHistoryService;
 import com.kola.management.event.user.services.exceptions.RoleServiceException;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ public class EventHistoryServiceIntegrationTest {
     IEventHistoryService eventHistoryService;
 
     @Test
-    void givenValidEventHistory_whenCreate_thenSuccess() throws RoleServiceException {
+    void givenValidEventHistory_whenCreate_thenSuccess() throws  EventHistoryServiceException {
         EventHistoryDto eventHistoryDto = new EventHistoryDto(
                 111111L,
                 "eventName",
@@ -42,7 +43,7 @@ public class EventHistoryServiceIntegrationTest {
     }
 
     @Test
-    void givenExistingEventHistory_whenUpdate_thenUpdatedSuccessfully() throws RoleServiceException {
+    void givenExistingEventHistory_whenUpdate_thenUpdatedSuccessfully() throws  EventHistoryServiceException {
         EventHistoryDto eventHistoryDto = new EventHistoryDto(
                 111111L,
                 "eventName",

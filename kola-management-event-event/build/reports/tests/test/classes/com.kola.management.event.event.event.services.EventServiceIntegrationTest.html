@@ -23,13 +23,13 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">5</div>
+<div class="counter">2</div>
 <p>tests</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">2</div>
+<div class="counter">0</div>
 <p>failures</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.626s</div>
+<div class="counter">0.050s</div>
 <p>duration</p>
 </div>
 </td>
@@ -50,8 +50,8 @@
 </div>
 </td>
 <td>
-<div class="infoBox failures" id="successRate">
-<div class="percent">60%</div>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
 <p>successful</p>
 </div>
 </td>
@@ -61,44 +61,12 @@
 <div class="tab-container">
 <ul class="tabLinks">
 <li>
-<a href="#">Failed tests</a>
-</li>
-<li>
 <a href="#">Tests</a>
 </li>
 <li>
 <a href="#">Standard output</a>
 </li>
 </ul>
-<div class="tab">
-<h2>Failed tests</h2>
-<div class="test">
-<a name="givenExistingEvent_whenUpdate_thenUpdatedSuccessfully()"></a>
-<h3 class="failures">givenExistingEvent_whenUpdate_thenUpdatedSuccessfully()</h3>
-<span class="code">
-<pre>java.util.NoSuchElementException: No value present
-	at java.base/java.util.Optional.get(Optional.java:143)
-	at com.kola.management.event.event.event.services.EventServiceIntegrationTest.givenExistingEvent_whenUpdate_thenUpdatedSuccessfully(EventServiceIntegrationTest.java:53)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-</pre>
-</span>
-</div>
-<div class="test">
-<a name="givenValidEvent_whenCreate_thenSuccess()"></a>
-<h3 class="failures">givenValidEvent_whenCreate_thenSuccess()</h3>
-<span class="code">
-<pre>java.util.NoSuchElementException: No value present
-	at java.base/java.util.Optional.get(Optional.java:143)
-	at com.kola.management.event.event.event.services.EventServiceIntegrationTest.givenValidEvent_whenCreate_thenSuccess(EventServiceIntegrationTest.java:38)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-</pre>
-</span>
-</div>
-</div>
 <div class="tab">
 <h2>Tests</h2>
 <table>
@@ -110,28 +78,13 @@
 </tr>
 </thead>
 <tr>
-<td class="failures">givenExistingEvent_whenUpdate_thenUpdatedSuccessfully()</td>
-<td class="failures">0.253s</td>
-<td class="failures">failed</td>
-</tr>
-<tr>
-<td class="success">givenMissingNom_whenCreate_thenThrowsException()</td>
-<td class="success">0.089s</td>
+<td class="success">givenExistingEvent_whenUpdate_thenUpdatedSuccessfully()</td>
+<td class="success">0.030s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">givenMissingPermissions_whenCreate_thenThrowsException()</td>
-<td class="success">0.103s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="failures">givenValidEvent_whenCreate_thenSuccess()</td>
-<td class="failures">0.104s</td>
-<td class="failures">failed</td>
-</tr>
-<tr>
-<td class="success">givenValidRole_whenFindByNom_thenReturnCorrectResult()</td>
-<td class="success">0.077s</td>
+<td class="success">givenValidEvent_whenCreate_thenSuccess()</td>
+<td class="success">0.020s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -139,8 +92,8 @@
 <div class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2025-04-30T23:49:32.102+02:00  INFO 14956 --- [Event Management System - Kernel] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.kola.management.event.event.event.services.EventServiceIntegrationTest]: EventServiceIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-04-30T23:49:32.130+02:00  INFO 14956 --- [Event Management System - Kernel] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.kola.management.event.event.EventEventApplication for test class com.kola.management.event.event.event.services.EventServiceIntegrationTest
+<pre>2025-05-01T14:34:48.481+02:00  INFO 12796 --- [Event Management System - Kernel] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.kola.management.event.event.event.services.EventServiceIntegrationTest]: EventServiceIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-05-01T14:34:48.486+02:00  INFO 12796 --- [Event Management System - Kernel] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.kola.management.event.event.EventEventApplication for test class com.kola.management.event.event.event.services.EventServiceIntegrationTest
 </pre>
 </span>
 </div>
@@ -152,7 +105,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 8.13</a> at 30 avr. 2025, 23:49:42</p>
+<a href="https://www.gradle.org">Gradle 8.13</a> at 1 mai 2025, 14:34:49</p>
 </div>
 </div>
 </body>

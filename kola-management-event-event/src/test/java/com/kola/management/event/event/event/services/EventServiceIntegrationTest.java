@@ -4,8 +4,7 @@ import com.kola.management.event.event.dto.event.EventDto;
 import com.kola.management.event.event.dto.event.EventUpdateNameDto;
 import com.kola.management.event.event.model.Event;
 import com.kola.management.event.event.services.event.IEventService;
-import com.kola.management.event.user.model.Role;
-import com.kola.management.event.user.services.IRoleService;
+import com.kola.management.event.event.services.event.exceptions.EventServiceException;
 import com.kola.management.event.user.services.exceptions.RoleServiceException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,10 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -28,7 +24,7 @@ public class EventServiceIntegrationTest {
     IEventService eventService;
 
     @Test
-    void givenValidEvent_whenCreate_thenSuccess() throws RoleServiceException {
+    void givenValidEvent_whenCreate_thenSuccess() throws EventServiceException {
 
         EventDto eventDto = new EventDto(
                 "eventName",
@@ -44,7 +40,7 @@ public class EventServiceIntegrationTest {
     }
 
     @Test
-    void givenExistingEvent_whenUpdate_thenUpdatedSuccessfully() throws RoleServiceException {
+    void givenExistingEvent_whenUpdate_thenUpdatedSuccessfully() throws  EventServiceException {
         EventDto eventDto = new EventDto(
                 "eventName1",
                 "description",
@@ -65,8 +61,8 @@ public class EventServiceIntegrationTest {
         assertThat(updated.getUpdatedAt()).isNotNull();
     }
 
-    @Test
-    void givenMissingNom_whenCreate_thenThrowsException() {
+//    @Test
+//    void givenMissingNom_whenCreate_thenThrowsException() {
 //        Role role = new Role();
 //        role.setDescription("Sans nom");
 //        role.setPermissions("LIMITED");
@@ -74,10 +70,10 @@ public class EventServiceIntegrationTest {
 //        assertThrows(RoleServiceException.class, () -> {
 //            roleService.createRole(role);
 //        });
-    }
+//    }
 
-    @Test
-    void givenMissingPermissions_whenCreate_thenThrowsException() {
+//    @Test
+//    void givenMissingPermissions_whenCreate_thenThrowsException() {
 //        Role role = new Role();
 //        role.setNom("NO_ACCESS");
 //        role.setDescription("Rôle fantôme");
@@ -85,10 +81,10 @@ public class EventServiceIntegrationTest {
 //        assertThrows(RoleServiceException.class, () -> {
 //            roleService.createRole(role);
 //        });
-    }
+//    }
 
-    @Test
-    void givenValidRole_whenFindByNom_thenReturnCorrectResult() throws RoleServiceException {
+//    @Test
+//    void givenValidRole_whenFindByNom_thenReturnCorrectResult() throws RoleServiceException {
 //        Role role = new Role();
 //        role.setNom("GESTIONNAIRE");
 //        role.setDescription("Responsable des dossiers");
@@ -100,5 +96,5 @@ public class EventServiceIntegrationTest {
 //
 //        assertThat(roles).isNotEmpty();
 //        assertThat(roles.get(0).getDescription()).contains("Responsable");
-    }
+//    }
 }
