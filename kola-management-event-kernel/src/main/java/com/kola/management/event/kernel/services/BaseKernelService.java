@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.*;
 
 @Service
@@ -109,6 +112,10 @@ public class BaseKernelService<T extends BaseKernelModel> {
                 field.setAccessible(true);
                 Object value = field.get(destinationObject);
                 if (nValue == value) continue;
+                if ((field.getModifiers() & Modifier.FINAL) == Modifier.FINAL)
+                {
+                    continue;
+                }
                 field.set(destinationObject,nValue);
             }catch (Exception exception){
                 throw new KernelException(String.format(errorMessageTemplate,field.getName(),exception.getMessage()));

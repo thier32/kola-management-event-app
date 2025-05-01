@@ -1,5 +1,7 @@
 package com.kola.management.event.event.dto.event;
 
+import org.springframework.lang.Nullable;
+
 /**
  *
  * @param eventName
@@ -9,6 +11,11 @@ package com.kola.management.event.event.dto.event;
 public record EventDto(
         String eventName,
         String eventDescription,
-        String eventVenue
+        String eventVenue,
+        Long eventId
 ) implements IEventDto {
+    public EventDto(){
+        this(null,null,null,null);
+    }
 }
+

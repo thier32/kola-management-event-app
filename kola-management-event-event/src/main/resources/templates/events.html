@@ -6,7 +6,7 @@
 <body>
 
 <div layout:fragment="content" >
-    <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
+    <div th:if="${message != null}" class="alert alert-danger alert-dismissible fade show text-center message"
          role="alert">
         [[${message}]]
         <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
@@ -15,8 +15,8 @@
     </div>
     <div th:switch="${eventData.listElements}">
         <p>
-            <a href="/students/signup" class="btn btn-primary"><i
-                    class="fas fa-user-plus ml-2"> Add Student</i></a>
+            <a href="/events/add" class="btn btn-primary"><i
+                    class="fas fa-user-plus ml-2"> Add Event</i></a>
         </p>
         <div class="col">
             <h2 th:case="null">No Event yet!</h2>

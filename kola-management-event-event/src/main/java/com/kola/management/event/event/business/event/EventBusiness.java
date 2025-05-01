@@ -2,10 +2,7 @@ package com.kola.management.event.event.business.event;
 
 import com.kola.management.event.event.business.IEventBusiness;
 import com.kola.management.event.event.business.exceptions.EventBusinessException;
-import com.kola.management.event.event.dto.event.EventDto;
-import com.kola.management.event.event.dto.event.EventReturnDto;
-import com.kola.management.event.event.dto.event.EventUpdateDto;
-import com.kola.management.event.event.dto.event.ListDataDto;
+import com.kola.management.event.event.dto.event.*;
 import com.kola.management.event.event.dto.eventhistory.EventHistoryBookerEventDto;
 import com.kola.management.event.event.dto.eventhistory.EventHistoryEndDateDto;
 import com.kola.management.event.event.dto.eventhistory.EventHistoryPublisherEventDto;
@@ -31,7 +28,12 @@ public class EventBusiness implements IEventBusiness {
     public EventReturnDto createEvent(EventDto eventDto) throws EventBusinessException {
         EventReturnDto eventReturnDto = null;
         try{
-            Optional<Event> optionalEvent = eventService.createEvent(eventDto);
+            Optional<Event> optionalEvent;
+            if (eventDto.eventId() != null){
+                optionalEvent = eventService.updateEvent(eventDto,eventDto.eventId());
+            }else{
+                optionalEvent = eventService.createEvent(eventDto);
+            }
 
             if (optionalEvent.isPresent()){
                 eventReturnDto = map(optionalEvent.get());
@@ -90,6 +92,7 @@ public class EventBusiness implements IEventBusiness {
         return null;
     }
 
+
     @Override
     public ListDataDto<Event> getListData() {
         ListDataDto<Event> data = new ListDataDto<>();
@@ -113,8 +116,24 @@ public class EventBusiness implements IEventBusiness {
         if (nbPage <= 0){
             nbPage = 1;
         }
+        if (data.listElements.isEmpty()) data.listElements = null;
         data.numberPage = (int) nbPage;
         return data;
+    }
+
+    @Override
+    public EventReturnDto getEvent(Long eventId) throws EventBusinessException {
+        Optional<Event> optionalEvent = eventService.findEventByEventId(new EventEventIdDto(eventId));
+        EventReturnDto eventReturnDto = null;
+        if (optionalEvent.isPresent()){
+            try {
+                eventReturnDto = eventService.mapping(optionalEvent.get(),EventReturnDto.class);
+            }catch (KernelException kernelException){
+                throw new EventBusinessException(kernelException.getMessage());
+            }
+        };
+
+        return eventReturnDto;
     }
 
 //    @Override

@@ -13,6 +13,7 @@ public class EventReturnDto {
     long eventId;
     int status;
     String eventName;
+    String eventVenue;
     String message;
 }
 
