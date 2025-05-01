@@ -142,7 +142,47 @@ public class EventBusiness implements IEventBusiness {
         return this.changeEventStatus(eventId,EventStatus.UNBOOKED);
     }
 
-    public ListDataDto<Event> getListData(int page) {
+    @Override
+    public ListDataDto<EventHistory> getEventHistoryListData() {
+        return getEventHistoryListData(1);
+    }
+
+    @Override
+    public ListDataDto<EventHistory> getEventHistoryListData(int page) {
+        ListDataDto<EventHistory> data = new ListDataDto<>();
+        data.numberPage = 10;
+        data.currentPage = page;
+        data.elementPerPage = 5;
+        data.listElements = this.eventHistoryService.findAllByOrderByIdDesc(data.currentPage,data.elementPerPage);
+        data.total = this.eventHistoryService.findAllEventHistory().size();
+
+        long divisor = data.total;
+        if (divisor <= 0){
+            divisor = 1;
+        }
+
+        long reste = data.elementPerPage % divisor;
+        long nbPage =  divisor / data.elementPerPage;
+        if (reste != 0){
+            nbPage++;
+        }
+        if (nbPage <= 0){
+            nbPage = 1;
+        }
+        if (data.listElements.isEmpty()) data.listElements = null;
+        data.numberPage = (int) nbPage;
+        return data;
+    }
+
+    @Override
+    public ListDataDto<EventHistory> getEventHistoryListData(Integer pageNo) {
+        if (pageNo == null){
+            return getEventHistoryListData(1);
+        }
+        return getEventHistoryListData(pageNo.intValue());
+    }
+
+    public ListDataDto<Event> getEventListData(int page) {
         ListDataDto<Event> data = new ListDataDto<>();
         data.numberPage = 10;
         data.currentPage = page;
@@ -170,8 +210,16 @@ public class EventBusiness implements IEventBusiness {
 
 
     @Override
-    public ListDataDto<Event> getListData() {
-        return getListData(1);
+    public ListDataDto<Event> getEventListData() {
+        return getEventListData(1);
+    }
+
+    @Override
+    public ListDataDto<Event> getEventListData(Integer page) {
+        if (page != null){
+            return getEventListData(page.intValue());
+        }
+        return getEventListData();
     }
 
     @Override
@@ -181,11 +229,12 @@ public class EventBusiness implements IEventBusiness {
         if (optionalEvent.isPresent()){
             try {
                 eventReturnDto = eventService.mapping(optionalEvent.get(),EventReturnDto.class);
-            }catch (KernelException kernelException){
+            }
+            catch (KernelException kernelException)
+            {
                 throw new EventBusinessException(kernelException.getMessage());
             }
         };
-
         return eventReturnDto;
     }
 }

@@ -2,14 +2,11 @@ package com.kola.management.event.event.business;
 
 import com.kola.management.event.event.business.exceptions.EventBusinessException;
 import com.kola.management.event.event.dto.event.*;
-import com.kola.management.event.event.dto.eventhistory.EventHistoryBookerEventDto;
 import com.kola.management.event.event.dto.eventhistory.EventHistoryEndDateDto;
 import com.kola.management.event.event.dto.eventhistory.EventHistoryPublisherEventDto;
 import com.kola.management.event.event.dto.eventhistory.EventHistoryStartDateDto;
 import com.kola.management.event.event.model.Event;
-import com.kola.management.event.event.services.exceptions.EventServiceException;
-
-import java.util.List;
+import com.kola.management.event.event.model.EventHistory;
 
 public interface IEventBusiness {
     /**
@@ -87,7 +84,15 @@ public interface IEventBusiness {
      *
      * @return
      */
-    ListDataDto<Event> getListData();
+    ListDataDto<Event> getEventListData();
+
+
+    /**
+     *
+     * @return
+     */
+    ListDataDto<Event> getEventListData(Integer page);
+
 
     /**
      *
@@ -111,12 +116,19 @@ public interface IEventBusiness {
      */
     EventReturnDto unBookEvent(long eventId) throws EventBusinessException;
 
+
     /**
      *
-     * @param page
      * @return
      */
-    ListDataDto<Event> getListData(int page);
+    ListDataDto<EventHistory> getEventHistoryListData();
 
+    ListDataDto<EventHistory> getEventHistoryListData(int page);
+
+    /**
+     *
+     * @return
+     */
+    ListDataDto<EventHistory> getEventHistoryListData(Integer pageNo);
 
 }

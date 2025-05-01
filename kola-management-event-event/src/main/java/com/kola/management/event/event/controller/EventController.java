@@ -3,7 +3,6 @@ package com.kola.management.event.event.controller;
 import com.kola.management.event.event.business.IEventBusiness;
 import com.kola.management.event.event.business.exceptions.EventBusinessException;
 import com.kola.management.event.event.dto.event.EventDto;
-import com.kola.management.event.event.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,11 +19,14 @@ public class EventController {
     @Autowired
     IEventBusiness eventBusiness;
 
-    @GetMapping("list")
-    public String eventlist(Model model){
-        model.addAttribute("eventData", eventBusiness.getListData());
+    @GetMapping(value = {"list","page","page/{pageNo}"})
+    public String eventlist(@PathVariable(value = "pageNo", required = false) Integer pageNo, Model model){
+        model.addAttribute("eventData", eventBusiness.getEventListData(pageNo));
         return  "events";
     }
+
+//    @GetMapping(value = {"page","page/{pageNo}"})
+//    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
 
     @GetMapping("add")
     public String eventAdd(Model model){

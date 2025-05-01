@@ -7,6 +7,7 @@ import com.kola.management.event.event.services.exceptions.EventHistoryServiceEx
 import com.kola.management.event.event.services.eventhistory.IEventHistoryService;
 import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.services.BaseKernelService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -95,5 +96,16 @@ public class EventHistoryService extends BaseKernelService<EventHistory> impleme
     @Override
     public List<EventHistory> findEventHistoryByStatus(EventHistoryStatusDto eventHistoryStatusDto) {
         return ((EventHistoryRepository)getDefaultRepository()).findEventHistoryByEventStatus(eventHistoryStatusDto.eventStatus());
+    }
+
+    @Override
+    public List<EventHistory> findAllByOrderByIdDesc(int currentPage, int elementPerPage) {
+        Pageable pageable = Pageable.ofSize( elementPerPage).withPage( currentPage-1);
+        return ((EventHistoryRepository)getDefaultRepository()).findByOrderByIdDesc(pageable);
+    }
+
+    @Override
+    public List<EventHistory> findAllEventHistory() {
+        return getDefaultRepository().findAll();
     }
 }

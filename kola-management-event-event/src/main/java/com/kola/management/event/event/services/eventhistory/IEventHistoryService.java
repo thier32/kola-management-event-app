@@ -94,4 +94,19 @@ public interface IEventHistoryService {
      * @return List<EventHistory>
      */
    List<EventHistory> findEventHistoryByEventId(EventHistoryEventIdDto eventHistoryEventIdDto);   List<EventHistory> findEventHistoryByStatus(EventHistoryStatusDto eventHistoryStatusDto);
+
+    /**
+     *
+     * @param currentPage
+     * @param elementPerPage
+     * @return
+     */
+   List<EventHistory> findAllByOrderByIdDesc(int currentPage, int elementPerPage);
+
+
+    /**
+     *
+     * @return
+     */
+    List<EventHistory> findAllEventHistory();
 }

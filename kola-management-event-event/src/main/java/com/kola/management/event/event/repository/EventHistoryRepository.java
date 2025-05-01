@@ -1,8 +1,10 @@
 package com.kola.management.event.event.repository;
 
 import com.kola.management.event.event.dto.event.EventStatus;
+import com.kola.management.event.event.model.Event;
 import com.kola.management.event.kernel.repository.BaseKernelRepository;
 import com.kola.management.event.event.model.EventHistory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -92,4 +94,11 @@ public interface EventHistoryRepository extends BaseKernelRepository<EventHistor
 
     Optional<EventHistory> findFirstByEventIdAndEventStatusOrderByIdDesc(long eventId, EventStatus eventStatus);
 
+
+    /**
+     *
+     * @param pageable number of page and index
+     * @return List of Event -> list can be empty
+     */
+    List<EventHistory> findByOrderByIdDesc(Pageable pageable);
 }
