@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.418s</div>
+<div class="counter">0.716s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,12 +79,12 @@
 </thead>
 <tr>
 <td class="success">givenNewBaseModel_whenSave_thenSuccess()</td>
-<td class="success">0.294s</td>
+<td class="success">0.161s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">givenNewBaseModel_whenUpdate_thenSuccess()</td>
-<td class="success">0.124s</td>
+<td class="success">0.555s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -92,8 +92,8 @@
 <div class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2025-04-30T16:38:43.358+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.kola.management.event.kernel.services.BaseModelServiceIntegrationTest]: BaseModelServiceIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-04-30T16:38:43.398+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.kola.management.event.kernel.EventKernelApplication for test class com.kola.management.event.kernel.services.BaseModelServiceIntegrationTest
+<pre>2025-05-02T08:44:10.550+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.kola.management.event.kernel.services.BaseModelServiceIntegrationTest]: BaseModelServiceIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-05-02T08:44:10.614+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.kola.management.event.kernel.EventKernelApplication for test class com.kola.management.event.kernel.services.BaseModelServiceIntegrationTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -104,18 +104,18 @@
 
  :: Spring Boot ::                (v3.4.4)
 
-2025-04-30T16:38:43.561+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] .m.e.k.s.BaseModelServiceIntegrationTest : Starting BaseModelServiceIntegrationTest using Java 21.0.7 with PID 7656 (started by user in E:\jjava\kola-management-event-app\kola-management-event-kernel)
-2025-04-30T16:38:43.569+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] .m.e.k.s.BaseModelServiceIntegrationTest : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2025-04-30T16:38:44.243+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-04-30T16:38:44.278+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 27 ms. Found 2 JPA repository interfaces.
-2025-04-30T16:38:44.607+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-2025-04-30T16:38:44.625+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:test user=SA
-2025-04-30T16:38:44.625+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-2025-04-30T16:38:44.625+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-04-30T16:38:44.625+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-04-30T16:38:44.671+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-04-30T16:38:44.687+02:00  WARN 7656 --- [Event Management System - Kernel] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-04-30T16:38:44.689+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2025-05-02T08:44:10.842+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] .m.e.k.s.BaseModelServiceIntegrationTest : Starting BaseModelServiceIntegrationTest using Java 21.0.7 with PID 2992 (started by user in E:\jjava\kola-management-event-app\kola-management-event-kernel)
+2025-05-02T08:44:10.847+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] .m.e.k.s.BaseModelServiceIntegrationTest : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2025-05-02T08:44:12.462+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-02T08:44:12.724+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 253 ms. Found 2 JPA repository interfaces.
+2025-05-02T08:44:13.411+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2025-05-02T08:44:13.425+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn18: url=jdbc:h2:mem:test user=SA
+2025-05-02T08:44:13.428+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2025-05-02T08:44:13.438+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-02T08:44:13.450+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-02T08:44:13.525+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-02T08:44:13.553+02:00  WARN 2992 --- [Event Management System - Kernel] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-05-02T08:44:13.560+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
 	Database driver: undefined/unknown
 	Database version: 2.3.232
@@ -123,12 +123,12 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-04-30T16:38:44.839+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-04-30T16:38:44.839+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-04-30T16:38:45.176+02:00  WARN 7656 --- [Event Management System - Kernel] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-04-30T16:38:45.377+02:00  WARN 7656 --- [Event Management System - Kernel] [    Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-2025-04-30T16:38:45.489+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2025-04-30T16:38:45.592+02:00  INFO 7656 --- [Event Management System - Kernel] [    Test worker] .m.e.k.s.BaseModelServiceIntegrationTest : Started BaseModelServiceIntegrationTest in 2.173 seconds (process running for 20.259)
+2025-05-02T08:44:13.768+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-02T08:44:13.774+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-02T08:44:14.040+02:00  WARN 2992 --- [Event Management System - Kernel] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-05-02T08:44:14.263+02:00  WARN 2992 --- [Event Management System - Kernel] [    Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-05-02T08:44:14.459+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-05-02T08:44:14.637+02:00  INFO 2992 --- [Event Management System - Kernel] [    Test worker] .m.e.k.s.BaseModelServiceIntegrationTest : Started BaseModelServiceIntegrationTest in 3.991 seconds (process running for 38.132)
 </pre>
 </span>
 </div>
@@ -140,7 +140,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 8.13</a> at 30 avr. 2025, 16:38:47</p>
+<a href="https://www.gradle.org">Gradle 8.13</a> at 2 mai 2025, 08:44:16</p>
 </div>
 </div>
 </body>

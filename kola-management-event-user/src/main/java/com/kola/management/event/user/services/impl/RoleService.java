@@ -5,7 +5,7 @@ import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.services.BaseKernelService;
 import com.kola.management.event.user.dto.role.IRoleDto;
 import com.kola.management.event.user.dto.role.RoleDescriptionDto;
-import com.kola.management.event.user.dto.role.RoleNomDto;
+import com.kola.management.event.user.dto.role.RoleNameDto;
 import com.kola.management.event.user.dto.role.RolePermissionsDto;
 import com.kola.management.event.user.model.Role;
 import com.kola.management.event.user.repository.RoleRepository;
@@ -54,8 +54,8 @@ public class RoleService extends BaseKernelService<Role> implements IRoleService
 
     @Override
     public Role updateRoleNom(String nom, Long roleId) throws RoleServiceException {
-        RoleNomDto roleNomDto = new RoleNomDto(nom);
-        return updateRole(roleNomDto, roleId);
+        RoleNameDto roleNameDto = new RoleNameDto(nom);
+        return updateRole(roleNameDto, roleId);
     }
 
     @Override

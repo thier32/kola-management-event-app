@@ -1,196 +1,101 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/html">
+      >
 <head>
     <meta charset="UTF-8">
     <title>Registration and Login System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c4255e24a8.js"
+            crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
-<div class="form-popup">
+<div class="container">
     <div class="form-box">
-        <div class="form-content">
-            <h2>Connexion</h2>
-            <div th:if="${param.error}">
-                <div class="alert alert-danger">Invalid Email or Password</div>
-            </div>
-            <form th:action="@{/login}" role="form"  method="post">
-                <div class="input-field">
-                    <input type="text" id="username" name="username" required>
-                    <label>Email</label>
+        <h1 id="title">Sign In</h1>
+        <div id="message" th:if="${param.error}">
+            <div class="alert alert-danger">Invalid Email or Password</div>
+        </div>
+        <div id="messages" th:if="${message}">
+            <div class="alert alert-danger" th:text="${message}"></div>
+        </div>
+        <form th:action= "${isRegister} ? @{/register} : @{/login}"  role="form"
+              method="post"  enctype="multipart/form-data" th:object="${userDto}">
+            <div class="input-group">
+                <div class="input-field" id="firstNameField" th:if="${isRegister}">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" name="firstname" placeholder="First Name"/>
+                </div>
+                <div class="input-field" id="lastNameField" th:if="${isRegister}">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" name="lastname" placeholder="Last Name"/>
+                </div>
+                <div class="input-field" id="emailField" th:if="${isRegister}">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="text" name="email" placeholder="Email"/>
+                </div>
+                <div class="input-field forSignup" id="nameField">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" name="username" placeholder="Username"/>
                 </div>
                 <div class="input-field">
-                    <input type="password" id="password" name="password"  required>
-                    <label>Mot de passe</label>
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="epassword" name="password" placeholder="Password"/>
                     <span class="password-toggle-icon"><i class="fas fa-eye"></i></span>
                 </div>
-                <button type="submit">Log In</button>
-            </form>
-        </div>
+                <div class="input-field" th:if="${isRegister}" id="confirmpasswordField">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password"/>
+                    <span class="cpassword-toggle-icon"><i class="fas fa-eye"></i></span>
+                </div>
+                <p>Lost password <a href="#">Click here!</a>&nbsp;&nbsp;
+
+                    <span th:if="${isRegister}" id="psignin" class="sign" >Already have an account.<a th:href="@{/login}" id="signinBtn">Sign In!</a></span>
+                    <span th:unless="${isRegister}" id="psignup" class="sign">Not yet registered. <a th:href="@{/register}" id="signupBtn">Sign Up!</a></span>
+                </p>
+<!--                <p id="psignup">Not yet registered. <a href="#" id="signupBtn">Sign Up!</a></p>-->
+<!--                <p id="psignin" style="display: none" >Already have an account.<a href="#" id="signinBtn">Sign In!</a></p>-->
+            </div>
+            <div class="btn-field">
+                <button type="submit" id="actionBtn">Sign in</button>
+<!--                <span id="psignin" class="sign" style="display: none">Already have an account.<a href="#" id="signinBtn">Sign In!</a></span>&lt;!&ndash;                <button type="button" id="signupBtn" class="disable">Sign up</button>&ndash;&gt;-->
+            </div>
+        </form>
     </div>
 </div>
-<!--<div class="form-container">-->
-<!--   <div class="form-container">-->
-<!--       <div class="loginform">-->
-<!--       <h2>Connexion</h2>-->
-<!--    <form>-->
-<!--        <div class="form-row">-->
-<!--            <div class="form-group">-->
-<!--                <label for="inputEmail4">Email</label>-->
-<!--                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <label for="inputPassword4">Password</label>-->
-<!--                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">-->
-<!--                <span class="password-toggle-icon"><i class="fas fa-eye"></i></span>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--                <button type="submit" class="btn btn-primary">Sign in</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </form>-->
-<!--   </div>-->
-<!--   </div>-->
+<script>
+    const confirmPasswordField = document.getElementById("confirmpassword");
+    const passwordField = document.getElementById("epassword");
+    const togglePassword = document.querySelector(".password-toggle-icon i");
+    const togglecPassword = document.querySelector(".cpassword-toggle-icon i");
 
-<!--    <div class="loginform">-->
-<!--        <h2 class="text-center">Connexion</h2>-->
+    togglePassword.addEventListener("click", function () {
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            togglePassword.classList.remove("fa-eye");
+            togglePassword.classList.add("fa-eye-slash");
+        } else {
+            passwordField.type = "password";
+            togglePassword.classList.remove("fa-eye-slash");
+            togglePassword.classList.add("fa-eye");
+        }
+    });
+    if (togglecPassword != null){
+        togglecPassword.addEventListener("click", function () {
+            if (confirmPasswordField.type === "password") {
+                confirmPasswordField.type = "text";
+                togglecPassword.classList.remove("fa-eye");
+                togglecPassword.classList.add("fa-eye-slash");
+            } else {
+                confirmPasswordField.type = "password";
+                togglecPassword.classList.remove("fa-eye-slash");
+                togglecPassword.classList.add("fa-eye");
+            }
+        });
+    }
 
-<!--        <div th:if="${param.error}">-->
-<!--            <div class="alert alert-danger">Invalid Email or Password</div>-->
-<!--        </div>-->
-<!--        <div th:if="${param.logout}">-->
-<!--            <div class="alert alert-success"> You have been logged out.</div>-->
-<!--        </div>-->
-<!--        <form th:action="@{/login}" role="form"  method="post">-->
-<!--            <div class="container">-->
-<!--                <label for="username"><b>Username</b></label>-->
-<!--                <input type="text" placeholder="Enter Username" id="username" name="username" required>-->
-<!--                <div>-->
-<!--                    <label for="password"><b>Password</b></label>-->
-<!--                    <input type="password" placeholder="Enter Password" id="password" name="password" required>-->
-<!--                    <span class="password-toggle-icon"><i class="fas fa-eye"></i></span>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                <label class="col" style="vertical-align: baseline">-->
-<!--                    <input type="checkbox"  checked="checked" name="remember-me"> Remember me-->
-<!--                </label>-->
-<!--                <button type="submit" class="col">Login</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
-<!--            <div th:if="${param.error}">-->
-<!--                <div class="alert alert-danger">Invalid Email or Password</div>-->
-<!--            </div>-->
-<!--            <div th:if="${param.logout}">-->
-<!--                <div class="alert alert-success"> You have been logged out.</div>-->
-<!--            </div>-->
-
-<!--            <div class="loginform">-->
-<!--                <div class="card-header">-->
-<!--                    <h2 class="text-center">Login Form</h2>-->
-<!--                </div>-->
-<!--                <div class="card-body">-->
-<!--                    <form-->
-<!--                            method="post"-->
-<!--                            role="form"-->
-<!--                            th:action="@{/login}"-->
-<!--                            class="form-horizontal"-->
-<!--                    >-->
-<!--                        <div class="form-group mb-3">-->
-<!--                            <label class="control-label"> Email</label>-->
-<!--                            <input-->
-<!--                                    type="text"-->
-<!--                                    id="username"-->
-<!--                                    name="username"-->
-<!--                                    class="form-control"-->
-<!--                                    placeholder="Enter email address"-->
-<!--                            />-->
-<!--                        </div>-->
-
-<!--                        <div class="form-group mb-3">-->
-<!--                            <label class="control-label"> Password</label>-->
-<!--                            <input-->
-<!--                                    type="password"-->
-<!--                                    id="password"-->
-<!--                                    name="password"-->
-<!--                                    class="form-control"-->
-<!--                                    placeholder="Enter password"-->
-<!--                            />-->
-<!--                        </div>-->
-<!--                        <div class="form-group mb-3">-->
-<!--                            <button type="submit" class="btn btn-primary" >Submit</button>-->
-<!--                            <span> Not registered ?-->
-<!--                                <a th:href="@{/register}">Register/Signup here</a>-->
-<!--                            </span>-->
-<!--                        </div>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--<div class="form-container loginform">-->
-<!--    <div class="row">-->
-<!--        <div class="col-md-6 offset-md-3">-->
-
-<!--            <div th:if="${param.error}">-->
-<!--                <div class="alert alert-danger">Invalid Email or Password</div>-->
-<!--            </div>-->
-<!--            <div th:if="${param.logout}">-->
-<!--                <div class="alert alert-success"> You have been logged out.</div>-->
-<!--            </div>-->
-
-<!--            <div class="card">-->
-<!--                <div class="card-header">-->
-<!--                    <h2 class="text-center">Login Form</h2>-->
-<!--                </div>-->
-<!--                <div class="card-body">-->
-<!--                    <form-->
-<!--                            method="post"-->
-<!--                            role="form"-->
-<!--                            th:action="@{/login}"-->
-<!--                            class="form-horizontal"-->
-<!--                    >-->
-<!--                        <div class="form-group mb-3">-->
-<!--                            <label class="control-label"> Email</label>-->
-<!--                            <input-->
-<!--                                    type="text"-->
-<!--                                    id="username"-->
-<!--                                    name="username"-->
-<!--                                    class="form-control"-->
-<!--                                    placeholder="Enter email address"-->
-<!--                            />-->
-<!--                        </div>-->
-
-<!--                        <div class="form-group mb-3">-->
-<!--                            <label class="control-label"> Password</label>-->
-<!--                            <input-->
-<!--                                    type="password"-->
-<!--                                    id="password"-->
-<!--                                    name="password"-->
-<!--                                    class="form-control"-->
-<!--                                    placeholder="Enter password"-->
-<!--                            />-->
-<!--                        </div>-->
-<!--                        <div class="form-group mb-3">-->
-<!--                            <button type="submit" class="btn btn-primary" >Submit</button>-->
-<!--                            <span> Not registered ?-->
-<!--                                <a th:href="@{/register}">Register/Signup here</a>-->
-<!--                            </span>-->
-<!--                        </div>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<script src="/js/script.js"></script>
+</script>
+<!--<script src="/js/script.js"></script>-->
 </body>
 </html>

@@ -1,6 +1,6 @@
 package com.kola.management.event.user.config;
 
-import com.kola.management.event.user.services.IUtilisateurService;
+import com.kola.management.event.user.services.IUserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +15,7 @@ import java.io.IOException;
 public class UserFilter extends OncePerRequestFilter {
 
     @Autowired
-    IUtilisateurService utilisateurService;
+    IUserService utilisateurService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

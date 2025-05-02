@@ -1,6 +1,6 @@
 package com.kola.management.event.user.config;
 
-import com.kola.management.event.user.services.IUtilisateurService;
+import com.kola.management.event.user.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -21,15 +21,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider
 {
 
     @Autowired
-    @Qualifier("utilisateurService")
-    private IUtilisateurService utilisateurService;
+    @Qualifier("userService")
+    private IUserService userService;
 
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         final String name = authentication.getName();
         final String password = authentication.getCredentials().toString();
-        this.utilisateurService.loadUserByUsername(name);
+        this.userService.loadUserByUsername(name);
             /*UserService userService = new UserService();
             userService.loadUserByCredentials(
             new String[]{name,password}

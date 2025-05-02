@@ -23,6 +23,7 @@
             <div th:case="*">
                 <div class="row">
                     <div th:each="key :${eventData.keys}" class="block">
+                        <span th:text=${key}></span>
                     </div>
                 </div>
                 <table class="table table-striped table-responsive-md">

@@ -1,6 +1,8 @@
 package com.kola.management.event.user.exception;
 
-public class EventUserException extends Throwable {
+import com.kola.management.event.kernel.exception.KernelException;
+
+public class EventUserException extends KernelException {
 
     public int code;
     public String message;

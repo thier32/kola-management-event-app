@@ -15,6 +15,9 @@ import com.kola.management.event.kernel.model.BaseKernelModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -152,6 +155,9 @@ public class EventBusiness implements IEventBusiness {
         ListDataDto<EventHistory> data = new ListDataDto<>();
         data.numberPage = 10;
         data.currentPage = page;
+        List<String> keys = new ArrayList<>();
+        Arrays.stream(EventStatus.values()).forEach(e -> keys.add(e.name()));
+        data.keys = keys;
         data.elementPerPage = 5;
         data.listElements = this.eventHistoryService.findAllByOrderByIdDesc(data.currentPage,data.elementPerPage);
         data.total = this.eventHistoryService.findAllEventHistory().size();

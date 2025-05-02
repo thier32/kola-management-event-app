@@ -17,5 +17,8 @@ public record EventDto(
     public EventDto(){
         this(null,null,null,null);
     }
+    public EventDto(String eventName, String eventDescription,String eventVenue){
+        this(eventName,eventDescription,eventVenue,null);
+    }
 }
 

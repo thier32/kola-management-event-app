@@ -48,6 +48,7 @@ public class HttpSecurityConfig {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers(
                                 "/home",
+                                "/register",
                                 "/resources/**",
                                 "/resources/static/**",
                                 "/js/**",
