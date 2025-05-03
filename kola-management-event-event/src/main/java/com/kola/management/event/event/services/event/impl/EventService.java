@@ -92,7 +92,8 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
         Optional<Event> optionalEvent = this.findEventByEventId(eventEventIdDto);
 
         if(optionalEvent.isEmpty()){
-            throw  new EventServiceException(String.format(NOT_FOUND_MESSAGE_TEMPLATE,
+            throw  new EventServiceException(
+                    String.format(NOT_FOUND_MESSAGE_TEMPLATE,
                     Event.class.getSimpleName(),
                     Event.eventIdProp,
                     eventEventIdDto.eventId()

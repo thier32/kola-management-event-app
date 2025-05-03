@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/main_layout.html}"
+>
+
+<body>
+<div layout:fragment="content">
+<!--    <h2 class="text-center">[[${pageTitle}]]</h2>-->
+
+    <div class="container">
+            <form th:action="@{/events/save}" role="form" method="post" enctype="multipart/form-data" th:object="${eventDto}">
+                <div class="row">
+                <input type="hidden" th:field="*{eventId}" />
+                    <div class="col-25">
+                        <label for="fservice">Event name</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="fservice" name="service" th:field="*{eventName}" placeholder="Service">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="lslug">Venue</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="lslug" name="slug" th:field="*{eventVenue}" placeholder="Slug">
+                    </div>
+                </div>
+<!--                <div class="row">-->
+<!--                    <div class="col-25">-->
+<!--                        <label for="lsvalue">Value</label>-->
+<!--                    </div>-->
+<!--                    <div class="col-75">-->
+<!--                        <div th:if="${#strings.contains((parameter.sslug != null ? parameter.sslug : ''),'periodicity')}">-->
+<!--                            <input class="periodicity" id="jr" min="0" maxlength="2" size="4" type="number" th:field="*{days}" /> jr(s)-->
+<!--                            <input class="periodicity" id="hr" min="0" maxlength="2" size="4" type="number" th:field="*{hours}" /> hr(s)-->
+<!--                            <input class="periodicity" id="min" min="0" maxlength="2" size="4" type="number" th:field="*{min}" /> min(s)-->
+<!--                            <input class="periodicity" id="s" min="0" maxlength="2" size="4" type="number" th:field="*{seconds}" /> sec(s)-->
+<!--                        </div>-->
+<!--                        <input th:unless="${#strings.contains((parameter.sslug != null ? parameter.sslug : ''),'periodicity')}" type="text" id="lsvalue" name="svalue" th:field="*{svalue}" />-->
+<!--                    </div>-->
+<!--                </div>-->
+                <input class="btn btn-primary" type="submit" value="Save" />
+                <input class="btn-secondary btn-sm" type="button" value="Cancel" id="btnCancel1" />
+            </form>
+            </div>
+</div>
+</body>

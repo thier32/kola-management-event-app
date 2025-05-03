@@ -123,6 +123,7 @@ public interface IEventBusiness {
      */
     ListDataDto<EventHistory> getEventHistoryListData();
 
+
     ListDataDto<EventHistory> getEventHistoryListData(int page);
 
     /**

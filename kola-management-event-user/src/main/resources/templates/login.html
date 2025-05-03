@@ -13,7 +13,7 @@
 <body>
 <div class="container">
     <div class="form-box">
-        <h1 id="title">Sign In</h1>
+        <h1 id="title" th:text="${isRegister} ? 'Sign Up' : 'Sign In'"></h1>
         <div id="message" th:if="${param.error}">
             <div class="alert alert-danger">Invalid Email or Password</div>
         </div>
@@ -21,45 +21,41 @@
             <div class="alert alert-danger" th:text="${message}"></div>
         </div>
         <form th:action= "${isRegister} ? @{/register} : @{/login}"  role="form"
-              method="post"  enctype="multipart/form-data" th:object="${userDto}">
+              method="post"  enctype="multipart/form-data" th:object="${userdto}">
             <div class="input-group">
                 <div class="input-field" id="firstNameField" th:if="${isRegister}">
                     <i class="fa-solid fa-user"></i>
-                    <input type="text" name="firstname" placeholder="First Name"/>
+                    <input type="text" name="firstname" placeholder="First Name" th:value="*{firstname}"/>
                 </div>
                 <div class="input-field" id="lastNameField" th:if="${isRegister}">
                     <i class="fa-solid fa-user"></i>
-                    <input type="text" name="lastname" placeholder="Last Name"/>
+                    <input type="text" name="lastname" placeholder="Last Name" th:value="*{lastname}"/>
                 </div>
                 <div class="input-field" id="emailField" th:if="${isRegister}">
                     <i class="fa-solid fa-envelope"></i>
-                    <input type="text" name="email" placeholder="Email"/>
+                    <input type="text" name="email" placeholder="Email" th:value="*{email}"/>
                 </div>
                 <div class="input-field forSignup" id="nameField">
                     <i class="fa-solid fa-user"></i>
-                    <input type="text" name="username" placeholder="Username"/>
+                    <input type="text" name="username" placeholder="Username" th:value="*{username}"/>
                 </div>
                 <div class="input-field">
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" id="epassword" name="password" placeholder="Password"/>
+                    <input type="password" id="epassword" name="password" th:value="*{password}" placeholder="Password"/>
                     <span class="password-toggle-icon"><i class="fas fa-eye"></i></span>
                 </div>
                 <div class="input-field" th:if="${isRegister}" id="confirmpasswordField">
                     <i class="fa-solid fa-lock"></i>
-                    <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password"/>
+                    <input type="password" id="confirmpassword" name="confirmpassword" th:value="*{confirmpassword}" placeholder="Confirm Password"/>
                     <span class="cpassword-toggle-icon"><i class="fas fa-eye"></i></span>
                 </div>
                 <p>Lost password <a href="#">Click here!</a>&nbsp;&nbsp;
-
                     <span th:if="${isRegister}" id="psignin" class="sign" >Already have an account.<a th:href="@{/login}" id="signinBtn">Sign In!</a></span>
                     <span th:unless="${isRegister}" id="psignup" class="sign">Not yet registered. <a th:href="@{/register}" id="signupBtn">Sign Up!</a></span>
                 </p>
-<!--                <p id="psignup">Not yet registered. <a href="#" id="signupBtn">Sign Up!</a></p>-->
-<!--                <p id="psignin" style="display: none" >Already have an account.<a href="#" id="signinBtn">Sign In!</a></p>-->
             </div>
             <div class="btn-field">
-                <button type="submit" id="actionBtn">Sign in</button>
-<!--                <span id="psignin" class="sign" style="display: none">Already have an account.<a href="#" id="signinBtn">Sign In!</a></span>&lt;!&ndash;                <button type="button" id="signupBtn" class="disable">Sign up</button>&ndash;&gt;-->
+                <button type="submit" id="actionBtn" th:text="${isRegister} ? 'Sign Up' : 'Sign In'"></button>
             </div>
         </form>
     </div>

@@ -22,6 +22,10 @@ public class AuthenticationController {
         model.addAttribute("isRegister",false);
         if (request.getRequestURI().equalsIgnoreCase("/register")){
             model.addAttribute("isRegister",true);
+            if (!model.containsAttribute("userdto")){
+                model.addAttribute("userdto",new UserDto());
+            }
+        }else{
             model.addAttribute("userdto",new UserDto());
         }
         return "login";
@@ -38,14 +42,14 @@ public class AuthenticationController {
 
     @PostMapping("register")
     public String userSave(UserDto userDto, RedirectAttributes redirectAttributes){
-
         try {
             userService.createUser(userDto);
         }catch (UserServiceException userServiceException){
             redirectAttributes.addFlashAttribute("message",userServiceException.getMessage());
+            redirectAttributes.addFlashAttribute("userdto",userDto);
         }
 
-        return "ruedirect:/register";
+        return "redirect:/register";
     }
 
 }

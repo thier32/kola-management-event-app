@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Builder
 public class EventHistory extends BaseKernelModel {
 
-
     public static final String eventHistoryIdProp = "eventHistoryId";
     public static final String eventIdProp = "eventId";
     public static final String eventNameProp = "eventName";
@@ -42,4 +41,7 @@ public class EventHistory extends BaseKernelModel {
     private EventStatus eventStatus;
     private LocalDateTime eventStartDate;
     private LocalDateTime eventEndDate;
+    private long eventSpotId;
+    private String eventSpotName;
+    private long eventSpotCapacity;
 }
