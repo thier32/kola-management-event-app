@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+
+      layout:decorate="~{layouts/main_layout.html}"
+>
+<head>
+    <link rel="stylesheet" href="/css/event.css">
+</head>
+
+<body>
+
+<div layout:fragment="content" >
+    <div th:if="${message != null}" class="alert alert-danger alert-dismissible fade show text-center message"
+         role="alert">
+        [[${message}]]
+        <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div th:switch="${eventSpotData.listElements}">
+        <p>
+            <a href="/eventspot/add" class="btn btn-primary"><i
+                    class="fas fa-user-plus ml-2"> Add Event Spot</i></a>
+        </p>
+        <div class="col">
+            <h2 th:case="null">No Event Spot yet!</h2>
+            <div th:case="*">
+                <div class="row">
+                    <div th:each="key :${eventSpotData.keys}" class="block">
+                        <span th:text=${key}></span>
+                    </div>
+                </div>
+                <table class="styled-table">
+                    <thead>
+                    <tr>
+                        <th>Event Spot Name</th>
+                        <th>Event Name</th>
+                        <th>Event Spot Capacity</th>
+<!--                        <th>Event Spot</th>-->
+                        <th colspan="3">Actions</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    </tfoot>
+                    <tbody>
+                    <tr th:each="eventSpot : ${eventSpotData.listElements}">
+                        <!--                         <td th:text="${parameter.id}">serzr</td>-->
+                        <td th:text="${eventSpot.eventSpotName}"></td>
+<!--                        <td th:text="${eventSpot.eventDescription}"></td>-->
+                        <td th:text="${eventSpot.eventName}"></td>
+                        <td th:text="${eventSpot.eventSpotCapacity}"></td>
+                        <td>
+                            <a th:href="@{'/eventspot/edit/' + ${eventSpot.eventSpotId}}"  title="Edit">
+                                <i class="fa fa-edit" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{'/eventspot/publish/' + ${eventSpot.eventSpotId}}"  title="Publish"
+                            ><i class="fa fa-upload" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{'/eventspot/cancel/' + ${eventSpot.eventSpotId}}"  title="Cancel">
+                                <i class="fa fa-cancel" aria-hidden="true"></i>
+                            </a>
+                        </td>
+<!--                        <td><a class="btn btn-primary"><i class="fa fa-user-times ml-2"></i></a></td>-->
+                    </tr>
+                    </tbody>
+                </table>
+
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item" th:classappend="${eventSpotData.currentPage==1} ? disabled">
+                            <a class="page-link" th:href="@{'/eventspot/page/'+${eventSpotData.currentPage-1}}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:classappend="${eventSpotData.currentPage==i} ? active" th:each="i: ${#numbers.sequence(1, eventSpotData.numberPage)}">
+                            <a class="page-link"  th:href="@{|/eventspot/page/${i}|}"
+                               th:text="${i}"
+                               ></a>
+                        </li>
+                        <li class="page-item" th:classappend="${eventSpotData.currentPage==eventSpotData.numberPage} ? disabled">
+                            <a class="page-link" th:href="@{'/eventspot/page/'+${eventSpotData.currentPage+1}}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+</body>

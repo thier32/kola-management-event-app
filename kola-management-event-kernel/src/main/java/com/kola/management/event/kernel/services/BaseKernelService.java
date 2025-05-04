@@ -4,12 +4,19 @@ import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.model.BaseKernelModel;
 import com.kola.management.event.kernel.repository.BaseKernelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 @Service
@@ -20,6 +27,7 @@ public class BaseKernelService<T extends BaseKernelModel> {
     public final String entityNotFoundMessageTemplate = "Entity %s with id %s not found";
     public final String findByEntityIdMethodTemplate = "find%sBy%sId";
     public final String errorMessageTemplate = "%s%s";
+
 
     public <D> T update(D newEntity, long entityId) throws KernelException {
         Class<T> classValue = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
@@ -172,4 +180,42 @@ public class BaseKernelService<T extends BaseKernelModel> {
     public BaseKernelRepository<T> getDefaultRepository(){
         return baseKernelRepository;
     }
+
+    public String uploadImage(MultipartFile file, String uploadDir,String filename) throws KernelException {
+        StringBuilder fileNames = new StringBuilder();
+        String root = System.getProperty("user.home") + File.separator + ".kola"+ File.separator;
+
+        Path newFilePath = Paths.get(root+ File.separator+uploadDir);
+        if (!Files.exists(newFilePath)){
+            try {
+                Files.createDirectories(newFilePath);
+            } catch (IOException ioException) {
+                throw new KernelException(ioException.getMessage());
+            }
+        }
+        int extensionDot = Objects.requireNonNull(file.getOriginalFilename()).lastIndexOf(".");
+        if (extensionDot > 0){
+            return "";
+        }
+        String extension = file.getOriginalFilename().substring(extensionDot);
+        if (filename == null){
+            filename = file.getOriginalFilename();
+        }else {
+            filename += extension;
+        }
+
+        Path fileNameAndPath = Paths.get(String.valueOf(newFilePath), filename);
+        fileNames.append(file.getOriginalFilename());
+        try {
+            Files.write(fileNameAndPath, file.getBytes());
+        }catch (Exception exception){
+            throw new KernelException(exception.getMessage());
+        }
+        return fileNameAndPath.toString();
+    }
+
+    public String uploadImage(MultipartFile file, String uploadDir) throws KernelException {
+        return uploadImage(file,uploadDir,null);
+    }
+
 }

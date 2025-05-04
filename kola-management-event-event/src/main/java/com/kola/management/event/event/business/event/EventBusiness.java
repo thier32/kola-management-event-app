@@ -7,7 +7,10 @@ import com.kola.management.event.event.dto.eventhistory.*;
 import com.kola.management.event.event.model.Event;
 import com.kola.management.event.event.model.EventHistory;
 import com.kola.management.event.event.services.event.IEventService;
+import com.kola.management.event.event.services.eventhistory.IEventHistoryService;
 import com.kola.management.event.event.services.eventhistory.impl.EventHistoryService;
+import com.kola.management.event.event.services.eventspot.IEventSpotService;
+import com.kola.management.event.event.services.eventspot.impl.EventSpotService;
 import com.kola.management.event.event.services.exceptions.EventHistoryServiceException;
 import com.kola.management.event.event.services.exceptions.EventServiceException;
 import com.kola.management.event.kernel.exception.KernelException;
@@ -27,7 +30,10 @@ public class EventBusiness implements IEventBusiness {
     IEventService eventService;
 
     @Autowired
-    EventHistoryService eventHistoryService;
+    IEventHistoryService eventHistoryService;
+
+    @Autowired
+    IEventSpotService eventSpotService;
 
     @Override
     public EventReturnDto createEvent(EventDto eventDto) throws EventBusinessException {
@@ -188,12 +194,12 @@ public class EventBusiness implements IEventBusiness {
         return getEventHistoryListData(pageNo.intValue());
     }
 
-    public ListDataDto<Event> getEventListData(int page) {
-        ListDataDto<Event> data = new ListDataDto<>();
+    public ListDataDto<EventReturnDto> getEventListData(int page) {
+        ListDataDto<EventReturnDto> data = new ListDataDto<>();
         data.numberPage = 10;
         data.currentPage = page;
         data.elementPerPage = 5;
-        data.listElements = this.eventService.findAllByOrderByIdDesc(data.currentPage,data.elementPerPage);
+        data.listElements = this.eventService.findEventReturnDtoAllByOrderByIdDesc(data.currentPage,data.elementPerPage);
         data.total = this.eventService.findAllEvents().size();
 
         long divisor = data.total;
@@ -216,12 +222,19 @@ public class EventBusiness implements IEventBusiness {
 
 
     @Override
-    public ListDataDto<Event> getEventListData() {
+    public ListDataDto<EventReturnDto> getEventListData() {
         return getEventListData(1);
     }
 
     @Override
-    public ListDataDto<Event> getEventListData(Integer page) {
+    public ListDataDto<EventReturnDto> getAllEventListData() {
+        ListDataDto<EventReturnDto> listDataDto = new ListDataDto<>();
+        listDataDto.listElements = eventService.findEventReturnDtoAllByOrderByIdDesc();
+        return listDataDto;
+    }
+
+    @Override
+    public ListDataDto<EventReturnDto> getEventListData(Integer page) {
         if (page != null){
             return getEventListData(page.intValue());
         }

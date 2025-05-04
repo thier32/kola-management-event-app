@@ -16,6 +16,8 @@
 
                         <label for="lslug">Venue</label>
                         <input type="text" id="lslug" name="slug" th:field="*{eventVenue}" placeholder="Slug">
+                        <label for="lslug">Venue</label>
+                        <input type="file" name="image" accept="image/*" th:field="*{eventImage}" class="form-control-file">
                 <input class="btn btn-primary" type="submit" value="Save" />
                 <input class="btn-secondary btn-sm" type="button" value="Cancel" id="btnCancel1" />
             </form>

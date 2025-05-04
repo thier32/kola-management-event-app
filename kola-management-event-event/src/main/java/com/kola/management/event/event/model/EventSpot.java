@@ -20,7 +20,7 @@ public class EventSpot extends BaseKernelModel {
     public static final String eventSpotOccupationProp = "eventSpotOccupation";
     public static final String eventSpotDescriptionProp = "eventSpotDescription";
     public static final String eventSpotStatusProp = "eventSpotStatus";
-
+    public static final String eventSpotImageUrlProp = "eventSpotImageUrl";
 
     private long eventSpotId;
     private long eventId;
@@ -30,4 +30,5 @@ public class EventSpot extends BaseKernelModel {
     private String eventName;
     private String eventSpotDescription;
     private EventSpotStatus eventSpotStatus;
+    private String eventSpotImageUrl;
 }

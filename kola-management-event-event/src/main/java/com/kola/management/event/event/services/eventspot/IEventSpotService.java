@@ -153,9 +153,11 @@ public interface IEventSpotService {
      * @param eventSpotNameDto Event spot name
      * @return list of eventSpot -> list can be empty
      */
-    public List<EventSpot> findEventByEventName(EventSpotNameDto eventSpotNameDto);
+    List<EventSpot> findEventByEventName(EventSpotNameDto eventSpotNameDto);
 
     Optional<EventSpot> verifyEventSpotExistByEventId(EventSpotEventSpotIdEventIdDto eventSpotIdEventIdDto) throws EventServiceException, EventSpotServiceException;
 
     EventSpotReturnDto mapping(BaseKernelModel model, Class<EventSpotReturnDto> eventSpotReturnDtoClass) throws EventSpotServiceException;
+
+    List<EventSpotReturnDto> findEventSpotReturnDtoAllByOrderByIdDesc(int currentPage, int elementPerPage);
 }

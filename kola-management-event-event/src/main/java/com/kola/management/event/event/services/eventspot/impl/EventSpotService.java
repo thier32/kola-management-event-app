@@ -1,6 +1,5 @@
 package com.kola.management.event.event.services.eventspot.impl;
 
-import com.kola.management.event.event.dto.event.*;
 import com.kola.management.event.event.dto.eventspot.*;
 import com.kola.management.event.event.model.EventSpot;
 import com.kola.management.event.event.repository.EventSpotRepository;
@@ -19,6 +18,7 @@ import java.util.Optional;
 @Service
 public class EventSpotService extends BaseKernelService<EventSpot> implements IEventSpotService {
     String NOT_FOUND_MESSAGE_TEMPLATE = "%s with %s %s not found.";
+
 
     @Override
     public Optional<EventSpot> updateEventSpot(IEventSpotDto eventSpotDto, long eventSpotId) throws EventSpotServiceException {
@@ -96,7 +96,7 @@ public class EventSpotService extends BaseKernelService<EventSpot> implements IE
 
     @Override
     public Optional<EventSpot> findEventSpotByEventSpotId(EventSpotEventSpotIdDto eventSpotEventSpotIdDto) {
-        return ((EventSpotRepository)getDefaultRepository()).findEventSpotByEventSpotId(
+        return ((EventSpotRepository)getDefaultRepository()).findByEventSpotId(
                 eventSpotEventSpotIdDto.eventSpotId()
         );
     }
@@ -138,14 +138,14 @@ public class EventSpotService extends BaseKernelService<EventSpot> implements IE
 
     @Override
     public Optional<EventSpot> findEventSpotByEventSpotId(EventSpotEventSpotIdEventIdDto eventEventIdDto) {
-        return ((EventSpotRepository)getDefaultRepository()).findEventSpotByEventSpotId(eventEventIdDto.eventId());
+        return ((EventSpotRepository)getDefaultRepository()).findByEventSpotId(eventEventIdDto.eventId());
     }
 
 
     @Override
     public Optional<EventSpot> verifyEventSpotExistByEventId(EventSpotEventSpotIdEventIdDto eventSpotIdEventIdDto) throws EventServiceException, EventSpotServiceException {
         return ((EventSpotRepository)getDefaultRepository()).
-                findEventSpotByEventSpotId(eventSpotIdEventIdDto.eventId());
+                findByEventSpotId(eventSpotIdEventIdDto.eventId());
     }
 
     @Override
@@ -156,5 +156,11 @@ public class EventSpotService extends BaseKernelService<EventSpot> implements IE
             throw new EventSpotServiceException(kernelException.getMessage());
         }
 
+    }
+
+    @Override
+    public List<EventSpotReturnDto> findEventSpotReturnDtoAllByOrderByIdDesc(int currentPage, int elementPerPage) {
+        Pageable pageable = Pageable.ofSize( elementPerPage).withPage( currentPage-1);
+        return  ((EventSpotRepository)getDefaultRepository()).findEventReturnDtoAllByOrderByIdDesc(pageable);
     }
 }

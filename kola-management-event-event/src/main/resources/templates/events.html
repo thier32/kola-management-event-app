@@ -36,6 +36,8 @@
                         <th>Event Name</th>
                         <th>Event Venue</th>
                         <th>Event Description</th>
+                        <th>Event Total Spot</th>
+                        <th>Event Booked Spot</th>
                         <th colspan="3">Actions</th>
                     </tr>
                     </thead>
@@ -47,20 +49,27 @@
                         <td th:text="${event.eventName}"></td>
                         <td th:text="${event.eventVenue}"></td>
                         <td th:text="${event.eventDescription}"></td>
+                        <td th:text="${event.eventSpotNumber}"></td>
+                        <td th:text="${event.eventSpotNumber}"></td>
                         <td>
-                            <a class="fa fa-regular fa fa-square icon-dark"
-                               th:href="@{'/events/edit/' + ${event.eventId}}"  title="Edit"
-
-                            ></a>
+                            <a th:href="@{'/events/edit/' + ${event.eventId}}"  title="Edit">
+                                <i class="fa fa-edit" aria-hidden="true"></i>
+                            </a>
                         </td>
                         <td>
-                            <a class="fa fa-regular fa fa-circle icon-dark"
-                               th:href="@{'/events/publish/' + ${event.eventId}}"  title="Publish"
-                            ></a>
+                            <a th:href="@{'/events/publish/' + ${event.eventId}}"  title="Publish"
+                            >
+                                <i class="fa fa-upload" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{'/events/cancel/' + ${event.eventId}}"  title="Cancel">
+                                <i class="fa fa-cancel" aria-hidden="true"></i>
+                            </a>
                         </td>
                         <td>
                             <a class="fa fa-regular fa fa-triangle icon-dark"
-                               th:href="@{'/events/cancel/' + ${event.eventId}}"  title="Cancel"
+                               th:href="@{'/eventspot/add/' + ${event.eventId}}"  title="Cancel"
                             ></a>
                         </td>
 <!--                        <td><a class="btn btn-primary"><i class="fa fa-user-times ml-2"></i></a></td>-->

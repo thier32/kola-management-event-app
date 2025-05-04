@@ -1,6 +1,8 @@
 package com.kola.management.event.event.business;
 
 import com.kola.management.event.event.business.exceptions.EventSpotBusinessException;
+import com.kola.management.event.event.dto.event.EventReturnDto;
+import com.kola.management.event.event.dto.event.ListDataDto;
 import com.kola.management.event.event.dto.eventspot.*;
 import com.kola.management.event.kernel.model.BaseKernelModel;
 
@@ -104,4 +106,21 @@ public interface IEventSpotBusiness {
      * @throws EventSpotBusinessException
      */
     EventSpotReturnDto map(BaseKernelModel model) throws EventSpotBusinessException;
+
+    /**
+     *
+     * @param pageNo
+     * @return
+     */
+    ListDataDto<EventSpotReturnDto> getEventSpotListData(Integer pageNo);
+
+    /**
+     *
+     * @return
+     */
+    ListDataDto<EventSpotReturnDto> getEventSpotListData();
+
+    ListDataDto<EventSpotReturnDto> getEventSpotListData(int pageNo);
+
+    EventSpotReturnDto getEventSpot(Long eventSpotId) throws EventSpotBusinessException;
 }

@@ -8,6 +8,8 @@ import com.kola.management.event.event.dto.eventhistory.EventHistoryStartDateDto
 import com.kola.management.event.event.model.Event;
 import com.kola.management.event.event.model.EventHistory;
 
+import java.util.List;
+
 public interface IEventBusiness {
     /**
      *
@@ -84,14 +86,16 @@ public interface IEventBusiness {
      *
      * @return
      */
-    ListDataDto<Event> getEventListData();
+    ListDataDto<EventReturnDto> getEventListData();
 
+
+    ListDataDto<EventReturnDto> getAllEventListData();
 
     /**
      *
      * @return
      */
-    ListDataDto<Event> getEventListData(Integer page);
+    ListDataDto<EventReturnDto> getEventListData(Integer page);
 
 
     /**

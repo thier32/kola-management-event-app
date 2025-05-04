@@ -4,6 +4,7 @@ import com.kola.management.event.event.dto.event.*;
 import com.kola.management.event.event.model.Event;
 import com.kola.management.event.event.services.exceptions.EventServiceException;
 import com.kola.management.event.kernel.model.BaseKernelModel;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -76,6 +77,8 @@ public interface IEventService {
     */
    Optional<Event> UpdateEventName(EventUpdateNameDto eventUpdateNameDto) throws EventServiceException;
 
+   Optional<Event> UpdateEventImage(EventUpdateImageUrlDto eventUpdateImageUrlDto) throws EventServiceException;
+
    /**
     *
     * @param eventUpdateDescritpinDto  eventUpdateDescritpinDto
@@ -123,7 +126,18 @@ public interface IEventService {
     * @param element number elements per page
     * @return list of event -> list can be empty
     */
-   public List<Event> findAllByOrderByIdDesc(int page, int element);
+   List<Event> findAllByOrderByIdDesc(int page, int element);
+
+   /**
+    *
+    * @param page
+    * @param element
+    * @return
+    */
+   List<EventReturnDto> findEventReturnDtoAllByOrderByIdDesc(int page, int element);
+
+
+   List<EventReturnDto> findEventReturnDtoAllByOrderByIdDesc();
 
    EventReturnDto mapping(BaseKernelModel model, Class<EventReturnDto> eventReturnDtoClass) throws EventServiceException;
 }

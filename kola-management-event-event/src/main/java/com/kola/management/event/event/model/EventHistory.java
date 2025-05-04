@@ -34,14 +34,14 @@ public class EventHistory extends BaseKernelModel {
     private String eventName;
     private String eventVenue;
     private String eventDescription;
-    private long eventBookerId;
+    private Long eventBookerId;
     private String eventBookerName;
-    private long eventPublisherId;
+    private Long eventPublisherId;
     private String eventPublisherName;
     private EventStatus eventStatus;
     private LocalDateTime eventStartDate;
     private LocalDateTime eventEndDate;
-    private long eventSpotId;
+    private Long eventSpotId;
     private String eventSpotName;
-    private long eventSpotCapacity;
+    private Long eventSpotCapacity;
 }

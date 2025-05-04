@@ -8,21 +8,26 @@ import com.kola.management.event.event.services.exceptions.EventServiceException
 import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.model.BaseKernelModel;
 import com.kola.management.event.kernel.services.BaseKernelService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class EventService extends BaseKernelService<Event> implements IEventService {
 
+    @Value("${kola.event.management.folder.event.images}")
+    private String eventFolder;
 
     @Override
     public Event saveEventDto(IEventDto eventDto, Long eventId) throws EventServiceException {
         Event event;
         try {
             event = this.mapping(eventDto, Event.class);
+
             if (eventId == null){
                 event = this.save(event);
             }else{
@@ -43,6 +48,22 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
     @Override
     public  Optional<Event> saveEvent(IEventDto eventDto) throws EventServiceException {
         Event event = this.saveEventDto(eventDto);
+        if (event != null && eventDto instanceof EventDto && ((EventDto)eventDto).eventImage() != null
+                && !Objects.requireNonNull(((EventDto) eventDto).eventImage().getOriginalFilename()).isEmpty()
+        )
+        {
+
+            String imageUrl  = "";
+                try {
+                  imageUrl = this.uploadImage(((EventDto)eventDto).eventImage(),this.eventFolder, String.valueOf(event.getEventId()));
+                } catch (KernelException e) {
+                    throw new EventServiceException(e.getMessage());
+                }
+            return   this.updateEvent(new EventUpdateImageUrlDto(
+                        imageUrl,
+                        event.getEventId()
+                ),event.getEventId());
+        }
         return event != null ? Optional.of(event) : Optional.empty();
     }
 
@@ -72,6 +93,12 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
     public Optional<Event> UpdateEventName(EventUpdateNameDto eventUpdateNameDto) throws EventServiceException {
         return this.updateEvent(eventUpdateNameDto,eventUpdateNameDto.eventId());
     }
+
+    @Override
+    public Optional<Event> UpdateEventImage(EventUpdateImageUrlDto eventUpdateImageUrlDto) throws EventServiceException {
+        return this.updateEvent(eventUpdateImageUrlDto,eventUpdateImageUrlDto.eventId());
+    }
+
 
     @Override
     public Optional<Event> UpdateEventDescription(EventUpdateDescritpinDto eventUpdateDescritpinDto) throws EventServiceException {
@@ -119,6 +146,17 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
     public List<Event> findAllByOrderByIdDesc(int page, int element){
         Pageable pageable = Pageable.ofSize( element).withPage( page-1);
         return ((EventRepository)getDefaultRepository()).findByOrderByIdDesc(pageable);
+    }
+
+    @Override
+    public List<EventReturnDto> findEventReturnDtoAllByOrderByIdDesc(int page, int element) {
+        Pageable pageable = Pageable.ofSize( element).withPage( page-1);
+        return ((EventRepository)getDefaultRepository()).findEventReturnDtoByOrderByIdDesc(pageable);
+    }
+
+    @Override
+    public List<EventReturnDto> findEventReturnDtoAllByOrderByIdDesc() {
+        return ((EventRepository)getDefaultRepository()).findEventReturnDtoByOrderByIdDesc();
     }
 
     @Override
