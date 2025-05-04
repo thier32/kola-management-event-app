@@ -3,10 +3,10 @@ package com.kola.management.event.event.dto.eventspot;
 public record EventSpotDto(
         String eventSpotName,
         String eventName,
-        long eventSpotId,
-        long eventId,
-        long eventSpotCapacity,
-        long eventSpotOccupation
+        Long eventSpotId,
+        Long eventId,
+        Long eventSpotCapacity,
+        Long eventSpotOccupation
 ) implements IEventSpotDto{
     public EventSpotDto(){
         this(null,null, 0L, 0L,0L,0L);

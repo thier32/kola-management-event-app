@@ -6,10 +6,10 @@ import com.kola.management.event.event.dto.event.*;
 import com.kola.management.event.event.dto.eventhistory.*;
 import com.kola.management.event.event.model.Event;
 import com.kola.management.event.event.model.EventHistory;
+import com.kola.management.event.event.services.event.IEventService;
 import com.kola.management.event.event.services.eventhistory.impl.EventHistoryService;
 import com.kola.management.event.event.services.exceptions.EventHistoryServiceException;
 import com.kola.management.event.event.services.exceptions.EventServiceException;
-import com.kola.management.event.event.services.event.impl.EventService;
 import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.model.BaseKernelModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.Optional;
 public class EventBusiness implements IEventBusiness {
 
     @Autowired
-    EventService eventService;
+    IEventService eventService;
 
     @Autowired
     EventHistoryService eventHistoryService;
@@ -55,8 +55,8 @@ public class EventBusiness implements IEventBusiness {
         try {
             eventReturnDto =
                     eventService.mapping(model,EventReturnDto.class);
-        }catch (KernelException kernelException){
-            throw new EventBusinessException(kernelException.getMessage());
+        }catch (EventServiceException eventServiceException){
+            throw new EventBusinessException(eventServiceException.getMessage());
         }
         return eventReturnDto;
     }

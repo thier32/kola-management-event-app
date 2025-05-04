@@ -3,6 +3,7 @@ package com.kola.management.event.event.services.event;
 import com.kola.management.event.event.dto.event.*;
 import com.kola.management.event.event.model.Event;
 import com.kola.management.event.event.services.exceptions.EventServiceException;
+import com.kola.management.event.kernel.model.BaseKernelModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -123,4 +124,6 @@ public interface IEventService {
     * @return list of event -> list can be empty
     */
    public List<Event> findAllByOrderByIdDesc(int page, int element);
+
+   EventReturnDto mapping(BaseKernelModel model, Class<EventReturnDto> eventReturnDtoClass) throws EventServiceException;
 }

@@ -6,6 +6,7 @@ import com.kola.management.event.event.repository.EventRepository;
 import com.kola.management.event.event.services.event.IEventService;
 import com.kola.management.event.event.services.exceptions.EventServiceException;
 import com.kola.management.event.kernel.exception.KernelException;
+import com.kola.management.event.kernel.model.BaseKernelModel;
 import com.kola.management.event.kernel.services.BaseKernelService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -118,5 +119,14 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
     public List<Event> findAllByOrderByIdDesc(int page, int element){
         Pageable pageable = Pageable.ofSize( element).withPage( page-1);
         return ((EventRepository)getDefaultRepository()).findByOrderByIdDesc(pageable);
+    }
+
+    @Override
+    public EventReturnDto mapping(BaseKernelModel model, Class<EventReturnDto> eventReturnDtoClass) throws EventServiceException {
+        try {
+            return super.mapping(model,eventReturnDtoClass);
+        }catch (KernelException kernelException){
+            throw new EventServiceException(kernelException.getMessage());
+        }
     }
 }

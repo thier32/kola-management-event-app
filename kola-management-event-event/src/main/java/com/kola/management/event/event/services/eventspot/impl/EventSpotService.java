@@ -8,12 +8,15 @@ import com.kola.management.event.event.services.eventspot.IEventSpotService;
 import com.kola.management.event.event.services.exceptions.EventServiceException;
 import com.kola.management.event.event.services.exceptions.EventSpotServiceException;
 import com.kola.management.event.kernel.exception.KernelException;
+import com.kola.management.event.kernel.model.BaseKernelModel;
 import com.kola.management.event.kernel.services.BaseKernelService;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class EventSpotService extends BaseKernelService<EventSpot> implements IEventSpotService {
     String NOT_FOUND_MESSAGE_TEMPLATE = "%s with %s %s not found.";
 
@@ -143,5 +146,15 @@ public class EventSpotService extends BaseKernelService<EventSpot> implements IE
     public Optional<EventSpot> verifyEventSpotExistByEventId(EventSpotEventSpotIdEventIdDto eventSpotIdEventIdDto) throws EventServiceException, EventSpotServiceException {
         return ((EventSpotRepository)getDefaultRepository()).
                 findEventSpotByEventSpotId(eventSpotIdEventIdDto.eventId());
+    }
+
+    @Override
+    public EventSpotReturnDto mapping(BaseKernelModel model, Class<EventSpotReturnDto> eventSpotReturnDtoClass) throws EventSpotServiceException {
+        try{
+            return super.mapping(model,eventSpotReturnDtoClass);
+        }catch (KernelException kernelException){
+            throw new EventSpotServiceException(kernelException.getMessage());
+        }
+
     }
 }

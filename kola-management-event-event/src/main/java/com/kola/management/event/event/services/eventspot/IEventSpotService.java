@@ -5,6 +5,7 @@ import com.kola.management.event.event.dto.eventspot.*;
 import com.kola.management.event.event.model.EventSpot;
 import com.kola.management.event.event.services.exceptions.EventServiceException;
 import com.kola.management.event.event.services.exceptions.EventSpotServiceException;
+import com.kola.management.event.kernel.model.BaseKernelModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -155,4 +156,6 @@ public interface IEventSpotService {
     public List<EventSpot> findEventByEventName(EventSpotNameDto eventSpotNameDto);
 
     Optional<EventSpot> verifyEventSpotExistByEventId(EventSpotEventSpotIdEventIdDto eventSpotIdEventIdDto) throws EventServiceException, EventSpotServiceException;
+
+    EventSpotReturnDto mapping(BaseKernelModel model, Class<EventSpotReturnDto> eventSpotReturnDtoClass) throws EventSpotServiceException;
 }

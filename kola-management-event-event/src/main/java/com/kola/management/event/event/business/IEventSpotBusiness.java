@@ -1,6 +1,8 @@
 package com.kola.management.event.event.business;
 
+import com.kola.management.event.event.business.exceptions.EventSpotBusinessException;
 import com.kola.management.event.event.dto.eventspot.*;
+import com.kola.management.event.kernel.model.BaseKernelModel;
 
 public interface IEventSpotBusiness {
     /**
@@ -8,7 +10,7 @@ public interface IEventSpotBusiness {
      * @param eventSpotDto eventSpotDto
      * @return EventSpotReturnDto
      */
-    EventSpotReturnDto createEventSpot(EventSpotDto eventSpotDto);
+    EventSpotReturnDto createEventSpot(EventSpotDto eventSpotDto) throws EventSpotBusinessException;
 
     /**
      *
@@ -94,4 +96,12 @@ public interface IEventSpotBusiness {
      */
     EventSpotReturnDto updateEventSpotState(EventSpotUpdateStateDto eventSpotUpdateStateDto);
 
+
+    /**
+     *
+     * @param model
+     * @return
+     * @throws EventSpotBusinessException
+     */
+    EventSpotReturnDto map(BaseKernelModel model) throws EventSpotBusinessException;
 }
