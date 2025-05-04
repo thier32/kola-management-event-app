@@ -8,6 +8,10 @@ package com.kola.management.event.event.dto.eventspot;
  */
 public record EventSpotUpdateStatusDto(
         EventSpotStatus eventSpotStatus,
-        long eventSpotId
+        long eventSpotId,
+        Long eventId
 ) implements IEventSpotDto {
+    public EventSpotUpdateStatusDto(EventSpotStatus eventSpotStatus, long eventSpotId){
+        this(eventSpotStatus,eventSpotId,null);
+    }
 }

@@ -1,6 +1,5 @@
 package com.kola.management.event.event.services.eventspot;
 
-import com.kola.management.event.event.dto.event.*;
 import com.kola.management.event.event.dto.eventspot.*;
 import com.kola.management.event.event.model.EventSpot;
 import com.kola.management.event.event.services.exceptions.EventServiceException;
@@ -116,7 +115,7 @@ public interface IEventSpotService {
      * @return
      * @throws EventSpotServiceException
      */
-    Optional<EventSpot> UpdateEventSpotStatus(EventSpotUpdateStatusDto eventSpotUpdateStatusDto) throws  EventSpotServiceException;
+    Optional<EventSpot> updateEventSpotStatus(EventSpotUpdateStatusDto eventSpotUpdateStatusDto) throws  EventSpotServiceException;
 
 
     /**

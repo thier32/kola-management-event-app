@@ -37,7 +37,7 @@
                         <th>Event Name</th>
                         <th>Event Spot Capacity</th>
 <!--                        <th>Event Spot</th>-->
-                        <th colspan="3">Actions</th>
+                        <th colspan="4">Actions</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -60,11 +60,10 @@
                             </a>
                         </td>
                         <td>
-                            <a th:href="@{'/eventspot/cancel/' + ${eventSpot.eventSpotId}}"  title="Cancel">
-                                <i class="fa fa-cancel" aria-hidden="true"></i>
+                            <a th:href="@{'/eventspot/book/' + ${eventSpot.eventSpotId}}"  title="Book">
+                                <i class="fa fa-bookmark" aria-hidden="true"></i>
                             </a>
                         </td>
-<!--                        <td><a class="btn btn-primary"><i class="fa fa-user-times ml-2"></i></a></td>-->
                     </tr>
                     </tbody>
                 </table>

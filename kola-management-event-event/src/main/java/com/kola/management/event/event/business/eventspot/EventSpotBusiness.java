@@ -86,12 +86,41 @@ public class EventSpotBusiness implements IEventSpotBusiness {
 
     @Override
     public EventSpotReturnDto bookEventSpot(EventSpotUpdateStatusDto eventSpotUpdateStatusDto) {
+
         return null;
     }
 
+    public EventSpotReturnDto changeEventSpotStatus(EventSpotUpdateStatusDto eventSpotUpdateStatusDto) throws EventSpotBusinessException {
+        EventSpotReturnDto eventSpotReturnDto = null;
+        try{
+            Optional<EventSpot> optionalEventSpot = this.eventSpotService.updateEventSpotStatus(eventSpotUpdateStatusDto);
+            if (optionalEventSpot.isPresent()){
+                eventSpotReturnDto = this.map(optionalEventSpot.get());
+            }
+        }catch (EventSpotServiceException eventSpotServiceException){
+                throw new EventSpotBusinessException(eventSpotServiceException.getMessage());
+        }
+
+        return eventSpotReturnDto;
+    }
+
     @Override
-    public EventSpotReturnDto unbookEventSpot(EventSpotUpdateStatusDto eventSpotUpdateStatusDto) {
-        return null;
+    public EventSpotReturnDto bookEventSpot(long eventSpotId) throws EventSpotBusinessException {
+        return this.changeEventSpotStatus(
+                new EventSpotUpdateStatusDto(EventSpotStatus.BOOKED,eventSpotId)
+        );
+    }
+
+    @Override
+    public EventSpotReturnDto unbookEventSpot(long eventSpotId) throws EventSpotBusinessException {
+        return this.changeEventSpotStatus(
+                new EventSpotUpdateStatusDto(EventSpotStatus.UNBOOKED,eventSpotId)
+        );
+    }
+
+    @Override
+    public EventSpotReturnDto unbookEventSpot(EventSpotUpdateStatusDto eventSpotUpdateStatusDto) throws EventSpotBusinessException {
+        return this.changeEventSpotStatus(eventSpotUpdateStatusDto);
     }
 
     @Override

@@ -51,10 +51,20 @@ public interface IEventSpotBusiness {
 
     /**
      *
+     * @param eventSpotId eventSpotId
+     * @return EventSpotReturnDto
+     */
+    EventSpotReturnDto bookEventSpot(long eventSpotId) throws EventSpotBusinessException;
+
+
+    EventSpotReturnDto unbookEventSpot(long eventSpotId) throws EventSpotBusinessException;
+
+    /**
+     *
      * @param eventSpotUpdateStatusDto eventSpotUpdateStatusDto
      * @return EventSpotReturnDto
      */
-    EventSpotReturnDto unbookEventSpot(EventSpotUpdateStatusDto eventSpotUpdateStatusDto);
+    EventSpotReturnDto unbookEventSpot(EventSpotUpdateStatusDto eventSpotUpdateStatusDto) throws EventSpotBusinessException;
 
     /**
      *

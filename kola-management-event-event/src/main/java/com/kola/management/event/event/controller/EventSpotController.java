@@ -60,15 +60,15 @@ public class EventSpotController {
         }
     }
 
-//    @GetMapping("publish/{eventId}")
-//    public String eventPublish(@PathVariable("eventId") Long eventId, Model model, RedirectAttributes redirectAttributes){
-//        try {
-//            model.addAttribute("eventDto", eventBusiness.publishEvent(eventId));
-//        } catch (Exception|EventBusinessException e) {
-//            redirectAttributes.addFlashAttribute("message", e.getMessage());
-//        }
-//        return "redirect:/events/list";
-//    }
+    @GetMapping("book/{eventSpotId}")
+    public String eventPublish(@PathVariable("eventSpotId") Long eventSpotId, Model model, RedirectAttributes redirectAttributes){
+        try {
+            model.addAttribute("eventSpotDto", eventSpotBusiness.bookEventSpot(eventSpotId));
+        } catch (Exception|EventSpotBusinessException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
+        return "redirect:/eventspot/list";
+    }
 
     @GetMapping(value = {"/view/{eventId}" ,"view/{eventId}/{pageNo}"})
     public String eventPublish(@PathVariable("eventId") Long eventId,
