@@ -11,15 +11,19 @@
     <div class="eventForm">
             <form th:action="@{/events/save}" role="form" method="post" enctype="multipart/form-data" th:object="${eventDto}">
                 <input type="hidden" th:field="*{eventId}" />
-                        <label for="fservice">Event name</label>
-                        <input type="text" id="fservice" name="service" th:field="*{eventName}" placeholder="Service">
-
-                        <label for="lslug">Venue</label>
-                        <input type="text" id="lslug" name="slug" th:field="*{eventVenue}" placeholder="Slug">
-                        <label for="lslug">Venue</label>
-                        <input type="file" name="image" accept="image/*" th:field="*{eventImage}" class="form-control-file">
-                <input class="btn btn-primary" type="submit" value="Save" />
-                <input class="btn-secondary btn-sm" type="button" value="Cancel" id="btnCancel1" />
+                <div class="input-event-field">
+                    <input type="text" id="fservice" name="service" th:field="*{eventName}" placeholder="Service">
+                </div>
+                <div class="input-event-field">
+                    <input type="text" id="lslug" name="slug" th:field="*{eventVenue}" placeholder="Slug">
+                </div>
+                <div class="input-event-field">
+                    <input type="file" name="image" accept="image/*" th:field="*{eventImage}" class="form-control-file">
+                </div>
+                <div class="btn-event-field">
+                    <button type="submit" th:text="${eventId != null} ? 'Edit' : 'New'"></button>
+                    <button type="reset" value="Cancel" id="btnCancel1" th:text="Reset" ></button>
+                </div>
             </form>
             </div>
 </div>

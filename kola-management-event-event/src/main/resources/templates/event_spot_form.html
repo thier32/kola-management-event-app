@@ -11,20 +11,29 @@
     <div class="eventForm">
             <form th:action="@{/eventspot/save}" role="form" method="post" enctype="multipart/form-data" th:object="${eventSpotDto}">
                 <input type="hidden" th:field="*{eventSpotId}" />
-                        <label for="eventname"></label>
-                        <select id="eventname" th:field="*{eventId}">
-                            <option th:each="event : *{listEventDto}"  th:value="${event.eventId}" th:text="${event.eventName}">
-                            </option>
-                        </select>
-                        <label for="spotname">Event Spot name</label>
-                        <input type="text" id="spotname" name="service" th:field="*{eventSpotName}" placeholder="Spot name">
-
-                        <label for="capacity">Event Spot Capacity</label>
-                        <input type="text" id="capacity" name="capacity" th:field="*{eventSpotCapacity}" placeholder="Spot capacity">
-                        <label for="image">Event Spot Image</label>
+                <div class="input-event-field">
+<!--                    <label for="eventname">Event</label>-->
+                    <select id="eventname" name="eventname" th:field="*{eventId}" th:placeholder="Event">
+                        <option th:each="event : *{listEventDto}"  th:value="${event.eventId}" th:text="${event.eventName}">
+                        </option>
+                    </select>
+                </div>
+                <div class="input-event-field">
+<!--                        <label for="spotname">Event Spot name</label>-->
+                        <input type="text" id="spotname" name="spotname" th:field="*{eventSpotName}" placeholder="Spot name" />
+                </div>
+                <div class="input-event-field">
+<!--                        <label for="capacity">Event Spot Capacity</label>-->
+                        <input type="number" id="capacity" name="capacity" th:field="*{eventSpotCapacity}" placeholder="Spot capacity" />
+                </div>
+                <div class="input-event-field">
+<!--                        <label for="image">Event Spot Image</label>-->
                         <input type="file" id="image" name="image" accept="image/*" th:field="*{eventSpotImage}" class="form-control-file">
-                <input class="btn btn-primary" type="submit" value="Save" />
-                <input class="btn-secondary btn-sm" type="button" value="Cancel" id="btnCancel1" />
+                </div>
+                <div class="btn-event-field">
+                    <button type="submit" th:text="${eventSpotId != null} ? 'Edit' : 'New'"></button>
+                    <button type="reset" value="Cancel" id="btnCancel1" th:text="Reset" ></button>
+                </div>
             </form>
             </div>
 </div>
