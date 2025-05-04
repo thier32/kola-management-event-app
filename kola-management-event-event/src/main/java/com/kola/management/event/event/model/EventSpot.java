@@ -23,7 +23,7 @@ public class EventSpot extends BaseKernelModel {
     public static final String eventSpotImageUrlProp = "eventSpotImageUrl";
 
     private long eventSpotId;
-    private long eventId;
+    private Long eventId;
     private long eventSpotCapacity;
     private long eventSpotOccupation;
     private String eventSpotName;
