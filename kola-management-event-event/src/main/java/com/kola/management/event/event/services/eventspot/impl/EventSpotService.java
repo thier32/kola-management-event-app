@@ -163,4 +163,15 @@ public class EventSpotService extends BaseKernelService<EventSpot> implements IE
         Pageable pageable = Pageable.ofSize( elementPerPage).withPage( currentPage-1);
         return  ((EventSpotRepository)getDefaultRepository()).findEventReturnDtoAllByOrderByIdDesc(pageable);
     }
+
+    @Override
+    public List<EventSpotReturnDto> findEventSpotReturnDtoAllByEventIdOrderByIdDesc(long eventId, int currentPage, int elementPerPage) {
+        Pageable pageable = Pageable.ofSize( elementPerPage).withPage( currentPage-1);
+        return  ((EventSpotRepository)getDefaultRepository()).findEventReturnDtoAllByEventIdOrderByIdDesc(eventId,pageable);
+    }
+
+    @Override
+    public List<EventSpotReturnDto> findEventSpotReturnDtoAllByEventIdOrderByIdDesc(long eventId) {
+        return  ((EventSpotRepository)getDefaultRepository()).findEventReturnDtoAllByEventIdOrderByIdDesc(eventId);
+    }
 }

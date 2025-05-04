@@ -160,4 +160,9 @@ public interface IEventSpotService {
     EventSpotReturnDto mapping(BaseKernelModel model, Class<EventSpotReturnDto> eventSpotReturnDtoClass) throws EventSpotServiceException;
 
     List<EventSpotReturnDto> findEventSpotReturnDtoAllByOrderByIdDesc(int currentPage, int elementPerPage);
+
+
+    List<EventSpotReturnDto> findEventSpotReturnDtoAllByEventIdOrderByIdDesc(long eventId, int currentPage, int elementPerPage);
+
+    List<EventSpotReturnDto> findEventSpotReturnDtoAllByEventIdOrderByIdDesc(long eventId);
 }

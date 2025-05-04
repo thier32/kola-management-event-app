@@ -7,6 +7,7 @@ import com.kola.management.event.event.model.EventSpot;
 import com.kola.management.event.kernel.repository.BaseKernelRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -71,4 +72,13 @@ public interface EventSpotRepository extends BaseKernelRepository<EventSpot> {
             " order by eventSpot.id desc ")
     List<EventSpotReturnDto> findEventReturnDtoAllByOrderByIdDesc(Pageable pageable);
 
+
+    @Query(value = "select new com.kola.management.event.event.dto.eventspot.EventSpotReturnDto(eventSpot) from EventSpot eventSpot" +
+            " where eventSpot.eventId = :eventId  order by eventSpot.id desc ")
+    List<EventSpotReturnDto> findEventReturnDtoAllByEventIdOrderByIdDesc(@Param("eventId") long eventId, Pageable pageable);
+
+
+    @Query(value = "select new com.kola.management.event.event.dto.eventspot.EventSpotReturnDto(eventSpot) from EventSpot eventSpot" +
+            " where eventSpot.eventId = :eventId  order by eventSpot.id desc ")
+    List<EventSpotReturnDto> findEventReturnDtoAllByEventIdOrderByIdDesc(@Param("eventId") long eventId);
 }

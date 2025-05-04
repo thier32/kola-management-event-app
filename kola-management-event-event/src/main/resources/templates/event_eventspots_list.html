@@ -17,59 +17,51 @@
             <span aria-hidden="true">×</span>
         </button>
     </div>
-    <div th:switch="${eventData.listElements}">
+    <div th:switch="${eventSpotData.listElements}">
         <p>
-            <a href="/events/add" class="btn btn-primary"><i
-                    class="fas fa-user-plus ml-2"> Add Event</i></a>
+            <a href="/eventspot/add" class="btn btn-primary"><i
+                    class="fas fa-user-plus ml-2"> Add Event Spot</i></a>
         </p>
         <div class="col">
-            <h2 th:case="null">No Event yet!</h2>
+            <h2 th:case="null">No Event Spot yet!</h2>
             <div th:case="*">
                 <div class="row">
-                    <div th:each="key :${eventData.keys}" class="block">
+                    <div th:each="key :${eventSpotData.keys}" class="block">
                         <span th:text=${key}></span>
                     </div>
                 </div>
                 <table class="styled-table">
                     <thead>
                     <tr>
+                        <th>Event Spot Name</th>
                         <th>Event Name</th>
-                        <th>Event Venue</th>
-                        <th>Event Description</th>
-                        <th>Event Total Spot</th>
-                        <th>Event Booked Spot</th>
-                        <th colspan="5">Actions</th>
+                        <th>Event Spot Capacity</th>
+<!--                        <th>Event Spot</th>-->
+                        <th colspan="3">Actions</th>
                     </tr>
                     </thead>
                     <tfoot>
                     </tfoot>
                     <tbody>
-                    <tr th:each="event : ${eventData.listElements}">
+                    <tr th:each="eventSpot : ${eventSpotData.listElements}">
                         <!--                         <td th:text="${parameter.id}">serzr</td>-->
-                        <td th:text="${event.eventName}"></td>
-                        <td th:text="${event.eventVenue}"></td>
-                        <td th:text="${event.eventDescription}"></td>
-                        <td th:text="${event.eventSpotNumber}"></td>
-                        <td th:text="${event.eventSpotNumber}"></td>
+                        <td th:text="${eventSpot.eventSpotName}"></td>
+<!--                        <td th:text="${eventSpot.eventDescription}"></td>-->
+                        <td th:text="${eventSpot.eventName}"></td>
+                        <td th:text="${eventSpot.eventSpotCapacity}"></td>
                         <td>
-                            <a th:href="@{'/events/edit/' + ${event.eventId}}"  title="Edit">
+                            <a th:href="@{'/eventspot/edit/' + ${eventSpot.eventSpotId}}"  title="Edit">
                                 <i class="fa fa-edit" aria-hidden="true"></i>
                             </a>
                         </td>
                         <td>
-                            <a th:href="@{'/events/publish/' + ${event.eventId}}"  title="Publish"
-                            >
-                                <i class="fa fa-upload" aria-hidden="true"></i>
+                            <a th:href="@{'/eventspot/publish/' + ${eventSpot.eventSpotId}}"  title="Publish"
+                            ><i class="fa fa-upload" aria-hidden="true"></i>
                             </a>
                         </td>
                         <td>
-                            <a th:href="@{'/events/cancel/' + ${event.eventId}}"  title="Cancel">
+                            <a th:href="@{'/eventspot/cancel/' + ${eventSpot.eventSpotId}}"  title="Cancel">
                                 <i class="fa fa-cancel" aria-hidden="true"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a th:href="@{'/eventspot/view/' + ${event.eventId}}"  title="View Spots"
-                            ><i class="fa fa-eye" aria-hidden="true"></i>
                             </a>
                         </td>
 <!--                        <td><a class="btn btn-primary"><i class="fa fa-user-times ml-2"></i></a></td>-->
@@ -79,20 +71,20 @@
 
                 <nav aria-label="...">
                     <ul class="pagination">
-                        <li class="page-item" th:classappend="${eventData.currentPage==1} ? disabled">
-                            <a class="page-link" th:href="@{'/events/page/'+${eventData.currentPage-1}}"
+                        <li class="page-item" th:classappend="${eventSpotData.currentPage==1} ? disabled">
+                            <a class="page-link" th:href="@{'/eventspot/page/'+${eventSpotData.currentPage-1}}"
                                aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                                 <span class="sr-only">Previous</span>
                             </a>
                         </li>
-                        <li class="page-item" th:classappend="${eventData.currentPage==i} ? active" th:each="i: ${#numbers.sequence(1, eventData.numberPage)}">
-                            <a class="page-link"  th:href="@{|/events/page/${i}|}"
+                        <li class="page-item" th:classappend="${eventSpotData.currentPage==i} ? active" th:each="i: ${#numbers.sequence(1, eventSpotData.numberPage)}">
+                            <a class="page-link"  th:href="@{|/eventspot/page/${i}|}"
                                th:text="${i}"
                                ></a>
                         </li>
-                        <li class="page-item" th:classappend="${eventData.currentPage==eventData.numberPage} ? disabled">
-                            <a class="page-link" th:href="@{'/events/page/'+${eventData.currentPage+1}}"
+                        <li class="page-item" th:classappend="${eventSpotData.currentPage==eventSpotData.numberPage} ? disabled">
+                            <a class="page-link" th:href="@{'/eventspot/page/'+${eventSpotData.currentPage+1}}"
                                aria-label="Next">
                                 <span aria-hidden="true">&raquo</span>
                                 <span class="sr-only">Next</span>

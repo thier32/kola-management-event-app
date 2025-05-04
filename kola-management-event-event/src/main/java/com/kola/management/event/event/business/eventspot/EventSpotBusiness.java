@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -148,6 +149,30 @@ public class EventSpotBusiness implements IEventSpotBusiness {
         return getEventSpotListData(1);
     }
 
+    public ListDataDto<EventSpotReturnDto> getEventSpotListData(int pageNo , int elementPerPage, List<EventSpotReturnDto> elements, long size){
+        ListDataDto<EventSpotReturnDto> data = new ListDataDto<>();
+        data.numberPage = 10;
+        data.currentPage = pageNo;
+        data.elementPerPage = elementPerPage;
+        data.listElements = elements;
+        data.total = size;
+        long divisor = data.total;
+        if (divisor <= 0){
+            divisor = 1;
+        }
+
+        long reste = data.elementPerPage % divisor;
+        long nbPage =  divisor / data.elementPerPage;
+        if (reste != 0){
+            nbPage++;
+        }
+        if (nbPage <= 0){
+            nbPage = 1;
+        }
+        if (data.listElements.isEmpty()) data.listElements = null;
+        data.numberPage = (int) nbPage;
+        return data;
+    }
 
     @Override
     public ListDataDto<EventSpotReturnDto> getEventSpotListData(int pageNo){
@@ -194,4 +219,26 @@ public class EventSpotBusiness implements IEventSpotBusiness {
         return eventSpotReturnDto;
     }
 
+    @Override
+    public ListDataDto<EventSpotReturnDto> getEventEventSpots(Long eventId, Integer pageNo) throws EventSpotBusinessException{
+        try{
+            Event event = eventService.verifyEventExistByEventId(new EventEventIdDto(eventId));
+        }catch (EventServiceException eventServiceException){
+            throw new EventSpotBusinessException(eventServiceException.getMessage());
+        }
+        if( pageNo == null){
+            pageNo = 1;
+        }
+        int elementPerPage = 10;
+        return getEventSpotListData(pageNo,elementPerPage,
+                eventSpotService.findEventSpotReturnDtoAllByEventIdOrderByIdDesc(eventId,pageNo,
+                        elementPerPage),
+                eventSpotService.findEventSpotReturnDtoAllByEventIdOrderByIdDesc(eventId).size()
+        );
+    }
+
+    @Override
+    public ListDataDto<EventSpotReturnDto> getEventEventSpots(Long eventId) throws EventSpotBusinessException {
+        return getEventEventSpots(eventId,null);
+    }
 }

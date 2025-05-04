@@ -123,4 +123,9 @@ public interface IEventSpotBusiness {
     ListDataDto<EventSpotReturnDto> getEventSpotListData(int pageNo);
 
     EventSpotReturnDto getEventSpot(Long eventSpotId) throws EventSpotBusinessException;
+
+    ListDataDto<EventSpotReturnDto> getEventEventSpots(Long eventId, Integer pageNo) throws EventSpotBusinessException;
+
+    ListDataDto<EventSpotReturnDto> getEventEventSpots(Long eventId) throws EventSpotBusinessException;
+
 }

@@ -70,4 +70,14 @@ public class EventSpotController {
 //        return "redirect:/events/list";
 //    }
 
+    @GetMapping(value = {"/view/{eventId}" ,"view/{eventId}/{pageNo}"})
+    public String eventPublish(@PathVariable("eventId") Long eventId,
+                               @PathVariable(value = "pageNo",required = false) Integer pageNo, Model model, RedirectAttributes redirectAttributes){
+        try {
+            model.addAttribute("eventSpotData", eventSpotBusiness.getEventEventSpots(eventId,pageNo));
+        } catch (EventSpotBusinessException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
+        return "event_eventspots_list";
+    }
 }

@@ -12,10 +12,10 @@
             <form th:action="@{/events/save}" role="form" method="post" enctype="multipart/form-data" th:object="${eventDto}">
                 <input type="hidden" th:field="*{eventId}" />
                 <div class="input-event-field">
-                    <input type="text" id="fservice" name="service" th:field="*{eventName}" placeholder="Service">
+                    <input type="text" id="fservice" name="service" th:field="*{eventName}" placeholder="Event Name" required>
                 </div>
                 <div class="input-event-field">
-                    <input type="text" id="lslug" name="slug" th:field="*{eventVenue}" placeholder="Slug">
+                    <input type="text" id="lslug" name="slug" th:field="*{eventVenue}" placeholder="Event Venue" required>
                 </div>
                 <div class="input-event-field">
                     <input type="file" name="image" accept="image/*" th:field="*{eventImage}" class="form-control-file">
