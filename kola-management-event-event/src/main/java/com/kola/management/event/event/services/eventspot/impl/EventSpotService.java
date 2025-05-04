@@ -71,6 +71,11 @@ public class EventSpotService extends BaseKernelService<EventSpot> implements IE
     }
 
     @Override
+    public Optional<EventSpot> UpdateEventSpotOccupation(EventSpotUpdateOccupationDto eventSpotUpdateOccupationDto) throws EventSpotServiceException {
+        return this.updateEventSpot(eventSpotUpdateOccupationDto,eventSpotUpdateOccupationDto.eventSpotId());
+    }
+
+    @Override
     public Optional<EventSpot> UpdateEventSpotName(EventSpotUpdateNameDto eventUpdateNameDto) throws EventSpotServiceException {
         return this.updateEventSpot(eventUpdateNameDto,eventUpdateNameDto.eventSpotId());
     }
@@ -81,7 +86,7 @@ public class EventSpotService extends BaseKernelService<EventSpot> implements IE
     }
 
     @Override
-    public Optional<EventSpot> UpdateEventSpotStatus(EventSpotUpdateStatusDto eventSpotUpdateStatusDto) throws EventServiceException, EventSpotServiceException {
+    public Optional<EventSpot> UpdateEventSpotStatus(EventSpotUpdateStatusDto eventSpotUpdateStatusDto) throws EventSpotServiceException {
         return this.updateEventSpot(eventSpotUpdateStatusDto,eventSpotUpdateStatusDto.eventSpotId());
     }
 

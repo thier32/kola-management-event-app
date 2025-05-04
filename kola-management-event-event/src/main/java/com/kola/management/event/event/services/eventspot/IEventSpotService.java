@@ -82,7 +82,15 @@ public interface IEventSpotService {
      * @param eventUpdateStateDto  eventUpdateStateDto
      * @return  Optional of <Event>
      */
-    Optional<EventSpot> UpdateEventSpotState(EventSpotUpdateStateDto eventUpdateStateDto) throws EventServiceException, EventSpotServiceException;
+    Optional<EventSpot> UpdateEventSpotState(EventSpotUpdateStateDto eventUpdateStateDto) throws  EventSpotServiceException;
+
+    /**
+     *
+     * @param eventSpotUpdateOccupationDto  eventSpotUpdateOccupationDto
+     * @return  Optional of <Event>
+     */
+    Optional<EventSpot> UpdateEventSpotOccupation(EventSpotUpdateOccupationDto eventSpotUpdateOccupationDto) throws EventSpotServiceException;
+
 
     /**
      *
@@ -98,16 +106,16 @@ public interface IEventSpotService {
      * @return
      * @throws EventServiceException
      */
-    Optional<EventSpot> UpdateEventSpotDescription(EventSpotUpdateDescritpionDto eventUpdateDescritpinDto) throws EventServiceException, EventSpotServiceException;
+    Optional<EventSpot> UpdateEventSpotDescription(EventSpotUpdateDescritpionDto eventUpdateDescritpinDto) throws  EventSpotServiceException;
 
 
     /**
      *
      * @param eventSpotUpdateStatusDto
      * @return
-     * @throws EventServiceException
+     * @throws EventSpotServiceException
      */
-    Optional<EventSpot> UpdateEventSpotStatus(EventSpotUpdateStatusDto eventSpotUpdateStatusDto) throws EventServiceException, EventSpotServiceException;
+    Optional<EventSpot> UpdateEventSpotStatus(EventSpotUpdateStatusDto eventSpotUpdateStatusDto) throws  EventSpotServiceException;
 
 
     /**
