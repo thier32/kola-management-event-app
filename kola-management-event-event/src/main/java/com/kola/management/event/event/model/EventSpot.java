@@ -24,8 +24,8 @@ public class EventSpot extends BaseKernelModel {
 
     private long eventSpotId;
     private Long eventId;
-    private long eventSpotCapacity;
-    private long eventSpotOccupation;
+    private Long eventSpotCapacity;
+    private Long eventSpotOccupation;
     private String eventSpotName;
     private String eventName;
     private String eventSpotDescription;

@@ -4,11 +4,11 @@ import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.model.BaseKernelModel;
 import com.kola.management.event.kernel.repository.BaseKernelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 @Service
-public class BaseKernelService<T extends BaseKernelModel> {
+public class BaseKernelService<T extends BaseKernelModel> implements IBaseKernelService {
 
     @Autowired
     public BaseKernelRepository<T> baseKernelRepository;
@@ -194,7 +194,7 @@ public class BaseKernelService<T extends BaseKernelModel> {
             }
         }
         int extensionDot = Objects.requireNonNull(file.getOriginalFilename()).lastIndexOf(".");
-        if (extensionDot > 0){
+        if (extensionDot < 0){
             return "";
         }
         String extension = file.getOriginalFilename().substring(extensionDot);
@@ -216,6 +216,20 @@ public class BaseKernelService<T extends BaseKernelModel> {
 
     public String uploadImage(MultipartFile file, String uploadDir) throws KernelException {
         return uploadImage(file,uploadDir,null);
+    }
+
+
+    public static String convertImageToBase64(String imagePath) throws IOException {
+        File imageFile = new File(imagePath);
+        if (imageFile.exists()) {
+            FileInputStream fileInputStream = new FileInputStream(imageFile);
+            byte[] imageData = new byte[(int) imageFile.length()];
+            fileInputStream.read(imageData);
+            fileInputStream.close();
+            return Base64.getEncoder().encodeToString(imageData);
+        } else {
+            throw new IOException("Image file not found: " + imagePath);
+        }
     }
 
 }

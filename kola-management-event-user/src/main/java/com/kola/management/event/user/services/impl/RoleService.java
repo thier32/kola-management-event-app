@@ -53,7 +53,7 @@ public class RoleService extends BaseKernelService<Role> implements IRoleService
     }
 
     @Override
-    public Role updateRoleNom(String nom, Long roleId) throws RoleServiceException {
+    public Role updateRoleName(String nom, Long roleId) throws RoleServiceException {
         RoleNameDto roleNameDto = new RoleNameDto(nom);
         return updateRole(roleNameDto, roleId);
     }
@@ -79,13 +79,13 @@ public class RoleService extends BaseKernelService<Role> implements IRoleService
     @Override
     public boolean verifyRoleExists(Role role) {
         return ((RoleRepository) getDefaultRepository())
-                .findRoleByNomAndDescription(role.getNom(), role.getDescription()) != null;
+                .findRoleByNameAndDescription(role.getName(), role.getDescription()) != null;
     }
 
     @Override
     public boolean verifyRoleExists(String nom, String description) {
         return ((RoleRepository) getDefaultRepository())
-                .findRoleByNomAndDescription(nom, description) != null;
+                .findRoleByNameAndDescription(nom, description) != null;
     }
 
     @Override
@@ -94,8 +94,8 @@ public class RoleService extends BaseKernelService<Role> implements IRoleService
     }
 
     @Override
-    public List<Role> findRoleByNom(String nom) {
-        return ((RoleRepository) getDefaultRepository()).findRoleByNom(nom);
+    public List<Role> findRoleByName(String nom) {
+        return ((RoleRepository) getDefaultRepository()).findRoleByName(nom);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class RoleService extends BaseKernelService<Role> implements IRoleService
 
     @Override
     public void checkMandatoryProperty(Role role) throws RoleServiceException {
-        if (role.getNom() == null || role.getNom().isEmpty()) {
+        if (role.getName() == null || role.getName().isEmpty()) {
             throw new RoleServiceException("Property 'nom' is mandatory");
         }
         if (role.getPermissions() == null || role.getPermissions().isEmpty()) {

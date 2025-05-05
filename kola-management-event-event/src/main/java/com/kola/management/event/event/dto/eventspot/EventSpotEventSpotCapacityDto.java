@@ -2,6 +2,6 @@ package com.kola.management.event.event.dto.eventspot;
 
 public record EventSpotEventSpotCapacityDto(
         long eventId,
-        long capacity
+        Long capacity
 ) implements IEventSpotDto{
 }

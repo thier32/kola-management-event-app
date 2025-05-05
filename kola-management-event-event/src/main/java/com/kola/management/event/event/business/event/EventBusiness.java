@@ -18,6 +18,7 @@ import com.kola.management.event.kernel.model.BaseKernelModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +49,7 @@ public class EventBusiness implements IEventBusiness {
 
             if (optionalEvent.isPresent()){
                 eventReturnDto = map(optionalEvent.get());
-            };
+            }
         }catch (EventServiceException|EventBusinessException eventServiceException){
             throw new EventBusinessException(eventServiceException.getMessage());
         }
@@ -198,6 +199,9 @@ public class EventBusiness implements IEventBusiness {
         ListDataDto<EventReturnDto> data = new ListDataDto<>();
         data.numberPage = 10;
         data.currentPage = page;
+        List<String> keys = new ArrayList<>();
+        Arrays.stream(EventStatus.values()).forEach(e -> keys.add(e.name()));
+        data.keys = keys;
         data.elementPerPage = 5;
         data.listElements = this.eventService.findEventReturnDtoAllByOrderByIdDesc(data.currentPage,data.elementPerPage);
         data.total = this.eventService.findAllEvents().size();

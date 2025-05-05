@@ -18,6 +18,12 @@
                     <input type="text" id="lslug" name="slug" th:field="*{eventVenue}" placeholder="Event Venue" required>
                 </div>
                 <div class="input-event-field">
+                    <input type="number" min="1" id="capacity" name="slug" th:field="*{eventCapacity}" placeholder="Event Capacity" required>
+                </div>
+                <div class="input-event-field">
+                    <textarea id="description" name="description" th:field="*{eventDescription}" placeholder="Event Description" required></textarea>
+                </div>
+                <div class="input-event-field">
                     <input type="file" name="image" accept="image/*" th:field="*{eventImage}" class="form-control-file">
                 </div>
                 <div class="btn-event-field">

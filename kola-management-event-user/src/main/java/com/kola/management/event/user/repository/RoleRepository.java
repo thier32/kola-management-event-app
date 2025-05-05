@@ -11,9 +11,9 @@ public interface RoleRepository extends BaseKernelRepository<Role> {
 
     Role findRoleByRoleId(long roleId);
 
-    List<Role> findRoleByNom(String nom);
+    List<Role> findRoleByName(String name);
 
     List<Role> findRoleByPermissions(String permissions);
 
-    Role findRoleByNomAndDescription(String nom, String description);
+    Role findRoleByNameAndDescription(String name, String description);
 }

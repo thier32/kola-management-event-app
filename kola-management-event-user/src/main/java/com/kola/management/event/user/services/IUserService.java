@@ -1,8 +1,10 @@
 package com.kola.management.event.user.services;
 
 
+import com.kola.management.event.kernel.model.BaseKernelModel;
 import com.kola.management.event.user.dto.user.IUserDto;
 import com.kola.management.event.user.dto.user.UserDto;
+import com.kola.management.event.user.dto.user.UserReturnDto;
 import com.kola.management.event.user.model.User;
 import com.kola.management.event.user.services.exceptions.UserServiceException;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -64,4 +66,6 @@ public interface IUserService extends UserDetailsService {
     User createUser(User user) throws UserServiceException;
 
     User createUser(UserDto userDto) throws UserServiceException;
+    UserReturnDto mapping(BaseKernelModel model, Class<UserReturnDto> eventReturnDtoClass) throws UserServiceException;
+
 }

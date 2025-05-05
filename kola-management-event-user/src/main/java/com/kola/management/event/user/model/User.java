@@ -56,13 +56,18 @@ public class User extends BaseKernelModel implements UserDetails {
     @PrePersist
     protected void onCreate() {
         this.creationDate = LocalDateTime.now();
-        this.roles = new ArrayList<>();
-        this.rolesObject = new ArrayList<>();
     }
 
     public void addRole(Role role) {
         role.setRoleId(role.getRoleId());
         this.rolesObject.add(role);
+    }
+    public void addRole(String role){
+        roles.add(role);
+    }
+
+    public void removeRole(String role){
+        roles.remove(role);
     }
 
     public void removeRole(Role role) {
@@ -78,7 +83,10 @@ public class User extends BaseKernelModel implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        getRoles().forEach(r -> grantedAuthorities.add(new SimpleGrantedAuthority(r)));
+        List<String> roles = getRoles();
+        if (roles != null){
+            roles.forEach(r -> grantedAuthorities.add(new SimpleGrantedAuthority(r)));
+        }
         return grantedAuthorities;
     }
 

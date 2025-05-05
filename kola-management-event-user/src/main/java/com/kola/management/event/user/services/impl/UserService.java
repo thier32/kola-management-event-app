@@ -1,20 +1,20 @@
 package com.kola.management.event.user.services.impl;
 
 import com.kola.management.event.kernel.exception.KernelException;
+import com.kola.management.event.kernel.model.BaseKernelModel;
 import com.kola.management.event.kernel.services.BaseKernelService;
 import com.kola.management.event.user.dto.user.*;
+import com.kola.management.event.user.model.Role;
 import com.kola.management.event.user.model.User;
 import com.kola.management.event.user.repository.UserRepository;
 import com.kola.management.event.user.services.IUserService;
 import com.kola.management.event.user.services.exceptions.UserServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -49,13 +49,26 @@ public class UserService extends BaseKernelService<User> implements IUserService
                         "%s %s must be identical",User.passwordProp,User.confirmPasswordProp
                 ));
             }
-
             user = this.mapping(userDto,User.class);
+
+            if(userDto.roles() != null){
+                user.setRoles(userDto.roles());
+            }
+
             user = this.createUser(user);
         }catch (KernelException kernelException){
             throw new UserServiceException(kernelException.getMessage());
         }
         return user;
+    }
+
+    @Override
+    public UserReturnDto mapping(BaseKernelModel model, Class<UserReturnDto> eventReturnDtoClass) throws UserServiceException {
+        try {
+            return super.mapping(model,eventReturnDtoClass);
+        }catch (KernelException kernelException){
+            throw new UserServiceException(kernelException.getMessage());
+        }
     }
 
     @Override

@@ -18,28 +18,6 @@ public class HttpSecurityConfig {
         this.customAuthenticationManager = customAuthenticationManager;
     }
 
-    /*
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails user = User.withUsername("user")
-                .password("{noop}pass") // {noop} indicates plain text password (for demo purposes)
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user);
-    }*/
-
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//    }
-
-//    @Bean
-//    public AuthenticationManager authenticationManager(
-//            final AuthenticationConfiguration authenticationConfiguration) throws Exception {
-//        return authenticationConfiguration.getAuthenticationManager();
-//    }
-
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -47,12 +25,16 @@ public class HttpSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login").permitAll()
                         .requestMatchers(
+                                "/",
                                 "/home",
+                                "/admin/register",
+                                "/admin",
                                 "/register",
                                 "/resources/**",
                                 "/resources/static/**",
                                 "/js/**",
-                                "/css/**"
+                                "/css/**",
+                                "/img/**"
                         )
                                 .permitAll()
 
@@ -75,26 +57,10 @@ public class HttpSecurityConfig {
                 .logout(logout -> logout.deleteCookies("JSESSIONID"))
                 .authenticationManager(customAuthenticationManager)
                 .addFilterBefore(new UserFilter(), BasicAuthenticationFilter.class);
-//        http
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/login").permitAll()
-//                        .requestMatchers("/requests/list").permitAll()// Allow access to the login page
-//                        .anyRequest().authenticated() // Secure all other endpoints
-//                )
-//                .formLogin(form -> form
-//                        .loginPage("/login") // Use the custom login page
-//                        .defaultSuccessUrl("/welcome", true) // Redirect to welcome page after login
-//                )
-//                .logout(logout -> logout
-//                        .logoutSuccessUrl("/login") // Redirect to login page after logout
-//                        .permitAll()
-//                ).authenticationProvider(new
-//                        CustomAuthenticationProvider()
-//                );
-
-
         return http.build();
     }
+
+
 
 }
 

@@ -1,13 +1,19 @@
 package com.kola.management.event.event.services.eventhistory.impl;
 
+import com.kola.management.event.event.dto.event.EventStatus;
 import com.kola.management.event.event.dto.eventhistory.*;
+import com.kola.management.event.event.dto.eventspot.EventSpotStatus;
 import com.kola.management.event.event.model.EventHistory;
 import com.kola.management.event.event.repository.EventHistoryRepository;
 import com.kola.management.event.event.services.exceptions.EventHistoryServiceException;
 import com.kola.management.event.event.services.eventhistory.IEventHistoryService;
 import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.services.BaseKernelService;
+import com.kola.management.event.user.model.User;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +21,14 @@ import java.util.Optional;
 
 @Service
 public class EventHistoryService extends BaseKernelService<EventHistory> implements IEventHistoryService {
+
+    User getConnectedUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            return ((User)authentication.getPrincipal());
+        }
+        return null;
+    }
 
     @Override
     public EventHistory saveEventHistoryDto(IEventHistoryDto eventHistoryDto,Long eventHistoryId) throws EventHistoryServiceException{
@@ -81,6 +95,54 @@ public class EventHistoryService extends BaseKernelService<EventHistory> impleme
     @Override
     public Optional<EventHistory> bookEvent(EventHistoryBookerEventDto eventHistoryBookerEventDto) throws EventHistoryServiceException {
         return this.saveEventHistory(eventHistoryBookerEventDto);
+    }
+
+    @Override
+    public Optional<EventHistory> bookEventSpot(EventHistoryBookerEventSpotDto eventHistoryBookerEventSpotDto) throws EventHistoryServiceException {
+        return this.saveEventHistory(eventHistoryBookerEventSpotDto);
+    }
+
+    @Override
+    public Optional<EventHistory> unbookEventSpot(EventHistoryBookerEventSpotDto eventHistoryBookerEventSpotDto) throws EventHistoryServiceException {
+        return this.saveEventHistory(eventHistoryBookerEventSpotDto);
+    }
+
+    @Override
+    public Optional<EventHistory> bookEventSpot(long eventSpotId) throws EventHistoryServiceException {
+        User user = getConnectedUser();
+        EventHistoryBookerEventSpotDto eventHistoryBookerEventSpotDto =
+                new EventHistoryBookerEventSpotDto(
+                        null,
+                        null,
+                        user != null ? user.getUserId() : null,
+                        user != null ? user.getUsername() : null,
+                        EventStatus.BOOKED,
+                        null,
+                        eventSpotId,
+                        null,
+                        EventSpotStatus.BOOKED,
+                        1L
+                );
+        return this.bookEventSpot(eventHistoryBookerEventSpotDto);
+    }
+
+    @Override
+    public Optional<EventHistory> unbookEventSpot(long eventSpotId) throws EventHistoryServiceException {
+        User user = getConnectedUser();
+        EventHistoryBookerEventSpotDto eventHistoryBookerEventSpotDto =
+                new EventHistoryBookerEventSpotDto(
+                        null,
+                        null,
+                        user != null ? user.getUserId() : null,
+                        user != null ? user.getUsername() : null,
+                        EventStatus.BOOKED,
+                        null,
+                        eventSpotId,
+                        null,
+                        EventSpotStatus.UNBOOKED,
+                        -1L
+                );
+        return this.bookEventSpot(eventHistoryBookerEventSpotDto);
     }
 
     @Override

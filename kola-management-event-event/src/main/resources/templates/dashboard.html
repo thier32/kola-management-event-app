@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:https="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/main_layout.html}"
+>
+<head>
+    <link rel="stylesheet" href="/css/card.css">
+</head>
+<body>
+<div  layout:fragment="content" >
+    <div class="card-columns" >
+<!--        <button th:each="key :${eventData.keys}" th:text="${key}"></button>-->
+        <div class="card" th:each="event : ${eventData.listElements}">
+            <div class="card-image"><img th:if="${event.eventImageUrl != null and
+             !#strings.isEmpty(event.eventImageUrl)}"
+                                         th:src="@{'data:image/jpeg;base64,'+${event.eventImageUrl}}"
+                                         alt="Orange" />
+                <img th:unless="${event.eventImageUrl != null and
+                     !#strings.isEmpty(event.eventImageUrl)}"
+                     th:src="@{img/no-image.png}"
+                     alt="Orange" />
+            </div>
+            <div class="card-body">
+                <!-- Date de publication de l'article-->
+                <div class="card-date">
+                    <time th:text="${event.createdAt}"></time>
+                </div>
+
+                <!-- Titre de l'article -->
+                <div class="card-title">
+                    <h3 th:text="${event.eventName}">Lorem Ipsum</h3>
+                </div>
+                <!-- Extrait de l'article -->
+                <div class="card-excerpt">
+                    <p th:text="${event.eventDescription}"> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>

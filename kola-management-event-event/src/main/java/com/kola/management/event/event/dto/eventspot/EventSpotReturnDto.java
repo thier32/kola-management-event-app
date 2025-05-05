@@ -19,8 +19,8 @@ public class EventSpotReturnDto {
     int status;
     String eventName;
     String eventSpotName;
-    long eventSpotCapacity;
-    long eventSpotId;
+    Long eventSpotCapacity;
+    Long eventSpotId;
     String message;
     EventSpotStatus eventSpotStatus;
     List<EventReturnDto> listEventDto;

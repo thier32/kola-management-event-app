@@ -31,7 +31,7 @@ public class EventBusinessIntegrationTest {
         EventDto eventDto = new EventDto(
                 "eventName",
                 "description",
-                "venue",null
+                "venue",15L
         );
         EventReturnDto created = eventBusiness.createEvent(eventDto);
 

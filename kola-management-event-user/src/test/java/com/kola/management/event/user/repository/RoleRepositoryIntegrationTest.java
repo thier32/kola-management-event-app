@@ -20,7 +20,7 @@ public class RoleRepositoryIntegrationTest {
     @Test
     void givenRoleModel_whenSave_thenSuccess() {
         Role role = new Role();
-        role.setNom("ADMIN");
+        role.setName("ADMIN");
 
         Role saved = roleRepository.save(role);
         assertThat(entityManager.find(Role.class, saved.getId())).isEqualTo(role);
@@ -29,19 +29,19 @@ public class RoleRepositoryIntegrationTest {
     @Test
     void givenRoleCreated_whenUpdate_thenSuccess() {
         Role role = new Role();
-        role.setNom("USER");
+        role.setName("USER");
         entityManager.persist(role);
 
-        role.setNom("MANAGER");
+        role.setName("MANAGER");
         roleRepository.save(role);
 
-        assertThat(entityManager.find(Role.class, role.getId()).getNom()).isEqualTo("MANAGER");
+        assertThat(entityManager.find(Role.class, role.getId()).getName()).isEqualTo("MANAGER");
     }
 
     @Test
     void givenRoleCreated_whenFindById_thenSuccess() {
         Role role = new Role();
-        role.setNom("SUPPORT");
+        role.setName("SUPPORT");
         entityManager.persist(role);
 
         Role found = roleRepository.findById(role.getId()).get();

@@ -15,7 +15,7 @@ public interface IRoleService {
 
     Role updateRole(IRoleDto roleDto, Long roleId) throws RoleServiceException;
 
-    Role updateRoleNom(String nom, Long roleId)  throws RoleServiceException;
+    Role updateRoleName(String nom, Long roleId)  throws RoleServiceException;
 
     Role updateRoleDescription(String description, Long roleId)  throws RoleServiceException;
 
@@ -29,7 +29,7 @@ public interface IRoleService {
 
     Role findRoleByRoleId(Long roleId);
 
-    List<Role> findRoleByNom(String nom);
+    List<Role> findRoleByName(String nom);
 
     List<Role> findRoleByPermissions(String permissions);
 

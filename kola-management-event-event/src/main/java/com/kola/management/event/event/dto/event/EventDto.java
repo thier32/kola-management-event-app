@@ -15,17 +15,21 @@ public record EventDto(
         String eventVenue,
         Long eventId,
         String eventImageUrl,
+        Long eventCapacity,
         MultipartFile eventImage
 ) implements IEventDto {
     public EventDto(){
-        this(null,null,null,null,null,null);
+        this(null,null,null,null,null,null,null);
     }
 
     public EventDto(String eventName, String eventDescription,String eventVenue,String eventImageUrl){
-        this(eventName,eventDescription,eventVenue,null,eventImageUrl,null);
+        this(eventName,eventDescription,eventVenue,null,eventImageUrl,null,null);
     }
     public EventDto(String eventName, String eventDescription,String eventVenue){
-        this(eventName,eventDescription,eventVenue,null,null,null);
+        this(eventName,eventDescription,eventVenue,null,null,null,null);
+    }
+    public EventDto(String eventName, String eventDescription,String eventVenue,Long eventCapacity){
+        this(eventName,eventDescription,eventVenue,null,null,eventCapacity,null);
     }
 }
 

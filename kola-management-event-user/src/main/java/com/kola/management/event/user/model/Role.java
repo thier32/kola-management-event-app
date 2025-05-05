@@ -13,13 +13,13 @@ import lombok.*;
 public class Role extends BaseKernelModel {
 
     public static final String roleIdProp = "roleId";
-    public static final String nomProp = "nom";
+    public static final String nameProp = "name";
     public static final String descriptionProp = "description";
     public static final String permissionsProp = "permissions";
 
     private Long roleId;
 
-    private String nom;
+    private String name;
 
     private String description;
 

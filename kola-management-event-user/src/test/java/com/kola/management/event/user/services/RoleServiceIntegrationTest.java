@@ -25,21 +25,21 @@ public class RoleServiceIntegrationTest {
     @Test
     void givenValidRole_whenCreate_thenSuccess() throws RoleServiceException {
         Role role = new Role();
-        role.setNom("ADMIN");
+        role.setName("ADMIN");
         role.setDescription("Administrateur de la plateforme");
         role.setPermissions("ALL");
 
         Role created = roleService.createRole(role);
 
         assertThat(created.getId()).isNotNull();
-        assertThat(created.getNom()).isEqualTo("ADMIN");
+        assertThat(created.getName()).isEqualTo("ADMIN");
         assertThat(created.getPermissions()).isEqualTo("ALL");
     }
 
     @Test
     void givenExistingRole_whenUpdate_thenUpdatedSuccessfully() throws RoleServiceException {
         Role role = new Role();
-        role.setNom("USER");
+        role.setName("USER");
         role.setDescription("Utilisateur basique");
         role.setPermissions("READ_ONLY");
 
@@ -66,7 +66,7 @@ public class RoleServiceIntegrationTest {
     @Test
     void givenMissingPermissions_whenCreate_thenThrowsException() {
         Role role = new Role();
-        role.setNom("NO_ACCESS");
+        role.setName("NO_ACCESS");
         role.setDescription("Rôle fantôme");
 
         assertThrows(RoleServiceException.class, () -> {
@@ -77,13 +77,13 @@ public class RoleServiceIntegrationTest {
     @Test
     void givenValidRole_whenFindByNom_thenReturnCorrectResult() throws RoleServiceException {
         Role role = new Role();
-        role.setNom("GESTIONNAIRE");
+        role.setName("GESTIONNAIRE");
         role.setDescription("Responsable des dossiers");
         role.setPermissions("MANAGE_DOSSIERS");
 
         roleService.createRole(role);
 
-        List<Role> roles = roleService.findRoleByNom("GESTIONNAIRE");
+        List<Role> roles = roleService.findRoleByName("GESTIONNAIRE");
 
         assertThat(roles).isNotEmpty();
         assertThat(roles.get(0).getDescription()).contains("Responsable");

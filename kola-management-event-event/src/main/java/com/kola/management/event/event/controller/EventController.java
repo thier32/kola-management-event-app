@@ -23,9 +23,6 @@ public class EventController {
         return  "events";
     }
 
-//    @GetMapping(value = {"page","page/{pageNo}"})
-//    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
-
     @GetMapping("add")
     public String eventAdd(Model model){
         model.addAttribute("eventDto", new EventDto());

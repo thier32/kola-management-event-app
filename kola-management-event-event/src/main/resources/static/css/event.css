@@ -133,3 +133,53 @@
     cursor: pointer;
     transition: background 1s;
 }
+
+.tag-event-filter {
+    margin-bottom: 20px;
+}
+
+.tag-event-filter button {
+    border: 2px solid #E1E8EE;
+    border-radius: 6px;
+    padding: 13px 20px;
+    font-size: 14px;
+    color: #5E6977;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all .5s;
+}
+
+.tag-event-filter button:hover,
+.tag-event-filter button:active,
+.tag-event-filter button:focus {
+    border: 2px solid #86939E;
+    outline: none;
+}
+
+.tag-event {
+    border-bottom: 1px solid #E1E8EE;
+    margin-bottom: 20px;
+}
+
+.tag-event a {
+    color: #358ED7;
+    text-decoration: none;
+    font-size: 12px;
+    position: relative;
+    margin: 10px 0;
+    display: inline-block;
+}
+
+.tag-event a:before {
+    content: "?";
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    border: 2px solid rgba(53, 142, 215, 0.5);
+    display: inline-block;
+    text-align: center;
+    line-height: 16px;
+    opacity: 0.5;
+    margin-right: 5px;
+}
+

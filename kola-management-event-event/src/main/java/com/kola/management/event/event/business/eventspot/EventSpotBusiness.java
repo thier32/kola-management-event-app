@@ -3,22 +3,29 @@ package com.kola.management.event.event.business.eventspot;
 import com.kola.management.event.event.business.IEventSpotBusiness;
 import com.kola.management.event.event.business.exceptions.EventSpotBusinessException;
 import com.kola.management.event.event.dto.event.EventEventIdDto;
+import com.kola.management.event.event.dto.event.EventStatus;
 import com.kola.management.event.event.dto.event.ListDataDto;
+import com.kola.management.event.event.dto.eventhistory.EventHistoryBookerEventDto;
 import com.kola.management.event.event.dto.eventspot.*;
 import com.kola.management.event.event.model.Event;
 import com.kola.management.event.event.model.EventSpot;
 import com.kola.management.event.event.services.event.impl.EventService;
+import com.kola.management.event.event.services.eventhistory.IEventHistoryService;
 import com.kola.management.event.event.services.eventspot.IEventSpotService;
+import com.kola.management.event.event.services.exceptions.EventHistoryServiceException;
 import com.kola.management.event.event.services.exceptions.EventServiceException;
 import com.kola.management.event.event.services.exceptions.EventSpotServiceException;
 import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.model.BaseKernelModel;
+import com.kola.management.event.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class EventSpotBusiness implements IEventSpotBusiness {
@@ -26,10 +33,16 @@ public class EventSpotBusiness implements IEventSpotBusiness {
     @Autowired
     IEventSpotService eventSpotService;
 
+    @Autowired
+    IEventHistoryService eventHistoryService;
+
     @Value("${kola.event.management.folder.eventspot.images}")
     private String eventSpotFolder;
+
     @Autowired
     private EventService eventService;
+
+
 
     @Override
     public EventSpotReturnDto createEventSpot(EventSpotDto eventSpotDto) throws EventSpotBusinessException {
@@ -40,13 +53,14 @@ public class EventSpotBusiness implements IEventSpotBusiness {
                 optionalEventSpot = eventSpotService.updateEventSpot(eventSpotDto,eventSpotDto.eventSpotId());
             }else{
                  Event event = eventService.verifyEventExistByEventId(new EventEventIdDto(eventSpotDto.eventId()));
+
                  EventSpotDto fullEventSpotDto = new EventSpotDto(
                          eventSpotDto.eventSpotName(),
                          event.getEventName(),
                          null,
                          event.getEventId(),
-                         eventSpotDto.eventSpotCapacity(),
-                         eventSpotDto.eventSpotOccupation(),
+                         eventSpotDto.eventSpotCapacity() != null ? eventSpotDto.eventSpotCapacity() : 0L,
+                         eventSpotDto.eventSpotOccupation() != null ? eventSpotDto.eventSpotOccupation() : 0L,
                          eventSpotDto.eventSpotImageUrl(),
                          eventSpotDto.eventSpotImage(),null
                  );
@@ -104,17 +118,28 @@ public class EventSpotBusiness implements IEventSpotBusiness {
         return eventSpotReturnDto;
     }
 
+
     @Override
     public EventSpotReturnDto bookEventSpot(long eventSpotId) throws EventSpotBusinessException {
+        try {
+            this.eventHistoryService.bookEventSpot(eventSpotId);
+        } catch (EventHistoryServiceException e) {
+            throw new EventSpotBusinessException(e.getMessage());
+        }
         return this.changeEventSpotStatus(
-                new EventSpotUpdateStatusDto(EventSpotStatus.BOOKED,eventSpotId)
+                new EventSpotUpdateStatusDto(EventSpotStatus.BOOKED,eventSpotId,1L)
         );
     }
 
     @Override
     public EventSpotReturnDto unbookEventSpot(long eventSpotId) throws EventSpotBusinessException {
+        try {
+            this.eventHistoryService.unbookEventSpot(eventSpotId);
+        } catch (EventHistoryServiceException e) {
+            throw new EventSpotBusinessException(e.getMessage());
+        }
         return this.changeEventSpotStatus(
-                new EventSpotUpdateStatusDto(EventSpotStatus.UNBOOKED,eventSpotId)
+                new EventSpotUpdateStatusDto(EventSpotStatus.UNBOOKED,eventSpotId,-1L)
         );
     }
 
@@ -211,7 +236,9 @@ public class EventSpotBusiness implements IEventSpotBusiness {
         data.elementPerPage = 5;
         data.listElements = this.eventSpotService.findEventSpotReturnDtoAllByOrderByIdDesc(data.currentPage,data.elementPerPage);
         data.total = this.eventSpotService.findAllEventSpots().size();
-
+        List<String> keys = new ArrayList<>();
+        Arrays.stream(EventSpotStatus.values()).forEach(e -> keys.add(e.name()));
+        data.keys = keys;
         long divisor = data.total;
         if (divisor <= 0){
             divisor = 1;

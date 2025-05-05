@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
 
       layout:decorate="~{layouts/main_layout.html}"
 >
@@ -19,7 +20,7 @@
     </div>
     <div th:switch="${eventSpotData.listElements}">
         <p>
-            <a href="/eventspot/add" class="btn btn-primary"><i
+            <a sec:authorize="hasRole('ADMIN')" href="/eventspot/add" class="btn btn-primary"><i
                     class="fas fa-user-plus ml-2"> Add Event Spot</i></a>
         </p>
         <div class="col">
@@ -50,17 +51,20 @@
                         <td th:text="${eventSpot.eventName}"></td>
                         <td th:text="${eventSpot.eventSpotCapacity}"></td>
                         <td>
-                            <a th:href="@{'/eventspot/edit/' + ${eventSpot.eventSpotId}}"  title="Edit">
+                            <a sec:authorize="hasRole('ADMIN')" th:href="@{'/eventspot/edit/' + ${eventSpot.eventSpotId}}"  title="Edit">
                                 <i class="fa fa-edit" aria-hidden="true"></i>
                             </a>
                         </td>
                         <td>
-                            <a th:href="@{'/eventspot/publish/' + ${eventSpot.eventSpotId}}"  title="Publish"
+                            <a sec:authorize="hasRole('ADMIN')" th:href="@{'/eventspot/publish/' + ${eventSpot.eventSpotId}}"  title="Publish"
                             ><i class="fa fa-upload" aria-hidden="true"></i>
                             </a>
                         </td>
                         <td>
-                            <a th:href="@{'/eventspot/book/' + ${eventSpot.eventSpotId}}"  title="Book">
+                            <a th:if= "${eventSpot.eventSpotStatus != null && eventSpot.eventSpotStatus.toString() == 'BOOKED'}" th:href="@{'/eventspot/unbook/' + ${eventSpot.eventSpotId}}"  title="Unbook">
+                                <i class="fa fa-bookmark-o"></i>
+                            </a>
+                            <a th:unless="${eventSpot.eventSpotStatus != null && eventSpot.eventSpotStatus.toString() == 'BOOKED'}" th:href="@{'/eventspot/book/' + ${eventSpot.eventSpotId}}"  title="Book">
                                 <i class="fa fa-bookmark" aria-hidden="true"></i>
                             </a>
                         </td>

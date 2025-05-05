@@ -18,23 +18,29 @@ import java.util.Optional;
 @Service
 public class EventSpotService extends BaseKernelService<EventSpot> implements IEventSpotService {
     String NOT_FOUND_MESSAGE_TEMPLATE = "%s with %s %s not found.";
+    String NO_MORE_SPACE_IN_SPOT_TEMPLATE = "The spot %s is fully booked.";
+    String INVALID_SPOT_CAPACITY_TEMPLATE = "The provider capacity %s is invalid.";
 
 
     @Override
     public Optional<EventSpot> updateEventSpot(IEventSpotDto eventSpotDto, long eventSpotId) throws EventSpotServiceException {
+
         EventSpot eventSpot = this.saveEventSpotDto(eventSpotDto,eventSpotId);
         return eventSpot != null ? Optional.of(eventSpot) : Optional.empty();
     }
+
+
 
     @Override
     public EventSpot saveEventSpotDto(IEventSpotDto eventSpotDto, Long eventSpotId) throws EventSpotServiceException {
         EventSpot eventSpot;
         try {
-            eventSpot = this.mapping(eventSpotDto, EventSpot.class);
+
             if (eventSpotId == null){
+                eventSpot = this.mapping(eventSpotDto, EventSpot.class);
                 eventSpot = this.save(eventSpot);
             }else{
-                eventSpot = this.update(eventSpot, eventSpotId);
+                eventSpot = this.update(eventSpotDto, eventSpotId);
             }
         } catch (KernelException e) {
             throw new EventSpotServiceException(e.getMessage());
@@ -55,6 +61,12 @@ public class EventSpotService extends BaseKernelService<EventSpot> implements IE
 
     @Override
     public Optional<EventSpot> createEventSpot(EventSpotDto eventSpot) throws EventSpotServiceException {
+        if (eventSpot.eventSpotCapacity() < 0L){
+            throw new EventSpotServiceException(String.format(
+                    INVALID_SPOT_CAPACITY_TEMPLATE,eventSpot.eventSpotCapacity()
+            ));
+        }
+
         return this.saveEventSpot(eventSpot);
     }
 
@@ -90,7 +102,24 @@ public class EventSpotService extends BaseKernelService<EventSpot> implements IE
 
     @Override
     public Optional<EventSpot> updateEventSpotStatus(EventSpotUpdateStatusDto eventSpotUpdateStatusDto) throws EventSpotServiceException {
+        if (eventSpotUpdateStatusDto.eventSpotOccupation() != null){
+            checkEventSpotOccupation(eventSpotUpdateStatusDto.eventSpotId(),eventSpotUpdateStatusDto.eventSpotOccupation());
+        }
         return this.updateEventSpot(eventSpotUpdateStatusDto,eventSpotUpdateStatusDto.eventSpotId());
+    }
+
+    @Override
+    public void checkEventSpotOccupation(long evenSpotId, Long occupation) throws EventSpotServiceException {
+        EventSpot eventSpot = verifyEventSpotExistByEventSpotId(new EventSpotEventSpotIdDto(evenSpotId));
+        Long current = eventSpot.getEventSpotCapacity();
+        //if (occupation > 0){
+        current -= occupation;
+        //}else{
+        //    current += occupation;
+        //}
+        if (current < 0){
+            throw new EventSpotServiceException(String.format(NO_MORE_SPACE_IN_SPOT_TEMPLATE,eventSpot.getEventSpotName()));
+        }
     }
 
 

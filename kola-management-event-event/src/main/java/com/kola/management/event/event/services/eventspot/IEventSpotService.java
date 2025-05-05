@@ -118,6 +118,8 @@ public interface IEventSpotService {
     Optional<EventSpot> updateEventSpotStatus(EventSpotUpdateStatusDto eventSpotUpdateStatusDto) throws  EventSpotServiceException;
 
 
+    void checkEventSpotOccupation(long evenSpotId, Long occupation) throws EventSpotServiceException;
+
     /**
      *
      * @param eventSpotEventSpotIdDto

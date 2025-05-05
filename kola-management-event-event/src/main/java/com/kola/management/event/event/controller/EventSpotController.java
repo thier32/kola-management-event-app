@@ -6,6 +6,7 @@ import com.kola.management.event.event.business.exceptions.EventBusinessExceptio
 import com.kola.management.event.event.business.exceptions.EventSpotBusinessException;
 import com.kola.management.event.event.dto.event.EventDto;
 import com.kola.management.event.event.dto.eventspot.EventSpotDto;
+import com.kola.management.event.event.dto.eventspot.EventSpotReturnDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,13 +62,29 @@ public class EventSpotController {
     }
 
     @GetMapping("book/{eventSpotId}")
-    public String eventPublish(@PathVariable("eventSpotId") Long eventSpotId, Model model, RedirectAttributes redirectAttributes){
+    public String bookEventSpot(@PathVariable("eventSpotId") Long eventSpotId, Model model, RedirectAttributes redirectAttributes){
+        EventSpotReturnDto eventSpotReturnDto = null;
         try {
-            model.addAttribute("eventSpotDto", eventSpotBusiness.bookEventSpot(eventSpotId));
+            eventSpotReturnDto = eventSpotBusiness.bookEventSpot(eventSpotId);
+            model.addAttribute("eventSpotDto", eventSpotReturnDto);
         } catch (Exception|EventSpotBusinessException e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "redirect:/events/list";
         }
-        return "redirect:/eventspot/list";
+        return "redirect:/eventspot/view/"+eventSpotReturnDto.getEventId();
+    }
+
+    @GetMapping("unbook/{eventSpotId}")
+    public String unbookEventSpot(@PathVariable("eventSpotId") Long eventSpotId, Model model, RedirectAttributes redirectAttributes){
+        EventSpotReturnDto eventSpotReturnDto = null;
+        try {
+            eventSpotReturnDto = eventSpotBusiness.unbookEventSpot(eventSpotId);
+            model.addAttribute("eventSpotDto", eventSpotReturnDto);
+        } catch (Exception|EventSpotBusinessException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "redirect:/events/list";
+        }
+        return "redirect:/eventspot/view/"+eventSpotReturnDto.getEventId();
     }
 
     @GetMapping(value = {"/view/{eventId}" ,"view/{eventId}/{pageNo}"})

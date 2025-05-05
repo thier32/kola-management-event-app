@@ -23,4 +23,5 @@ public class Event extends BaseKernelModel {
     private String eventVenue;
     private String eventDescription;
     private String eventImageUrl;
+    private Long eventCapacity;
 }

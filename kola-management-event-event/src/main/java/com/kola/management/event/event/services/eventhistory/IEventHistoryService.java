@@ -81,6 +81,16 @@ public interface IEventHistoryService {
      */
    Optional<EventHistory> bookEvent(EventHistoryBookerEventDto eventHistoryBookerEventDto) throws EventHistoryServiceException;
 
+
+   Optional<EventHistory> bookEventSpot(EventHistoryBookerEventSpotDto eventHistoryBookerEventSpotDto) throws EventHistoryServiceException;
+
+
+   Optional<EventHistory> unbookEventSpot(EventHistoryBookerEventSpotDto eventHistoryBookerEventSpotDto) throws EventHistoryServiceException;
+
+   Optional<EventHistory> bookEventSpot(long eventSpotId) throws EventHistoryServiceException;
+
+   Optional<EventHistory> unbookEventSpot(long eventSpotId) throws EventHistoryServiceException;
+
     /**
      *
      * @param eventHistoryStatusDto
