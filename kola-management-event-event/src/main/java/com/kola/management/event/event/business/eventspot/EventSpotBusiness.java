@@ -3,9 +3,7 @@ package com.kola.management.event.event.business.eventspot;
 import com.kola.management.event.event.business.IEventSpotBusiness;
 import com.kola.management.event.event.business.exceptions.EventSpotBusinessException;
 import com.kola.management.event.event.dto.event.EventEventIdDto;
-import com.kola.management.event.event.dto.event.EventStatus;
 import com.kola.management.event.event.dto.event.ListDataDto;
-import com.kola.management.event.event.dto.eventhistory.EventHistoryBookerEventDto;
 import com.kola.management.event.event.dto.eventspot.*;
 import com.kola.management.event.event.model.Event;
 import com.kola.management.event.event.model.EventSpot;
@@ -17,12 +15,8 @@ import com.kola.management.event.event.services.exceptions.EventServiceException
 import com.kola.management.event.event.services.exceptions.EventSpotServiceException;
 import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.model.BaseKernelModel;
-import com.kola.management.event.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

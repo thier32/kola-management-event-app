@@ -4,6 +4,10 @@ import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.model.BaseKernelModel;
 import com.kola.management.event.kernel.repository.BaseKernelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -134,13 +138,27 @@ public class BaseKernelService<T extends BaseKernelModel> implements IBaseKernel
 
     }
 
+    User getConnectedUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            return ((User)authentication.getPrincipal());
+        }
+        return null;
+    }
+
     public T save(T entity) throws KernelException {
         entity.setUpdatedAt(new Date());
+        User user = getConnectedUser();
+        String userName = user != null ? user.getUsername() : null;
+        Long userId = user != null ? user.getUserId() : null;
         if (entity.getId() == null){
-//            entity.setCreatedAt(new Date());
-//        }else{
             entity = generateEntityId(entity);
             entity.setCreatedAt(new Date());
+            entity.setCreatedBy(userName);
+            entity.setIdCreatedBy(userId);
+        }else{
+            entity.setUpdatedBy(userName);
+            entity.setIdUpdatedBy(userId);
         }
         return (T) this.getDefaultRepository().save(entity);
     }

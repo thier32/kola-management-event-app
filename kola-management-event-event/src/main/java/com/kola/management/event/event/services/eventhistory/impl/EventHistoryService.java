@@ -34,11 +34,11 @@ public class EventHistoryService extends BaseKernelService<EventHistory> impleme
     public EventHistory saveEventHistoryDto(IEventHistoryDto eventHistoryDto,Long eventHistoryId) throws EventHistoryServiceException{
         EventHistory eventHistory;
         try {
-            eventHistory = this.mapping(eventHistoryDto, EventHistory.class);
             if(eventHistoryId == null){
+                eventHistory = this.mapping(eventHistoryDto, EventHistory.class);
                 eventHistory = this.save(eventHistory);
             }else{
-                eventHistory = this.update(eventHistory,eventHistoryId);
+                eventHistory = this.update(eventHistoryDto,eventHistoryId);
             }
         } catch (KernelException e) {
             throw new EventHistoryServiceException(e.getMessage());
@@ -94,6 +94,7 @@ public class EventHistoryService extends BaseKernelService<EventHistory> impleme
 
     @Override
     public Optional<EventHistory> bookEvent(EventHistoryBookerEventDto eventHistoryBookerEventDto) throws EventHistoryServiceException {
+        User user = getConnectedUser();
         return this.saveEventHistory(eventHistoryBookerEventDto);
     }
 

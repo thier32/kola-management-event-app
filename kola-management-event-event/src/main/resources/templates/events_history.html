@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{layouts/main_layout.html}"
+      layout:decorate="~{layouts/main_layout.html}" xmlns:sec="http://www.w3.org/1999/xhtml"
 >
 
 <body>
@@ -15,7 +15,7 @@
     </div>
     <div th:switch="${eventHistoryData.listElements}">
         <p>
-            <a href="/events/add" class="btn btn-primary"><i
+            <a sec:authorize="hasRole('ADMIN')" href="/events/add" class="btn btn-primary"><i
                     class="fas fa-user-plus ml-2"> Add Event</i></a>
         </p>
         <div class="col">

@@ -28,4 +28,10 @@ public abstract class BaseKernelModel {
 
     @Column()
     private String updatedBy;
+
+    @Column()
+    private Long idUpdatedBy;
+
+    @Column()
+    private Long idCreatedBy;
 }
