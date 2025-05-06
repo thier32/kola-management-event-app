@@ -150,7 +150,16 @@ public class BaseKernelService<T extends BaseKernelModel> implements IBaseKernel
         entity.setUpdatedAt(new Date());
         User user = getConnectedUser();
         String userName = user != null ? user.getUsername() : null;
-        Long userId = user != null ? user.getUserId() : null;
+        Long userId = null;
+
+        if (user != null){
+            try{
+                Method method =  user.getClass().getDeclaredMethod("getUserId");
+                userId = (Long) method.invoke(user);
+            }catch (Exception e){
+            }
+        }
+
         if (entity.getId() == null){
             entity = generateEntityId(entity);
             entity.setCreatedAt(new Date());
