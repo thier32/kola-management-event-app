@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+   <meta charset="UTF-8">
+   <title>Registration and Login System</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+         rel="stylesheet"
+         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+         crossorigin="anonymous">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="/css/search.css">
+</head>
+<body>
+<!--<form class="form-wrapper">-->
+<!--   <input type="text" id="search" placeholder="Search for..." required>-->
+<!--   <input type="submit" value="go" id="submit">-->
+<!--</form>-->
+<div class="wrap">
+   <div class="search">
+      <form th:action="@{/search}" role="form" method="post" enctype="multipart/form-data" th:object="${searchDto}" >
+       <div>
+      <input type="text" th:field="*{searchItem}" class="searchTerm" placeholder="Your looking for...">
+      <button type="submit" class="searchButton">
+         <i class="fa fa-search"></i>
+      </button>
+       </div>
+      </form>
+   </div>
+</div>
+<div class="card-columns" th:if="${eventData != null}" >
+   <div class="card"   th:each="event : ${eventData.listElements}">
+      <div class="card-image"><img th:if="${event.eventImageUrl != null and
+             !#strings.isEmpty(event.eventImageUrl)}"
+                                   th:src="@{'data:image/jpeg;base64,'+${event.eventImageUrl}}"
+                                   alt="Orange" />
+         <img th:unless="${event.eventImageUrl != null and
+                     !#strings.isEmpty(event.eventImageUrl)}"
+              th:src="@{img/no-image.png}"
+              alt="Orange" />
+      </div>
+      <div class="card-body">
+         <!-- Date de publication de l'article-->
+         <div class="card-date">
+            <time th:text="${event.createdAt}"></time>
+         </div>
+
+         <!-- Titre de l'article -->
+         <div class="card-title">
+            <h3 th:text="${event.eventName}">Lorem Ipsum</h3>
+         </div>
+         <!-- Extrait de l'article -->
+         <div class="card-excerpt">
+            <p th:text="${event.eventDescription}"> </p>
+         </div>
+      </div>
+   </div>
+</div>
+</body>
+</html>

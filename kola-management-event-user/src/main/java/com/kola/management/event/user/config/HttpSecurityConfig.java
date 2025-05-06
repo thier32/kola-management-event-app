@@ -27,6 +27,7 @@ public class HttpSecurityConfig {
                         .requestMatchers(
                                 "/",
                                 "/home",
+                                "/search",
                                 "/admin/register",
                                 "/admin",
                                 "/register",

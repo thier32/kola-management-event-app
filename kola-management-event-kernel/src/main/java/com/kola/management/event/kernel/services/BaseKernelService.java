@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -138,17 +138,17 @@ public class BaseKernelService<T extends BaseKernelModel> implements IBaseKernel
 
     }
 
-    User getConnectedUser(){
+    UserDetails getConnectedUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            return ((User)authentication.getPrincipal());
+            return ((UserDetails)authentication.getPrincipal());
         }
         return null;
     }
 
     public T save(T entity) throws KernelException {
         entity.setUpdatedAt(new Date());
-        User user = getConnectedUser();
+        UserDetails user = getConnectedUser();
         String userName = user != null ? user.getUsername() : null;
         Long userId = null;
 

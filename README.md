@@ -9,7 +9,7 @@ The application start on port 8081
 
 - User Registration
   -
-      use "/" and /register
+      use /login and /register
 
 - Admin Registration
   -
