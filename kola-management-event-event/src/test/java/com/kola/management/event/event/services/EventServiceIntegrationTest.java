@@ -48,7 +48,7 @@ public class EventServiceIntegrationTest {
         Event event = eventService.createEvent(eventDto).get();
 
 
-        Event updated = eventService.UpdateEventName(
+        Event updated = eventService.updateEventName(
                 new EventUpdateNameDto(
                         "newName",
                         event.getEventId()

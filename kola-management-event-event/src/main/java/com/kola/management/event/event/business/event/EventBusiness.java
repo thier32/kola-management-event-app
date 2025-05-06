@@ -15,6 +15,7 @@ import com.kola.management.event.event.services.exceptions.EventHistoryServiceEx
 import com.kola.management.event.event.services.exceptions.EventServiceException;
 import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.model.BaseKernelModel;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class EventBusiness implements IEventBusiness {
 
     @Autowired
@@ -144,11 +146,26 @@ public class EventBusiness implements IEventBusiness {
 
     @Override
     public EventReturnDto bookEvent(long eventId) throws EventBusinessException {
+        try {
+            this.eventService.updateEventOccupation(
+                    new EventUpdateOccupationDto(eventId,1L)
+            );
+        } catch (EventServiceException e) {
+            throw new EventBusinessException(e.getMessage());
+        }
+
         return this.changeEventStatus(eventId,EventStatus.BOOKED);
     }
 
     @Override
     public EventReturnDto unBookEvent(long eventId) throws EventBusinessException {
+        try {
+            this.eventService.updateEventOccupation(
+                    new EventUpdateOccupationDto(eventId,-1L)
+            );
+        } catch (EventServiceException e) {
+            throw new EventBusinessException(e.getMessage());
+        }
         return this.changeEventStatus(eventId,EventStatus.UNBOOKED);
     }
 

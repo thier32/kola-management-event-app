@@ -28,14 +28,18 @@ public class EventReturnDto {
     long eventSpotNumber = 0L;
     long eventBookedSpotNumber = 0L;
     Long eventCapacity;
+    Long eventOccupation;
     MultipartFile eventImage;
 
     public EventReturnDto(Event event, long eventspotnumber){
             eventId = event.getEventId();
             eventName = event.getEventName();
             eventVenue = event.getEventVenue();
+            eventOccupation = event.getEventOccupation();
             try {
-                eventImageUrl = BaseKernelService.convertImageToBase64(event.getEventImageUrl());
+                if (event.getEventImageUrl() != null){
+                    eventImageUrl = BaseKernelService.convertImageToBase64(event.getEventImageUrl());
+                }
             } catch (IOException e) {
             }
             eventDescription = event.getEventDescription();

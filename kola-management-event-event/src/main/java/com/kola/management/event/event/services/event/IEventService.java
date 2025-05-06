@@ -5,13 +5,14 @@ import com.kola.management.event.event.model.Event;
 import com.kola.management.event.event.services.exceptions.EventServiceException;
 import com.kola.management.event.kernel.model.BaseKernelModel;
 import com.kola.management.event.kernel.services.IBaseKernelService;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IEventService extends IBaseKernelService {
    String NOT_FOUND_MESSAGE_TEMPLATE = "%s with %s %s not found.";
+   String NOT_ENOUGH_SPOT_MESSAGE_TEMPLATE = "There is no more spot for event %s.";
+   String NO_SPOT_DEFINED_MESSAGE_TEMPLATE = "There is not spot defined for event %s.";
 
    /**
     *
@@ -62,37 +63,37 @@ public interface IEventService extends IBaseKernelService {
     * @param eventUpdateDto  eventUpdateDto
     * @return  Optional of <Event>
     */
-   Optional<Event> UpdateEvent(EventUpdateDto eventUpdateDto) throws EventServiceException;
+   Optional<Event> updateEvent(EventUpdateDto eventUpdateDto) throws EventServiceException;
 
    /**
     *
     * @param eventUpdateStateDto  eventUpdateStateDto
     * @return  Optional of <Event>
     */
-   Optional<Event> UpdateEventState(EventUpdateStateDto eventUpdateStateDto) throws EventServiceException;
+   Optional<Event> updateEventState(EventUpdateStateDto eventUpdateStateDto) throws EventServiceException;
 
    /**
     *
     * @param eventUpdateNameDto  eventUpdateNameDto
     * @return  Optional of <Event>
     */
-   Optional<Event> UpdateEventName(EventUpdateNameDto eventUpdateNameDto) throws EventServiceException;
+   Optional<Event> updateEventName(EventUpdateNameDto eventUpdateNameDto) throws EventServiceException;
 
-   Optional<Event> UpdateEventImage(EventUpdateImageUrlDto eventUpdateImageUrlDto) throws EventServiceException;
+   Optional<Event> updateEventImage(EventUpdateImageUrlDto eventUpdateImageUrlDto) throws EventServiceException;
 
    /**
     *
     * @param eventUpdateDescritpinDto  eventUpdateDescritpinDto
     * @return  Optional of <Event>
     */
-   Optional<Event> UpdateEventDescription(EventUpdateDescritpinDto eventUpdateDescritpinDto) throws EventServiceException;
+   Optional<Event> updateEventDescription(EventUpdateDescritpinDto eventUpdateDescritpinDto) throws EventServiceException;
 
    /**
     *
     * @param eventUpdateNameDescriptionDto eventUpdateNameDescriptionDto
     * @return  Optional of <Event>
     */
-   Optional<Event> UpdateEventNameDescription(EventUpdateNameDescriptionDto eventUpdateNameDescriptionDto) throws EventServiceException;
+   Optional<Event> updateEventNameDescription(EventUpdateNameDescriptionDto eventUpdateNameDescriptionDto) throws EventServiceException;
 
    /**
     *
@@ -141,4 +142,8 @@ public interface IEventService extends IBaseKernelService {
    List<EventReturnDto> findEventReturnDtoAllByOrderByIdDesc();
 
    EventReturnDto mapping(BaseKernelModel model, Class<EventReturnDto> eventReturnDtoClass) throws EventServiceException;
+
+
+   Optional<Event> updateEventOccupation(EventUpdateOccupationDto eventUpdateOccupationDto) throws EventServiceException;
+
 }

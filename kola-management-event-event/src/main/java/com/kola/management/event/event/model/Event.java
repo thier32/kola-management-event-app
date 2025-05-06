@@ -17,6 +17,7 @@ public class Event extends BaseKernelModel {
     public static final String eventVenueProp = "eventVenue";
     public static final String eventDescriptionProp = "eventDescription";
     public static final String eventImageUrlProp = "eventImageUrl";
+    public static final String eventOccupationProp = "eventOccupation";
 
     private long eventId;
     private String eventName;
@@ -24,4 +25,5 @@ public class Event extends BaseKernelModel {
     private String eventDescription;
     private String eventImageUrl;
     private Long eventCapacity;
+    private Long eventOccupation;
 }

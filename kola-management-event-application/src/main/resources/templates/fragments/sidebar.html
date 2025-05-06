@@ -12,13 +12,13 @@
                     <span>Events</span>
                 </a>
             </li>
-            <li sec:authorize="hasRole('ADMIN')" class="sidebar-item">
+            <li class="sidebar-item">
                 <a th:href="@{'/events/history/list'}" class="sidebar-link">
                     <i></i>
                     <span>Events (history)</span>
                 </a>
             </li>
-            <li class="sidebar-item">
+            <li sec:authorize="hasRole('ADIN')" class="sidebar-item">
                 <a th:href="@{'/eventspot/list'}" class="sidebar-link">
                     <i></i>
                     <span>Events Spot</span>

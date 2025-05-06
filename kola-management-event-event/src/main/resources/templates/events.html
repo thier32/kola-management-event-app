@@ -52,7 +52,7 @@
                         <td th:text="${event.eventVenue}"></td>
                         <td th:text="${event.eventDescription}"></td>
                         <td th:text="${event.eventCapacity}"></td>
-                        <td th:text="${event.eventSpotNumber}"></td>
+                        <td th:text="${event.eventOccupation}"></td>
                         <td>
                             <a sec:authorize="hasRole('ADMIN')" th:href="@{'/events/edit/' + ${event.eventId}}"  title="Edit">
                                 <i class="fa fa-edit" aria-hidden="true"></i>
@@ -71,9 +71,18 @@
                             </a>
                         </td>
                         <td>
-                            <a th:href="@{'/eventspot/view/' + ${event.eventId}}"  title="View Spots"
-                            ><i class="fa fa-eye" aria-hidden="true"></i>
+                            <a th:href="@{'/events/book/' + ${event.eventId}}"  title="Book a spot"
+                            ><i class="fa fa-bookmark-o" aria-hidden="true"></i>
                             </a>
+
+<!--                            <a th:if= "${eventSpot.eventSpotStatus != null && eventSpot.eventSpotStatus.toString() == 'BOOKED'}" th:href="@{'/eventspot/unbook/' + ${eventSpot.eventSpotId}}"  title="Unbook">-->
+<!--                                <i class="fa fa-bookmark-o"></i>-->
+<!--                            </a>-->
+<!--                            <a th:unless="${eventSpot.eventSpotStatus != null && eventSpot.eventSpotStatus.toString() == 'BOOKED'}" th:href="@{'/eventspot/book/' + ${eventSpot.eventSpotId}}"  title="Book">-->
+<!--                                <i class="fa fa-bookmark" aria-hidden="true"></i>-->
+<!--                            </a>-->
+
+
                         </td>
                     </tr>
                     </tbody>

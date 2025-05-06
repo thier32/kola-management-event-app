@@ -26,12 +26,11 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
     public Event saveEventDto(IEventDto eventDto, Long eventId) throws EventServiceException {
         Event event;
         try {
-            event = this.mapping(eventDto, Event.class);
-
             if (eventId == null){
+                event = this.mapping(eventDto, Event.class);
                 event = this.save(event);
             }else{
-                event = this.update(event, eventId);
+                event = this.update(eventDto, eventId);
             }
         } catch (KernelException e) {
             throw new EventServiceException(e.getMessage());
@@ -80,33 +79,33 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
     }
 
     @Override
-    public Optional<Event> UpdateEvent(EventUpdateDto eventUpdateDto) throws EventServiceException {
+    public Optional<Event> updateEvent(EventUpdateDto eventUpdateDto) throws EventServiceException {
         return this.updateEvent(eventUpdateDto,eventUpdateDto.eventId());
     }
 
     @Override
-    public Optional<Event> UpdateEventState(EventUpdateStateDto eventUpdateStateDto) throws EventServiceException {
+    public Optional<Event> updateEventState(EventUpdateStateDto eventUpdateStateDto) throws EventServiceException {
         return this.updateEvent(eventUpdateStateDto,eventUpdateStateDto.eventId());
     }
 
     @Override
-    public Optional<Event> UpdateEventName(EventUpdateNameDto eventUpdateNameDto) throws EventServiceException {
+    public Optional<Event> updateEventName(EventUpdateNameDto eventUpdateNameDto) throws EventServiceException {
         return this.updateEvent(eventUpdateNameDto,eventUpdateNameDto.eventId());
     }
 
     @Override
-    public Optional<Event> UpdateEventImage(EventUpdateImageUrlDto eventUpdateImageUrlDto) throws EventServiceException {
+    public Optional<Event> updateEventImage(EventUpdateImageUrlDto eventUpdateImageUrlDto) throws EventServiceException {
         return this.updateEvent(eventUpdateImageUrlDto,eventUpdateImageUrlDto.eventId());
     }
 
 
     @Override
-    public Optional<Event> UpdateEventDescription(EventUpdateDescritpinDto eventUpdateDescritpinDto) throws EventServiceException {
+    public Optional<Event> updateEventDescription(EventUpdateDescritpinDto eventUpdateDescritpinDto) throws EventServiceException {
         return this.updateEvent(eventUpdateDescritpinDto,eventUpdateDescritpinDto.eventId());
     }
 
     @Override
-    public Optional<Event> UpdateEventNameDescription(EventUpdateNameDescriptionDto eventUpdateNameDescriptionDto) throws EventServiceException {
+    public Optional<Event> updateEventNameDescription(EventUpdateNameDescriptionDto eventUpdateNameDescriptionDto) throws EventServiceException {
         return this.updateEvent(eventUpdateNameDescriptionDto,eventUpdateNameDescriptionDto.eventId());
     }
 
@@ -166,5 +165,39 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
         }catch (KernelException kernelException){
             throw new EventServiceException(kernelException.getMessage());
         }
+    }
+
+    @Override
+    public Optional<Event> updateEventOccupation(EventUpdateOccupationDto eventUpdateOccupationDto) throws EventServiceException {
+        Optional<Event> optionalEvent = findEventByEventId(new EventEventIdDto(eventUpdateOccupationDto.eventId()));
+        if (optionalEvent.isEmpty()){
+          throw new EventServiceException(String.format(NOT_FOUND_MESSAGE_TEMPLATE,Event.class.getSimpleName(),Event.eventIdProp,eventUpdateOccupationDto.eventId()));
+        }
+        Event event = optionalEvent.get();
+        Long capacity = event.getEventCapacity();
+
+        if (capacity == null){
+            throw new EventServiceException(
+                    String.format(NO_SPOT_DEFINED_MESSAGE_TEMPLATE,event.getEventName())
+            );
+        }
+
+        Long currentOccupation = event.getEventOccupation();
+        Long occupation = eventUpdateOccupationDto.eventOccupation();
+        if (currentOccupation != null){
+            occupation = currentOccupation + eventUpdateOccupationDto.eventOccupation();
+        }
+        Long diff = capacity - occupation;
+        if (diff < 0L || diff > capacity){
+            throw new EventServiceException(
+                    String.format(NOT_ENOUGH_SPOT_MESSAGE_TEMPLATE,event.getEventName())
+            );
+        }
+
+        EventUpdateOccupationDto eventUpdateOccupationDtoActual = new EventUpdateOccupationDto(
+          event.getEventId(),
+          occupation
+        );
+        return this.updateEvent(eventUpdateOccupationDtoActual,eventUpdateOccupationDto.eventId());
     }
 }

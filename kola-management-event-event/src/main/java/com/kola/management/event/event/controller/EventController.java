@@ -61,4 +61,14 @@ public class EventController {
         return "redirect:/events/list";
     }
 
+
+    @GetMapping("book/{eventId}")
+    public String eventBook(@PathVariable("eventId") Long eventId, Model model, RedirectAttributes redirectAttributes){
+        try {
+            model.addAttribute("eventDto", eventBusiness.bookEvent(eventId));
+        } catch (Exception|EventBusinessException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
+        return "redirect:/events/list";
+    }
 }
