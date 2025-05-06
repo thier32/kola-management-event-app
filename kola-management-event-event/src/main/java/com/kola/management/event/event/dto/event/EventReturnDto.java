@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -30,7 +31,7 @@ public class EventReturnDto {
     Long eventCapacity;
     Long eventOccupation;
     MultipartFile eventImage;
-
+    LocalDateTime eventStartDate;
     public EventReturnDto(Event event, long eventspotnumber){
             eventId = event.getEventId();
             eventName = event.getEventName();
@@ -46,6 +47,7 @@ public class EventReturnDto {
             createdAt = event.getCreatedAt();
             this.eventSpotNumber = eventspotnumber;
             eventCapacity = event.getEventCapacity();
+            eventStartDate = event.getEventStartDate();
     }
 
     public EventReturnDto(Event event, long eventspotnumber,long eventbookedspotnumber){
