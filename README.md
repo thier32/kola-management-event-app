@@ -20,6 +20,6 @@ The application start on port 8081
   -
    - at the root of the project run
   
-    gradlew build && gradlew boot:application run 
+    gradlew build && gradlew bootRun 
 
     then open the application on the browser localhost:8081 
