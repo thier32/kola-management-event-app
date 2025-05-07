@@ -1,10 +1,12 @@
 package com.kola.management.event.event.repository;
 
 import com.kola.management.event.event.dto.event.EventReturnDto;
+import com.kola.management.event.event.dto.event.EventStatus;
 import com.kola.management.event.kernel.repository.BaseKernelRepository;
 import com.kola.management.event.event.model.Event;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -48,6 +50,8 @@ public interface EventRepository extends BaseKernelRepository<Event> {
      */
     List<Event> findByOrderByIdDesc(Pageable pageable);
 
+    @Query(value = "select event from Event  event where event.eventStatus in (:eventStatus)")
+    List<Event> findEventByEventStatusList(@Param("eventStatus") List<EventStatus> eventStatus);
 
 //    @Query(value = "select new com.kola.management.event.event.dto.event.EventReturnDto(event) from Event event")
 //    List<EventReturnDto> findEventReturnDtoByOrderByIdDesc(Pageable pageable);
@@ -59,4 +63,12 @@ public interface EventRepository extends BaseKernelRepository<Event> {
     @Query(value = "select new com.kola.management.event.event.dto.event.EventReturnDto(event,count(eventSpot)) from Event event " +
             "left join EventSpot eventSpot on eventSpot.eventId = event.eventId  group by event.eventId order by event.id desc")
     List<EventReturnDto> findEventReturnDtoByOrderByIdDesc();
+
+    @Query(value = "select new com.kola.management.event.event.dto.event.EventReturnDto(event)" +
+            " from Event event where event.eventStatus = :eventStatus order by event.id desc")
+    List<EventReturnDto> findEventReturnDtoByEventStatusOrderByIdDesc(@Param("eventStatus") EventStatus eventStatus);
+
+    @Query(value = "select new com.kola.management.event.event.dto.event.EventReturnDto(event)" +
+            " from Event event where event.eventStatus in (:eventStatus) order by event.id desc")
+    List<EventReturnDto> findEventReturnDtoByEventStatusOrderByIdDesc(@Param("eventStatus") List<EventStatus> eventStatus, Pageable pageable);
 }

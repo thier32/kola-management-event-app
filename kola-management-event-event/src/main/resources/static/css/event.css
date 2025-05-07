@@ -138,7 +138,7 @@
     margin-bottom: 20px;
 }
 
-.tag-event-filter button {
+.tag-event-filter a {
     border: 2px solid #E1E8EE;
     border-radius: 6px;
     padding: 13px 20px;
@@ -149,9 +149,9 @@
     transition: all .5s;
 }
 
-.tag-event-filter button:hover,
-.tag-event-filter button:active,
-.tag-event-filter button:focus {
+.tag-event-filter a:hover,
+.tag-event-filter a:active,
+.tag-event-filter a:focus {
     border: 2px solid #86939E;
     outline: none;
 }
@@ -171,7 +171,7 @@
 }
 
 .tag-event a:before {
-    content: "?";
+    /*content: "?";*/
     height: 15px;
     width: 15px;
     border-radius: 50%;

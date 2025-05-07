@@ -90,6 +90,24 @@ public class User extends BaseKernelModel implements UserDetails {
         return grantedAuthorities;
     }
 
+    public boolean hasRole(String role){
+        String prefix = "ROLE_";
+        String roleTemplate = prefix+"%s";
+        String rl = null;
+        List<String> roles = getRoles();
+        if (roles == null) roles = new ArrayList<>(0);
+        for(String rle : roles){
+            rl = rle;
+            if (!role.startsWith(prefix)){
+               rl = String.format(roleTemplate,role);
+            }
+            if (rl.equalsIgnoreCase(rle)){
+                return true;
+            }
+        }
+        return  false;
+    }
+
     @Override
     public String getPassword() {
         return this.password;

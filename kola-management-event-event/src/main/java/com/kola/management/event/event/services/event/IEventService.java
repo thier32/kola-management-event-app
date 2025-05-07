@@ -79,6 +79,8 @@ public interface IEventService extends IBaseKernelService {
     */
    Optional<Event> updateEventName(EventUpdateNameDto eventUpdateNameDto) throws EventServiceException;
 
+   Optional<Event> updateEventStatus(EventUpdateStatusDto eventUpdateStatusDto) throws EventServiceException;
+
    Optional<Event> updateEventImage(EventUpdateImageUrlDto eventUpdateImageUrlDto) throws EventServiceException;
 
    /**
@@ -122,6 +124,8 @@ public interface IEventService extends IBaseKernelService {
    List<Event> findAllEvents();
 
 
+   List<Event> findAllEventsByStatus(List<EventStatus> eventStatus);
+
    /**
     *
     * @param page page number
@@ -137,6 +141,8 @@ public interface IEventService extends IBaseKernelService {
     * @return
     */
    List<EventReturnDto> findEventReturnDtoAllByOrderByIdDesc(int page, int element);
+
+   List<EventReturnDto> findEventReturnDtoAllByOrderByIdDesc(List<EventStatus> eventStatuses,int page, int element);
 
 
    List<EventReturnDto> findEventReturnDtoAllByOrderByIdDesc();

@@ -6,6 +6,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -20,7 +24,17 @@ public class UserFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 //        UserService userService = new UserService();
-        System.out.println("Requête"+request);
+//        System.out.println("Requête"+request);
+//
+//        if(SecurityContextHolder.getContext().getAuthentication() != null &&
+//                SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
+//                && !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)
+//        ){
+//            if (request.isUserInRole("ROLE_ADMIN") && !request.getRequestURI().contains("/admin")){
+//
+//                throw new BadCredentialsException("Invalids credentials");
+//            }
+//        }
 
         /*final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (isEmpty(header) || !header.startsWith("Bearer ")) {

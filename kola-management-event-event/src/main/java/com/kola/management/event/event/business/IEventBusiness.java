@@ -100,6 +100,14 @@ public interface IEventBusiness {
 
     /**
      *
+     * @param page
+     * @param keys
+     * @return
+     */
+    ListDataDto<EventReturnDto> getEventListData(Integer page, List<String> keys);
+
+    /**
+     *
      * @param eventId
      * @return
      * @throws EventBusinessException

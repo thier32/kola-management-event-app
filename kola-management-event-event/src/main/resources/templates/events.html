@@ -29,7 +29,7 @@
                 <div class="tag-event">
                     <span>Type of event</span>
                     <div class="tag-event-filter">
-                        <button th:each="key :${eventData.keys}" th:text="${key}"></button>
+                        <a th:each="key :${eventData.keys}"  th:text="${key}"  th:href="@{'/events/list/' + ${#strings.toLowerCase(key)}}"></a>
                     </div>
                 </div>
                 <table class="styled-table">
@@ -62,9 +62,19 @@
                         </td>
                         <td>
 
-                            <a sec:authorize="hasRole('ADMIN')" th:href="@{'/events/publish/' + ${event.eventId}}"  title="Publish"
+                            <a th:if=
+                            "${event.eventStatus != null && (event.eventStatus.toString() == 'CREATED'
+                            || event.eventStatus.toString() == 'UNPUBLISHED'  || event.eventStatus.toString() == 'CANCELED'
+                            )}"
+
+                               sec:authorize="hasRole('ADMIN')" th:href="@{'/events/publish/' + ${event.eventId}}"  title="Publish"
                             >
                                 <i class="fa fa-upload" aria-hidden="true"></i>
+                            </a>
+                            <a th:if="${event.eventStatus != null && event.eventStatus.toString() == 'PUBLISHED'}"
+                               sec:authorize="hasRole('ADMIN')" th:href="@{'/events/unpublish/' + ${event.eventId}}"  title="Publish"
+                            >
+                                <i class="fa fa-download" aria-hidden="true"></i>
                             </a>
                         </td>
                         <td>

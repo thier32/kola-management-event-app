@@ -103,7 +103,8 @@ public interface IEventHistoryService {
      * @param eventHistoryEventIdDto
      * @return List<EventHistory>
      */
-   List<EventHistory> findEventHistoryByEventId(EventHistoryEventIdDto eventHistoryEventIdDto);   List<EventHistory> findEventHistoryByStatus(EventHistoryStatusDto eventHistoryStatusDto);
+   List<EventHistory> findEventHistoryByEventId(EventHistoryEventIdDto eventHistoryEventIdDto);
+
 
     /**
      *

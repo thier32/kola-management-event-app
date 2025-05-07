@@ -94,6 +94,11 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
     }
 
     @Override
+    public Optional<Event> updateEventStatus(EventUpdateStatusDto eventUpdateStatusDto) throws EventServiceException {
+        return this.updateEvent(eventUpdateStatusDto,eventUpdateStatusDto.eventId());
+    }
+
+    @Override
     public Optional<Event> updateEventImage(EventUpdateImageUrlDto eventUpdateImageUrlDto) throws EventServiceException {
         return this.updateEvent(eventUpdateImageUrlDto,eventUpdateImageUrlDto.eventId());
     }
@@ -140,6 +145,10 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
         return getDefaultRepository().findAll();
     }
 
+    @Override
+    public List<Event> findAllEventsByStatus(List<EventStatus> eventStatuses) {
+        return ((EventRepository)getDefaultRepository()).findEventByEventStatusList(eventStatuses);
+    }
 
     @Override
     public List<Event> findAllByOrderByIdDesc(int page, int element){
@@ -151,6 +160,12 @@ public class EventService extends BaseKernelService<Event> implements IEventServ
     public List<EventReturnDto> findEventReturnDtoAllByOrderByIdDesc(int page, int element) {
         Pageable pageable = Pageable.ofSize( element).withPage( page-1);
         return ((EventRepository)getDefaultRepository()).findEventReturnDtoByOrderByIdDesc(pageable);
+    }
+
+    @Override
+    public List<EventReturnDto> findEventReturnDtoAllByOrderByIdDesc(List<EventStatus> eventStatuses, int page, int element) {
+        Pageable pageable = Pageable.ofSize( element).withPage( page-1);
+        return ((EventRepository)getDefaultRepository()).findEventReturnDtoByEventStatusOrderByIdDesc(eventStatuses,pageable);
     }
 
     @Override

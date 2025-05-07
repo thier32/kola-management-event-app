@@ -156,10 +156,7 @@ public class EventHistoryService extends BaseKernelService<EventHistory> impleme
         return ((EventHistoryRepository)getDefaultRepository()).findEventHistoryByEventId(eventHistoryEventIdDto.eventId());
     }
 
-    @Override
-    public List<EventHistory> findEventHistoryByStatus(EventHistoryStatusDto eventHistoryStatusDto) {
-        return ((EventHistoryRepository)getDefaultRepository()).findEventHistoryByEventStatus(eventHistoryStatusDto.eventStatus());
-    }
+
 
     @Override
     public List<EventHistory> findAllByOrderByIdDesc(int currentPage, int elementPerPage) {

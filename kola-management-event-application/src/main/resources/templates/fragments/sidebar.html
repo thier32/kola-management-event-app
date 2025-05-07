@@ -13,7 +13,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a th:href="@{'/events/history/list'}" class="sidebar-link">
+                <a sec:authorize="hasRole('ADIN')" th:href="@{'/events/history/list'}" class="sidebar-link">
                     <i></i>
                     <span>Events (history)</span>
                 </a>

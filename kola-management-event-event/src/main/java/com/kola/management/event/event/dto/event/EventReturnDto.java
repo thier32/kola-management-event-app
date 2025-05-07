@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Getter
@@ -32,6 +33,7 @@ public class EventReturnDto {
     Long eventOccupation;
     MultipartFile eventImage;
     LocalDateTime eventStartDate;
+    Date  selectedStartDate;
     public EventReturnDto(Event event, long eventspotnumber){
             eventId = event.getEventId();
             eventName = event.getEventName();
@@ -48,6 +50,10 @@ public class EventReturnDto {
             this.eventSpotNumber = eventspotnumber;
             eventCapacity = event.getEventCapacity();
             eventStartDate = event.getEventStartDate();
+            if (eventStartDate != null){
+                selectedStartDate = Date.from(eventStartDate.atZone(ZoneId.systemDefault()).toInstant());
+            }
+            eventStatus = event.getEventStatus();
     }
 
     public EventReturnDto(Event event, long eventspotnumber,long eventbookedspotnumber){
@@ -60,6 +66,25 @@ public class EventReturnDto {
         this.eventSpotNumber = eventspotnumber;
         this.eventBookedSpotNumber = eventbookedspotnumber;
         eventCapacity = event.getEventCapacity();
+    }
+
+    public EventReturnDto(Event event){
+        eventId = event.getEventId();
+        eventName = event.getEventName();
+        eventVenue = event.getEventVenue();
+        try {
+            if (event.getEventImageUrl() != null){
+                eventImageUrl = BaseKernelService.convertImageToBase64(event.getEventImageUrl());
+            }
+        } catch (IOException e) {
+        }
+        eventDescription = event.getEventDescription();
+        createdAt = event.getCreatedAt();
+        eventCapacity = event.getEventCapacity();
+        eventStartDate = event.getEventStartDate();
+        if (eventStartDate != null){
+            selectedStartDate = Date.from(eventStartDate.atZone(ZoneId.systemDefault()).toInstant());
+        }
     }
 }
 

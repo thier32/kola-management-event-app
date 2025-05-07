@@ -15,15 +15,21 @@ import com.kola.management.event.event.services.exceptions.EventHistoryServiceEx
 import com.kola.management.event.event.services.exceptions.EventServiceException;
 import com.kola.management.event.kernel.exception.KernelException;
 import com.kola.management.event.kernel.model.BaseKernelModel;
+import com.kola.management.event.user.model.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 @Transactional
@@ -38,15 +44,52 @@ public class EventBusiness implements IEventBusiness {
     @Autowired
     IEventSpotService eventSpotService;
 
+    UserDetails getConnectedUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            return ((UserDetails)authentication.getPrincipal());
+        }
+        return null;
+    }
+
+    EventDto getActualEventDto(EventDto eventDto){
+        EventDto actualEventDto = eventDto;
+        if (eventDto.selectedStartDate() != null) {
+            // Parse the String to LocalDate using the formatter
+            LocalDateTime eventStartDate = LocalDateTime.parse(eventDto.selectedStartDate());
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+//            LocalDateTime eventStartDate = new LocalDateTime(localDate);
+
+            actualEventDto = new EventDto(
+                    eventDto.eventName(),
+                    eventDto.eventDescription(),
+                    eventDto.eventVenue(),
+                    eventDto.eventId(),
+                    eventDto.eventImageUrl(),
+                    eventDto.eventCapacity(),
+                    eventDto.eventImage(),
+                    eventDto.selectedStartDate(),
+                    eventStartDate
+            );
+        }
+        return actualEventDto;
+    }
+
     @Override
     public EventReturnDto createEvent(EventDto eventDto) throws EventBusinessException {
         EventReturnDto eventReturnDto = null;
         try{
             Optional<Event> optionalEvent;
-            if (eventDto.eventId() != null){
-                optionalEvent = eventService.updateEvent(eventDto,eventDto.eventId());
+            EventDto actualEventDto = getActualEventDto(eventDto);
+
+            if (actualEventDto.eventId() != null){
+                optionalEvent = eventService.updateEvent(actualEventDto,eventDto.eventId());
             }else{
-                optionalEvent = eventService.createEvent(eventDto);
+                optionalEvent = eventService.createEvent(actualEventDto);
+                this.changeEventStatus(
+                  optionalEvent.get(),
+                  EventStatus.CREATED
+                );
             }
 
             if (optionalEvent.isPresent()){
@@ -106,6 +149,13 @@ public class EventBusiness implements IEventBusiness {
         EventReturnDto eventReturnDto = null;
 
         try {
+            this.eventService.updateEventStatus(
+                    new EventUpdateStatusDto(
+                            eventStatus,
+                            event.getEventId()
+                    )
+            );
+
             EventHistoryChangeStatusEventDto eventHistoryChangeStatusEventDto =
                     new EventHistoryChangeStatusEventDto(
                     event.getEventId(),
@@ -127,7 +177,7 @@ public class EventBusiness implements IEventBusiness {
                 eventReturnDto = this.map(optionalEventHistory.get());
             }
 
-        } catch (EventHistoryServiceException e) {
+        } catch (EventHistoryServiceException|EventServiceException e) {
             throw new EventBusinessException(e.getMessage());
         }
 
@@ -212,6 +262,40 @@ public class EventBusiness implements IEventBusiness {
         return getEventHistoryListData(pageNo.intValue());
     }
 
+    public ListDataDto<EventReturnDto> getEventListData(int page, List<String> lkeys){
+        ListDataDto<EventReturnDto> data = new ListDataDto<>();
+        data.numberPage = 10;
+        data.currentPage = page;
+        List<String> keys = new ArrayList<>();
+        Arrays.stream(EventStatus.values()).forEach(e -> keys.add(e.name()));
+        List<EventStatus> eventStatusList = new ArrayList<>(0);
+        List<EventStatus> finalEventStatusList = eventStatusList;
+        lkeys.forEach(l -> finalEventStatusList.add(EventStatus.valueOf(l.toUpperCase())));
+        data.keys = keys;
+        data.elementPerPage = 5;
+        if(keys.isEmpty()){
+            eventStatusList = Arrays.stream(EventStatus.values()).toList();
+        }
+        data.listElements = this.eventService.findEventReturnDtoAllByOrderByIdDesc(eventStatusList,data.currentPage,data.elementPerPage);
+        data.total = this.eventService.findAllEventsByStatus(eventStatusList).size();
+        long divisor = data.total;
+        if (divisor <= 0){
+            divisor = 1;
+        }
+
+        long reste = data.elementPerPage % divisor;
+        long nbPage =  divisor / data.elementPerPage;
+        if (reste != 0){
+            nbPage++;
+        }
+        if (nbPage <= 0){
+            nbPage = 1;
+        }
+        if (data.listElements.isEmpty()) data.listElements = null;
+        data.numberPage = (int) nbPage;
+        return data;
+    }
+
     public ListDataDto<EventReturnDto> getEventListData(int page) {
         ListDataDto<EventReturnDto> data = new ListDataDto<>();
         data.numberPage = 10;
@@ -256,10 +340,23 @@ public class EventBusiness implements IEventBusiness {
 
     @Override
     public ListDataDto<EventReturnDto> getEventListData(Integer page) {
-        if (page != null){
-            return getEventListData(page.intValue());
+        return getEventListData(page,new ArrayList<>(0));
+    }
+
+    @Override
+    public ListDataDto<EventReturnDto> getEventListData(Integer page, List<String> keys) {
+        User user = (User) getConnectedUser();
+        if (user != null && !user.hasRole("ADMIN")){
+             keys.add(EventStatus.PUBLISHED.name());
+             keys.add(EventStatus.BOOKED.name());
         }
-        return getEventListData();
+        if (keys == null || keys.isEmpty()){
+            return getEventListData(page);
+        }
+        if (page == null){
+            return getEventListData(1,keys);
+        }
+        return getEventListData(page.intValue(),keys);
     }
 
     @Override

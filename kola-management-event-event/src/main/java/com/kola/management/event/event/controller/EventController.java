@@ -4,11 +4,19 @@ import com.kola.management.event.event.business.IEventBusiness;
 import com.kola.management.event.event.business.exceptions.EventBusinessException;
 import com.kola.management.event.event.dto.event.EventDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/events/")
@@ -17,9 +25,19 @@ public class EventController {
     @Autowired
     IEventBusiness eventBusiness;
 
-    @GetMapping(value = {"list","page","page/{pageNo}"})
-    public String eventlist(@PathVariable(value = "pageNo", required = false) Integer pageNo, Model model){
-        model.addAttribute("eventData", eventBusiness.getEventListData(pageNo));
+//    @InitBinder
+//    public void initBinder(WebDataBinder binder) {
+//        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true));
+//        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("dd-MM-yyyy"), true));
+//    }
+
+    @GetMapping(value = {"list","list/{key}","list/{key}/{pageNo}","page","page/{pageNo}"})
+    public String eventlist(@PathVariable(value = "pageNo", required = false) Integer pageNo, @PathVariable(value = "key", required = false) String key, Model model){
+        List<String> keys = new ArrayList<>(0);
+        if (key != null){
+            keys.add(key);
+        }
+        model.addAttribute("eventData", eventBusiness.getEventListData(pageNo,keys));
         return  "events";
     }
 

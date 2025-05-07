@@ -87,12 +87,15 @@ public interface EventHistoryRepository extends BaseKernelRepository<EventHistor
 
     /**
      *
-     * @param status the requested event status
+     * @param eventStatus the requested event status
      * @return List of EventHistory -> list can be empty
      */
-    List<EventHistory> findEventHistoryByEventStatus(int status);
+    List<EventHistory> findEventHistoryByEventStatus(EventStatus eventStatus);
 
     Optional<EventHistory> findFirstByEventIdAndEventStatusOrderByIdDesc(long eventId, EventStatus eventStatus);
+
+    Optional<EventHistory> findFirstByEventStatusOrderByIdDesc(EventStatus eventStatus);
+
 
 
     /**
